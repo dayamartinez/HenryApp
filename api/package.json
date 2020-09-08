@@ -1,0 +1,31 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^6.3.5",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "morgan": "^1.10.0",
+    "jquery": "^3.5.1",
+    "ioredis": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.3.0"
+  },
+  "devDependencies": {
+    "supertest-session": "^4.0.0",
+    "mocha": "^8.1.1",
+    "chai": "^4.2.0",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
