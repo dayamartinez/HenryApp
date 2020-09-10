@@ -5,7 +5,7 @@ const {isAuthenticated,isAdmin} =require('./helpers')
 //rutas para ver todos los usuarios, modificar un usuario, borrar un usuario
 
 //se trae todos los usuarios
-server.get('/',isAuthenticated,isAdmin,(req,res,next) => {
+server.get('/users',isAuthenticated,isAdmin,(req,res,next) => {
     Usuario.findAll()
     .then( usuario => {
         res.status(200).send(usuario);
@@ -14,7 +14,7 @@ server.get('/',isAuthenticated,isAdmin,(req,res,next) => {
 
 
 //Busca un usuario por su ID
-server.get('/:id',isAuthenticated,isAdmin,(req,res,next) => {
+server.get('/users/:id',isAuthenticated,isAdmin,(req,res,next) => {
   Usuario.findByPk(req.params.id)
   .then(usuario => {
     if (!usuario) {
@@ -39,7 +39,7 @@ server.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next) => {
 
 
 //borra un usuario (no lo borra de la base, sino que lo pasa a estado inactivo)
-server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
+server.delete('/users/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     Usuario.findByPk(req.params.id)
     .then(usuario => {
         if (!usuario){
@@ -53,5 +53,14 @@ server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
         }
     })
 })
+
+
+//Lista todos los cohortes y se trae todos los usuarios de los cohortes
+server.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
+  Cohort.findAll({
+  include: [{model: Usuario}]
+  })
+})
+
 
 module.exports = app;
