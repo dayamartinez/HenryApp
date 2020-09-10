@@ -39,6 +39,7 @@ instructor.hasMany(student)
 student.belongsTo(instructor)
 
 profile.hasOne(instructor, {foreignKey: 'instructor_id'})
+
 //
 
 
