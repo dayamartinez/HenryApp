@@ -28,3 +28,13 @@ useEffect( () => {
 
 * Reducer en archivos separados.
 * Crear carpetas para guardar los componentes de acuerdo a su funcionalidad.
+
+
+10/09/2020
+
+*Se crea el front para la página de HenryApp. Se utiliza https://marvelapp.com/ para hacerlo.
+*Por otra parte, vamos a utilizar https://freefrontend.com/css-fire-animation/ para darle animación al cohete.
+
+* Se creó la dirección de la app para enviar mails.
+mail:  henryAppGrupo1@gmail.com
+pwd:   webft03HAG1
