@@ -30,17 +30,17 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { cohort, user, group, account  } = sequelize.models;
+const { Cohort, Usuario, Group, Account } = sequelize.models;
 
 // Aca vendrian las relaciones
 
-user.belongsTo(group); //user * ---- 1 group
-group.hasMany(user);
-user.belongsTo(cohort); //user * ---- 1 cohort
-cohort.hasMany(user);
-user.hasOne(account); //user 1 --- 1 account
-cohort.hasMany(group); //cohort 1 --- * group
-group.belongsTo(cohort);
+Usuario.belongsTo(Group); //user * ---- 1 group
+Group.hasMany(Usuario);
+Usuario.belongsTo(Cohort); //user * ---- 1 cohort
+Cohort.hasMany(Usuario);
+Usuario.hasOne(Account); //user 1 --- 1 account
+Cohort.hasMany(Group); //cohort 1 --- * group
+Group.belongsTo(Cohort);
 
 
 module.exports = {
