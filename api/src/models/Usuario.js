@@ -72,6 +72,12 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM,
       values: ["user", "admin"],
       defaultValue: "user"
+    },
+
+    activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false
     }
 
     //hashea password antes de crearla
