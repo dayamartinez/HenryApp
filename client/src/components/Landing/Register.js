@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,11 +12,15 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {addUser} from '../../actions/user.js';
+import {connect} from 'react-redux';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 65-67) me tiraban error
 
 */
+
+//ESTILOS DE MATERIAL UI
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -37,14 +41,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+
+export function Register(props) {
     const classes = useStyles();
-    const [input,setInput]=React.useState({
-        firstName:'',
+    const [input,setInput]=useState({
+        name:'',
         lastName:'',
         email:'',
         password:''
     });
+
+    const onSend = function(e){
+      e.preventDefault();
+      props.addUser(input)
+    }
 
     //MANEJO DE ONCHANGE()
     const handleInputChange = function(e) {
@@ -53,10 +63,6 @@ export default function SignUp() {
           [e.target.name]:e.target.value
         })
       }
-    
-    const imprimir = function () {
-        console.log(input);
-    } 
 
   return (
     <Container component="main" maxWidth="xs">
@@ -73,7 +79,7 @@ export default function SignUp() {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="name"
                 variant="outlined"
                 required
                 fullWidth
@@ -133,7 +139,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={()=>imprimir()}
+            onClick={(e)=>onSend(e)}
           >
             Sign Up
           </Button>
@@ -152,3 +158,17 @@ export default function SignUp() {
     </Container>
   );
 }
+
+const mapStateToProps = state => {		
+  return {		
+    user: state.user,
+  }		
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addUser: (input)=>dispatch(addUser(input)),
+  }
+}
+    
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

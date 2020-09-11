@@ -1,12 +1,13 @@
+import {combineReducers} from 'redux';
+import user from './users'
+
 /*
 Hay que crear un archivo para cada estado a modificar
  */
-const initialState = {
-    algo: "algo"
-};
+// const initialState = {
+//     algo: "algo"
+// };
 
-function rootReducer(state = initialState, action) {
-    return state;
-}
-
-export default rootReducer;
+export default combineReducers({
+    user,
+}) 
