@@ -8,7 +8,7 @@ app.use(cors());
 app.post('/send-email/:email', (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
-  
+
     console.log(req.body);
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -40,12 +40,6 @@ const mailOptions = {
         }
     })
 });
-
-
-
-
-
-
 
 
 module.exports = app;
