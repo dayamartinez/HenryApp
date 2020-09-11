@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { User } = require('../db.js');
+const { Usuario } = require('../db.js');
 const {isAuthenticated,isAdmin} =require('./helpers')
 
 //rutas para ver todos los usuarios, modificar un usuario, borrar un usuario
@@ -54,4 +54,4 @@ server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     })
 })
 
-module.exports = app;
+module.exports = server;
