@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => ({
 export function Settings(props){
     const classes = useStyles();
     const [state, setState]=useState({
+        id: '',
         name:'',
         lastName:'',
-        email:'',
     });
  
 
@@ -73,7 +73,7 @@ export function Settings(props){
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="Update Name"
                 autoFocus
                 onChange={(e) => handleInputChange(e)}
               />
@@ -84,7 +84,7 @@ export function Settings(props){
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label=" Update LastName"
                 name="lastName"
                 autoComplete="lname"
                 onChange={(e) => handleInputChange(e)}

@@ -62,10 +62,14 @@ const useStyles = makeStyles((theme) => ({
       textAbout: {
         position: 'absolute',
         left: '250px',
-        color: 'darkgray',
         marginTop: '50px'
       },
-      
+      textBirthday: {
+        position: 'absolute',
+        left: '250px',
+        color: 'darkgray',
+        marginTop: '100px'
+      },
   }));
 
 
@@ -87,10 +91,12 @@ const useStyles = makeStyles((theme) => ({
         <Typography variant="subtitle1" gutterBottom> 
          <p className={classes.text}>email@gmail.com</p>
          </Typography> 
+         
          <Typography variant="body1" gutterBottom> 
-         <p className={classes.textAbout}>About</p>
-         </Typography> 
-         <Typography variant="body1" gutterBottom className={classes.textAbout}> 
+         <article className={classes.textAbout}>About</article>
+         </Typography>
+        
+         <Typography variant="body1" gutterBottom className={classes.textBirthday}> 
          <p><CalendarTodayIcon />Fecha de nacimiento</p>
          </Typography>
         </div>

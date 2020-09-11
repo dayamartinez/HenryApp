@@ -9,7 +9,7 @@ app.use(cors());
 //enviar mail para invitar a la HenryApp
 app.post('/send-email/:email', (req, res) => {
     const email = req.body.email;
-  
+
     console.log(req.body);
   const transporter = nodemailer.createTransport({
     service: 'gmail',

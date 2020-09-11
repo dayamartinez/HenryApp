@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {addUser} from '../../actions/user.js';
 import {connect} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 65-67) me tiraban error
@@ -43,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function Register(props) {
+  const history = useHistory();
     const classes = useStyles();
     const [input,setInput]=useState({
         name:'',
@@ -54,6 +56,7 @@ export function Register(props) {
     const onSend = function(e){
       e.preventDefault();
       props.addUser(input)
+      history.push("/Home")
     }
 
     //MANEJO DE ONCHANGE()
