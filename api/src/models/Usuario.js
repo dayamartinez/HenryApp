@@ -1,6 +1,6 @@
 const { Sequelize, Op, Model, DataTypes } = require('sequelize');
 
-
+//SE CAMBIARON LOS MODELOS PARA PODER METER DATOS VACIOS!
 module.exports = (sequelize) => {
   sequelize.define('usuario', {
     name: {
@@ -26,17 +26,17 @@ module.exports = (sequelize) => {
 
     birthday: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
 
     address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
     country: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
 
     about: {
