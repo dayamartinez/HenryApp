@@ -1,7 +1,7 @@
-import axios from 'axios';
-const instance = axios.create({
-    withCredentials: true
-  })
+export const ADD_COHORT = 'ADD_COHORT'
+export const UPDATE_COHORT = 'UPDATE_COHORT'
+export const GET_COHORT_DETAIL = 'GET_COHORT_DETAIL'
+export const GET_COHORTS = 'GET_COHORTS'
 
 export function addCohort(cohort) {
   return function (dispatch) {

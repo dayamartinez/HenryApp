@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 const server = require('express').Router();
 const { Usuario } = require('../db.js');
+=======
+const app = require('express').Router();
+const { Sequelize } = require('sequelize');
+const { Usuario, Cohort } = require('../db.js');
+>>>>>>> master
 const {isAuthenticated,isAdmin} =require('./helpers')
 
 //rutas para ver todos los usuarios, modificar un usuario, borrar un usuario
 
 //se trae todos los usuarios
-server.get('/',isAuthenticated,isAdmin,(req,res,next) => {
+app.get('/users',isAuthenticated,isAdmin,(req,res,next) => {
     Usuario.findAll()
     .then( usuario => {
         res.status(200).send(usuario);
@@ -14,7 +20,7 @@ server.get('/',isAuthenticated,isAdmin,(req,res,next) => {
 
 
 //Busca un usuario por su ID
-server.get('/:id',isAuthenticated,isAdmin,(req,res,next) => {
+app.get('/users/:id',isAuthenticated,isAdmin,(req,res,next) => {
   Usuario.findByPk(req.params.id)
   .then(usuario => {
     if (!usuario) {
@@ -28,7 +34,7 @@ server.get('/:id',isAuthenticated,isAdmin,(req,res,next) => {
 
 
 //modifica un usuario para tener funciones de administrador
-server.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next) => {
+app.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next) => {
    Usuario.findByPk(req.params.id)
   .then ( function(usuario){
     usuario.rol = "admin";
@@ -39,7 +45,7 @@ server.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next) => {
 
 
 //borra un usuario (no lo borra de la base, sino que lo pasa a estado inactivo)
-server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
+app.delete('/users/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     Usuario.findByPk(req.params.id)
     .then(usuario => {
         if (!usuario){
@@ -54,4 +60,17 @@ server.delete('/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     })
 })
 
+<<<<<<< HEAD
 module.exports = server;
+=======
+
+//Lista todos los cohortes y se trae todos los usuarios de los cohortes
+app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
+  Cohort.findAll({
+  include: [{model: Usuario}]
+  })
+})
+
+
+module.exports = app;
+>>>>>>> master

@@ -1,16 +1,18 @@
+const {Usuario} = require ('../db')//SE IMPORTO LA DATABASE{SE MODIFICO EL MODELO PARA PODER CREAR USERS..}
 const express = require('express');
-const app = require('express').Router();
+const server = require('express').Router();
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Sequelize = require('sequelize');
 
-app.use(cors());
+//app.use(cors());
 
 //Creamos los usuarios en la BD
 
-app.post('/', (req, res, next) => {
-  usuario.create({
+server.post('/', (req, res, next) => {
+  console.log(req.body);
+  Usuario.create({
     name: req.body.name,
     lastName: req.body.lastName,
     birthday: req.body.birthday,
@@ -28,4 +30,4 @@ app.post('/', (req, res, next) => {
   .catch(next);
 })
 
-module.exports = app;
+module.exports = server;

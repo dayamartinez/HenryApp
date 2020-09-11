@@ -9,6 +9,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "material-ui-icons": "^1.0.0-beta.36",
     "passport": "^0.4.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -17,10 +18,12 @@
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
+    "recharts": "^1.8.5",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "typescript": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
