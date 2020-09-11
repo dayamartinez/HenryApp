@@ -1,4 +1,4 @@
-import {ADD_USER} from '../actions/user.js'
+import {ADD_USER, UPDATE_USER} from '../actions/user.js'
 
 const initialState ={
     user:{
@@ -9,6 +9,12 @@ const initialState ={
 
 export default function user (state = initialState, action){
     if (action.type === ADD_USER){
+        return {
+            ...state,
+            user: action.payload
+        }
+    }
+    if (action.type === UPDATE_USER){
         return {
             ...state,
             user: action.payload
