@@ -5,7 +5,7 @@ const initialState ={
         id: 0,
         isAdmin: false
     },
-    email: []
+    email: [] 
 }
 
 export default function user (state = initialState, action){
@@ -26,6 +26,6 @@ export default function user (state = initialState, action){
             ...state,
             email: action.payload
         }
-    }
+    } 
     return state;
 }
