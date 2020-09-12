@@ -13,7 +13,6 @@ app.post('/send-email/:email', (req, res) => {
     console.log(req.body);
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    host: 'smtp.ethereal.email',
     port: 587,
     secure: false,
     auth: {
@@ -34,7 +33,7 @@ const mailOptions = {
 
     transporter.sendMail(mailOptions, (err, info) => {
         if(err){
-            res.status(500).send(err.message)
+            res.status(500).send(err)
         } else {
             console.log("Email enviado")
             res.status(200).json(req.body)
@@ -47,10 +46,10 @@ const mailOptions = {
 app.post('/send-email/forgotPassword/:email', (req, res) => {
     const email = req.body.email;
   
-    console.log(req.body);
+    console.log(email);
+    console.log('hola')
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    host: 'smtp.ethereal.email',
     port: 587,
     secure: false,
     auth: {
@@ -70,8 +69,10 @@ const mailOptions = {
 }
 
     transporter.sendMail(mailOptions, (err, info) => {
+        console.log(email)
         if(err){
-            res.status(500).send(err.message)
+            console.log(err)
+            res.status(500).send(err)
         } else {
             console.log("Email enviado")
             res.status(200).json(req.body)
