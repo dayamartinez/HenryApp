@@ -10,11 +10,11 @@ import Settings from './components/Landing/User/Settings.js';
 // import {Redirect} from 'react-router';
 import Landing from './components/Landing/Landing.js';
 import Dashboard from './components/Admin/Dashboard.js';
-
-
+import theme from "./GlobalTheme.js"
+import {ThemeProvider} from "@material-ui/core"
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme = {theme}>
       <Route  exact path='/profile'component={Profile} />
       <Route  exact path='/profile/Settings'component={Settings} />
       <Route exact path='/'component={Landing} />
@@ -24,7 +24,7 @@ function App() {
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       
       <Route exact path='/admin'component={Dashboard} />
-    </div>
+    </ThemeProvider>
   )
 }
 // const mapStateToProps = state => {
