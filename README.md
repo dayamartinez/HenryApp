@@ -42,6 +42,10 @@ PASSWORD= Henry123App
 
 *Passport: para la implementación ir a hhtp://npmjs.com/package/passport
 
+Para ingresar a Elephant DB:
+universoverde.henry@gmail.com 
+Password: HenryAppG1
+
 
 
 
