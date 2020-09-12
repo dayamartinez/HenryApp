@@ -55,7 +55,6 @@ app.delete('/users/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     })
 })
 
-
 //Lista todos los cohortes y se trae todos los usuarios de los cohortes
 app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
   Cohort.findAll({
@@ -63,5 +62,4 @@ app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
   })
 })
 
-
-module.exports = server;
+module.exports = app;
