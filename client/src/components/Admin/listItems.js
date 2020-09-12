@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -54,7 +56,9 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupAddIcon/>
       </ListItemIcon>
+      <Link to='/admin/createCohort'>
       <ListItemText primary="Crear Cohorte" />
+      </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>

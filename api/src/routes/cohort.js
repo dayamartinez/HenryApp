@@ -40,11 +40,7 @@ server.post('/create',  (req, res) => {
               cohort.about = about || cohort.about
   
               cohort.save().then(cohort => {
-                  res.status(201).json({
-            success: true,
-            message: 'Cohorte modificado correctamente',
-            cohort
-          })
+                  res.status(201).send(cohort)
               })
           })
           .catch(() => res.status(400).json({
@@ -84,5 +80,19 @@ server.post('/create',  (req, res) => {
        })
       )
   })
-  
+
+  //Elimina un cohort 
+  server.delete('/:id', (req, res) => {
+    Cohort.findByPk(req.params.id)
+		.then(cohort => {
+			cohort.destroy().then(() => {
+				res.status(200).json(cohort)
+			})
+		})
+		.catch(() => res.status(404).json({
+      error: true,
+      message: 'el id no es valido'
+      })
+    )
+  })
   module.exports = server;
