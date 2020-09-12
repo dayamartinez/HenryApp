@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,19 +12,9 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-/*
-
-este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 71-73) me tiraban error
-
-*/
-export function Copyright() {
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        <a href="https://www.soyhenry.com">Henry!</a>
-      </Typography>
-    );
-  } 
+import {ForgotPass} from '../../actions/user.js';
+import {connect} from 'react-redux';
+ 
   
   //LOS ESTILOS DEL FORMULARIO SETEADOS
   const useStyles = makeStyles((theme) => ({
@@ -49,21 +39,28 @@ export function Copyright() {
   
 
   //LOGIN PRINCIPAL DE LA PAGINA!
-  export  default function Login() {
+  export function ForgotPassword(props) {
     
     const classes = useStyles();
-    const [input,setInput]=React.useState({
-      email:'',
-      password:''
-    });
+    const [email, setMail]= useState({
+        email: '',
+    })
 
-    //MANEJO DE ONCHANGE()
-    const handleInputChange = function(e) {
-      setInput({
-        ...input,
-        [e.target.name]:e.target.value
-      })
-    }
+
+      const onSend =  async (e) =>{
+        e.preventDefault();
+        props.ForgotPass(email)
+      }
+  
+      //MANEJO DE ONCHANGE()
+      const handleInputChange = function(e) {
+        setMail({
+            ...email,
+          [e.target.name]:e.target.value
+        })
+      }
+
+    
 
     //COMPONENTE DE MATERIAL UI
     return (
@@ -74,7 +71,7 @@ export function Copyright() {
             <LockOutlinedIcon />
           </Avatar> */}
           <Typography component="h1" variant="h5">
-            Sign in
+            Ingrese su email
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -87,23 +84,8 @@ export function Copyright() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email.email}
               onChange={(e) => handleInputChange(e)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e)=>handleInputChange(e)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
@@ -111,29 +93,29 @@ export function Copyright() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e)=>onSend(e)}
             >
-              Sign In
+              Send
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link to="/forgotPassword" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to = "/register">
-                  <span>
-                  "Don't have an account? Sign Up"
-
-                  </span>
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
       </Container>
     );
   }
+
+  const mapStateToProps = state => {		
+    return {		
+      email: state.email,
+    }		
+  }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    ForgotPass: state => dispatch(ForgotPass(state))
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ForgotPassword)
