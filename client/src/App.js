@@ -14,13 +14,14 @@ import Dashboard from './components/Admin/Dashboard.js';
 
 import theme from "./GlobalTheme.js"
 import {ThemeProvider} from "@material-ui/core"
-
+import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 
 function App() {
   return (
     <ThemeProvider theme = {theme}>
-       <Route  exact path='/Home'component={Home} />
+      <Route path='/' component={NavBar} />
+      <Route  exact path='/Home'component={Home} />
       <Route  exact path='/profile'component={Profile} />
       <Route  exact path='/profile/Settings'component={Settings} />
       <Route exact path='/'component={Landing} />
@@ -29,8 +30,9 @@ function App() {
 
       <Route path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
-      
+
       <Route exact path='/admin'component={Dashboard} />
+
     </ThemeProvider>
   )
 }
