@@ -62,7 +62,4 @@ app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
   })
 })
 
-
-
 module.exports = app;
-
