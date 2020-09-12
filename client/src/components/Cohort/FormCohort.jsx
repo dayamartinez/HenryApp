@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
 import {addCohort, updateCohort} from '../../actions/cohort'
 import { useHistory } from 'react-router-dom'
+import swal from 'sweetalert'
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -21,11 +22,11 @@ import { useHistory } from 'react-router-dom'
       marginTop: theme.spacing(1),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+      margin: theme.spacing(2, 0, 0),
+      marginButton: theme.spacing(2)
     },
   }));
   
-
   export function FormCohort({ match, addCohort, updateCohort}) {
      let id = match.params.id
      const history = useHistory()
@@ -37,7 +38,6 @@ import { useHistory } from 'react-router-dom'
       about:''
       
     });
-
 
     useEffect(() =>{
       if(id){
@@ -71,8 +71,18 @@ import { useHistory } from 'react-router-dom'
           startDate: input.startDate,
           about: input.about
         }
-        id ? updateCohort(id, newCohort) : addCohort(newCohort)
-        history.push('/')
+        if(id){
+          updateCohort(id, newCohort)
+        }  
+         else {
+        addCohort(newCohort) 
+        swal('bien').then(res => {
+          if(res){
+            history.push("/")
+          } else{ return null}
+        })              
+             
+         }
 	}
 
     return (
@@ -148,7 +158,7 @@ import { useHistory } from 'react-router-dom'
               variant="contained"
               color="secondary"
               className={classes.submit}
-              onClick={() => history.replace('/') }
+              onClick={() => history.replace('/admin') }
             >
               Cancelar
             </Button>

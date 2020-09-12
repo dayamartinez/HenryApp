@@ -1,3 +1,4 @@
+import swal from 'sweetalert'
 export const ADD_COHORT = 'ADD_COHORT'
 export const UPDATE_COHORT = 'UPDATE_COHORT'
 export const GET_COHORT_DETAIL = 'GET_COHORT_DETAIL'
@@ -15,12 +16,13 @@ export function addCohort(cohort) {
       body: JSON.stringify(cohort),
     })
       .then(res => res.json())
-      .then(cohort => {
-        dispatch({
+      .then(data => {
+           dispatch({
           type: 'ADD_COHORT',
-          payload: cohort,
-        })
+          payload: data.cohort,
+        })        
       })
+      .catch(err => swal(err, '', 'error'))
   }
 }
 
@@ -37,8 +39,9 @@ export function updateCohort(id, cohort) {
         dispatch({
           type: 'UPDATE_COHORT',
           payload: res.cohort,
-        })      
+        })   
     })
+    .catch(err => swal(err, '', 'error'))
   }
 }
 

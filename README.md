@@ -35,6 +35,18 @@ useEffect( () => {
 *Se crea el front para la página de HenryApp. Se utiliza https://marvelapp.com/ para hacerlo.
 *Por otra parte, vamos a utilizar https://freefrontend.com/css-fire-animation/ para darle animación al cohete.
 
-* Se creó la dirección de la app para enviar mails.
-mail:  henryAppGrupo1@gmail.com
-pwd:   webft03HAG1
+12/09/2020
+*Se cambió la dirección de mail:
+mail:HenryAppteam1@gmail.com
+PASSWORD= Henry123App
+
+*Passport: para la implementación ir a hhtp://npmjs.com/package/passport
+
+Para ingresar a Elephant DB:
+universoverde.henry@gmail.com 
+Password: HenryAppG01
+
+
+
+
+

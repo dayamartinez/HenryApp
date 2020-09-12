@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles, unstable_createMuiStrictModeTheme } from '@material-ui/core/styles';
+import { makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {connect} from 'react-redux';
 import HenryIcon from '../../../images/henryUserIcon.jpg'
