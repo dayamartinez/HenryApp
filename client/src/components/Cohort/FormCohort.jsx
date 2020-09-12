@@ -59,7 +59,7 @@ import swal from 'sweetalert'
                 about: cohort.about  
             })
       }).catch()  
-      } else { history.replace('/admin')}  
+      }  
   }, [])
 
     const handleInputChange = function(e) {
