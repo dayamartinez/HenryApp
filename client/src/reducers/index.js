@@ -1,13 +1,7 @@
 import {combineReducers} from 'redux';
 import user from './users'
-
-/*
-Hay que crear un archivo para cada estado a modificar
- */
-// const initialState = {
-//     algo: "algo"
-// };
+import cohort from './cohort.js'
 
 export default combineReducers({
-    user,
+    user, cohort
 }) 
