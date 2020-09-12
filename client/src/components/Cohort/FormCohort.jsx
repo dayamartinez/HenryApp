@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
-import {addCohort, updateCohort, getCohortDetail} from '../../actions/cohort'
+import {addCohort, updateCohort} from '../../actions/cohort'
 import { useHistory } from 'react-router-dom'
 
   const useStyles = makeStyles((theme) => ({
@@ -26,7 +26,7 @@ import { useHistory } from 'react-router-dom'
   }));
   
 
-  export function FormCohort({ match, addCohort, updateCohort, getCohortDetail}) {
+  export function FormCohort({ match, addCohort, updateCohort}) {
      let id = match.params.id
      const history = useHistory()
 
@@ -161,8 +161,7 @@ import { useHistory } from 'react-router-dom'
   const mapDispatchToProps = dispatch => { 
     return {
       addCohort: (cohort) => dispatch(addCohort(cohort)),
-      updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort)),
-      getCohortDetail: (id) => dispatch(getCohortDetail(id))
+      updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort))
     }
   }
   export default connect(null, mapDispatchToProps)(FormCohort)
