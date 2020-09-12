@@ -16,8 +16,8 @@ function App() {
       <Route exact path='/'component={Landing} />
       <Route exact path = '/register' component={Register}/>
 
-      <Route path='/admin/createCohort' render={() => <Cohort />} />
-      <Route path='/cohort/:cohortId' render={({match}) => <Cohort  match={match} />} />
+      <Route path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
+      <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       
       <Route exact path='/admin'component={Dashboard} />
     </div>

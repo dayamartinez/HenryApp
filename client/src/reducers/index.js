@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import user from './users'
-import cohorts from './cohort'
+import cohort from './cohort.js'
 
 export default combineReducers({
-    user, cohorts
+    user, cohort
 }) 

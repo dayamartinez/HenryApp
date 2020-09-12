@@ -5,7 +5,7 @@ const initialState = {
     cohortDetail: {}
 };
 
-export default function cohorts(state = initialState, action) {
+export default function cohort(state = initialState, action) {
     switch (action.type) {
         case ADD_COHORT:
             return {

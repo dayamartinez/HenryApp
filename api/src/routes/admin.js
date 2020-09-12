@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-const server = require('express').Router();
-const { Usuario } = require('../db.js');
-=======
 const app = require('express').Router();
 const { Sequelize } = require('sequelize');
 const { Usuario, Cohort } = require('../db.js');
->>>>>>> master
 const {isAuthenticated,isAdmin} =require('./helpers')
 
 //rutas para ver todos los usuarios, modificar un usuario, borrar un usuario
@@ -60,10 +55,6 @@ app.delete('/users/:id',isAuthenticated,isAdmin,(req,res,next)=>{
     })
 })
 
-<<<<<<< HEAD
-module.exports = server;
-=======
-
 //Lista todos los cohortes y se trae todos los usuarios de los cohortes
 app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
   Cohort.findAll({
@@ -72,5 +63,6 @@ app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
 })
 
 
+
 module.exports = app;
->>>>>>> master
+

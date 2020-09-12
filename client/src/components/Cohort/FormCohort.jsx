@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
 import {addCohort, updateCohort, getCohortDetail} from '../../actions/cohort'
+import { useHistory } from 'react-router-dom'
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -25,28 +26,36 @@ import {addCohort, updateCohort, getCohortDetail} from '../../actions/cohort'
   }));
   
 
-  export function FormCohort({ match, addCohort, updateCohort}) {
-     let id = match
+  export function FormCohort({ match, addCohort, updateCohort, getCohortDetail}) {
+     let id = match.params.id
+     const history = useHistory()
 
     const classes = useStyles();
-   // const [students, setStudents] = useState([])
     const [input, setInput]= useState({
       name:'',
-      about:'' // necesita una fecha de inicio
+      startDate: '',
+      about:''
+      
     });
 
+
     useEffect(() =>{
-        if(id){
-            getCohortDetail(id)
-            .then(cohort => {
+      if(id){
+          fetch(`http://localhost:3001/cohort/${id}`,
+           {credentials: 'include'})
+           .then(res => {
+            return res.json()
+          })
+          .then(cohort => {
             setInput({
-            ...input,
-            name: cohort.name,
-            about: cohort.about 
-            })   
-        })  
-        }  
-    }, [id, input])
+              ...input,
+                name: cohort.name,
+                startDate: cohort.startDate,
+                about: cohort.about  
+            })
+      }).catch()  
+      }  
+  }, [])
 
     const handleInputChange = function(e) {
       setInput({
@@ -57,17 +66,27 @@ import {addCohort, updateCohort, getCohortDetail} from '../../actions/cohort'
 
     const handleSubmit = function (e) {
         e.preventDefault()
-        id ? updateCohort(id, input.name, input.about) : addCohort(input)
+        const newCohort = {
+          name: input.name,
+          startDate: input.startDate,
+          about: input.about
+        }
+        id ? updateCohort(id, newCohort) : addCohort(newCohort)
+        history.push('/')
 	}
 
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-        
-          <Typography component="h1" variant="h5">
+        { id ? 
+        <Typography component="h1" variant="h5">
+        Cohorte
+      </Typography>:
+        <Typography component="h1" variant="h5">
             Nuevo Cohorte
-          </Typography>
+          </Typography>  
+        }
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
@@ -82,12 +101,22 @@ import {addCohort, updateCohort, getCohortDetail} from '../../actions/cohort'
               onChange={handleInputChange}
             />
             <TextField
+            type="date"
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="startDate"
+            id="startDate"
+            value={input.startDate}
+            onChange={handleInputChange}
+            required
+            />
+            <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               name="about"
-              label="Fecha de Inicio"
+              label="Acerca del Cohorte"
               type="about"
               id="about"
               value={input.about}
@@ -113,6 +142,16 @@ import {addCohort, updateCohort, getCohortDetail} from '../../actions/cohort'
             >
               Crear
             </Button>}
+            <Button
+              type="onClick"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              onClick={() => history.replace('/') }
+            >
+              Cancelar
+            </Button>
           </form>
         </div>
       </Container>
@@ -122,7 +161,7 @@ import {addCohort, updateCohort, getCohortDetail} from '../../actions/cohort'
   const mapDispatchToProps = dispatch => { 
     return {
       addCohort: (cohort) => dispatch(addCohort(cohort)),
-      updateCohort: (id, nameCoh, date) => dispatch(updateCohort(id, nameCoh, date)),
+      updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort)),
       getCohortDetail: (id) => dispatch(getCohortDetail(id))
     }
   }

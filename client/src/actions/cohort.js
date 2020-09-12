@@ -24,7 +24,7 @@ export function addCohort(cohort) {
   }
 }
 
-export function updateCohort(id, nameCoh, date) {
+export function updateCohort(id, cohort) {
   return function (dispatch) {
     return fetch(`http://localhost:3001/cohort/update/${id}`, {
       method: 'PUT',
@@ -32,7 +32,7 @@ export function updateCohort(id, nameCoh, date) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({name: nameCoh, about: date}),
+      body: JSON.stringify(cohort),
     }).then( res => {
         dispatch({
           type: 'UPDATE_COHORT',
