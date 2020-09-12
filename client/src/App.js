@@ -10,7 +10,7 @@ import Settings from './components/Landing/User/Settings.js';
 // import {Redirect} from 'react-router';
 import Landing from './components/Landing/Landing.js';
 import forgotPassword from './components/Landing/forgotPassword.js';
-import Dashboard from './components/Admin/Dashboard.js';
+import Contenedor from './components/Admin/Dashboard/Contenedor.js';
 
 import theme from "./GlobalTheme.js"
 import {ThemeProvider} from "@material-ui/core"
@@ -31,7 +31,7 @@ function App() {
       <Route path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
 
-      <Route exact path='/admin'component={Dashboard} />
+      <Route exact path='/admin'component={Contenedor} />
 
     </ThemeProvider>
   )
