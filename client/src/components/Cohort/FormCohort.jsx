@@ -6,8 +6,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
-import {addCohort, updateCohort} from '../../actions/cohort'
-import { useHistory } from 'react-router-dom'
+import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
+import {useHistory } from 'react-router-dom'
+import swal from 'sweetalert'
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -21,12 +22,17 @@ import { useHistory } from 'react-router-dom'
       marginTop: theme.spacing(1),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+      margin: theme.spacing(2, 0, 0),
+      marginButton: theme.spacing(2)
     },
+    delete: {
+      backgroundColor: 'darkgray',
+      color: 'white',
+      marginBorder: '0px'     
+    }
   }));
   
-
-  export function FormCohort({ match, addCohort, updateCohort}) {
+  export function FormCohort({ match, addCohort, updateCohort, removeCohort}) {
      let id = match.params.id
      const history = useHistory()
 
@@ -37,7 +43,6 @@ import { useHistory } from 'react-router-dom'
       about:''
       
     });
-
 
     useEffect(() =>{
       if(id){
@@ -54,7 +59,7 @@ import { useHistory } from 'react-router-dom'
                 about: cohort.about  
             })
       }).catch()  
-      }  
+      } 
   }, [])
 
     const handleInputChange = function(e) {
@@ -66,18 +71,17 @@ import { useHistory } from 'react-router-dom'
 
     const handleSubmit = function (e) {
         e.preventDefault()
-        const newCohort = {
+        const cohort = {
           name: input.name,
           startDate: input.startDate,
           about: input.about
         }
-        id ? updateCohort(id, newCohort) : addCohort(newCohort)
-        history.push('/')
+       id ? updateCohort(id, cohort) : addCohort(cohort)      
 	}
 
     return (
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+       <CssBaseline />
         <div className={classes.paper}>
         { id ? 
         <Typography component="h1" variant="h5">
@@ -143,16 +147,36 @@ import { useHistory } from 'react-router-dom'
               Crear
             </Button>}
             <Button
-              type="onClick"
               fullWidth
               variant="contained"
-              color="secondary"
               className={classes.submit}
-              onClick={() => history.replace('/') }
+              onClick={() => history.replace('/admin') }
             >
               Cancelar
             </Button>
           </form>
+           { id ?
+             <div>
+             <hr/>
+             <Button className={classes.delete}
+             onClick={() => {
+              swal({
+                title: 'Eliminar',
+                text: 'Seguro desea eliminar el cohorte?',
+                icon: 'warning',
+                buttons: ['No', 'Si'],
+                dangerMode: true,
+              }).then(res =>{
+                if(res){
+                   removeCohort(id)
+                   swal('Se elimino el cohorte correctamente', '', 'success')
+                   .then(() => history.replace('/admin'))    
+                } else {
+                  return null}
+              })
+            }}
+             > Eliminar Cohorte </Button>
+           </div> : null} 
         </div>
       </Container>
     )
@@ -161,7 +185,8 @@ import { useHistory } from 'react-router-dom'
   const mapDispatchToProps = dispatch => { 
     return {
       addCohort: (cohort) => dispatch(addCohort(cohort)),
-      updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort))
+      updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort)),
+      removeCohort: (id) => dispatch(removeCohort(id))
     }
   }
   export default connect(null, mapDispatchToProps)(FormCohort)
