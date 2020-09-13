@@ -3,12 +3,69 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const passport = require ('passport');
+const bcrypt = require('bcrypt')
+var Strategy = require ('passport-local').Strategy;
+
 //CORS IMPORTADO AL APP!
 //const cors = require("cors");
 
-require('./db.js');
+const db = require('./db.js');
+
+passport.use(new Strategy(
+    function(username, password, done){
+    
+      //VERIFICA EL USER EN LA BASE DE DATOS
+      db.Usuario.findOne({
+        where:{
+          email: username
+         //   activo: true POR AHORA NOS TRAIGA TODOS!
+        }
+      })
+      .then((user) => {
+        //SINO ENCUENTRA USUARIO VUELVE FALSE
+        if(!user){
+          return done(null,false);
+        }
+
+        //COMPARA LA PASSWORD CON EL HASH DE BCRYPT
+        bcrypt.compare(password, user.password, function(err, res) {
+          if (res){
+            return done(null, user);
+          } else {
+            return done(null, false)
+          }
+        })
+    })
+    .catch(err => {
+    console.log(err)
+    return done(err);
+    })
+}))
+  
+    passport.serializeUser(function(user, done){
+        done(null, user.id);
+      });
+    
+    passport.deserializeUser(function(id, done){
+    db.Usuario.findByPk(id)
+    .then(user => {
+        done(null, user);
+    })
+    .catch(err => {
+        return done(err);
+    })
+    });
+
 
 const server = express();
+
+//SIN ESTA FUNCION EL SESSION NOSE LEVANTA!!!
+server.use(require('express-session')({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+  }));
 
 server.name = 'API';
 
@@ -26,7 +83,41 @@ res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
 next();
 });
 
+//SE CREA LA SESSION!
+server.use(passport.initialize());
+server.use(passport.session());
+
+//COMENTADO SOLO MUESTRA DATOS EN EL BACK!!
+// server.use((req, res, next) => {
+//     console.log(req.session);
+//     console.log(req.user);
+//     next();
+//   });
+  
+
 server.use('/', routes);
+
+//ESTA FUNCION ES PARA INICIAR SESION!!
+server.post('/login',
+  passport.authenticate('local',{failureRedirect: '/login'}),
+  function(req, res) {
+    res.status(200).send("Sesion iniciada!");
+  });
+
+  server.get('/logout', function(req, res){
+    req.logOut();
+    if (req.session) {
+      req.session.destroy((err) => {
+        if (err) {
+          next(err)
+        } else {
+          res.clearCookie('connect.sid')
+          res.status(200).send("Deslogueado!")
+          //res.redirect('/')
+        }
+      })
+    }
+  });
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
