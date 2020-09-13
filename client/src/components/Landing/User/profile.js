@@ -1,7 +1,11 @@
 import React,{useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+<<<<<<< HEAD
 import { makeStyles, unstable_createMuiStrictModeTheme } from '@material-ui/core/styles';
+=======
+import { makeStyles} from '@material-ui/core/styles';
+>>>>>>> ac358832b58bf35ed33bcecb00527d9867449b39
 import Container from '@material-ui/core/Container';
 import {connect} from 'react-redux';
 import HenryIcon from '../../../images/henryUserIcon.jpg'
