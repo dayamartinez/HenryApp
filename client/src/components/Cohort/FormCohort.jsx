@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
+
 import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
@@ -33,6 +34,7 @@ import swal from 'sweetalert'
   }));
   
   export function FormCohort({ match, addCohort, updateCohort, removeCohort}) {
+
      let id = match.params.id
      const history = useHistory()
 
@@ -59,7 +61,8 @@ import swal from 'sweetalert'
                 about: cohort.about  
             })
       }).catch()  
-      } 
+      }  
+
   }, [])
 
     const handleInputChange = function(e) {
@@ -76,7 +79,7 @@ import swal from 'sweetalert'
           startDate: input.startDate,
           about: input.about
         }
-       id ? updateCohort(id, cohort) : addCohort(cohort)      
+       id ? updateCohort(id, cohort) : addCohort(cohort)
 	}
 
     return (
