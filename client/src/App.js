@@ -29,21 +29,11 @@ function App() {
       <Route exact path='/'component={Landing} />
       <Route  exact path='/forgotPassword'component={forgotPassword} />
       <Route exact path = '/register' component={Register}/>
-
       <Route path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
-
-
       <Route exact path='/admin'component={Contenedor} />
-
       <Route path='/students' render={() => <Students/>} />
       <Route path='/cohorts' render={() => <AllCohorts/>} />
-      
-
-      <Route exact path='/admin' component={Dashboard} />
-
-      <Route exact path='/admin'component={Dashboard} />
-
     </ThemeProvider>
   )
 }
@@ -52,6 +42,10 @@ function App() {
 //     algo: state.algo
 //   }
 // }
+
+{/* <Route exact path='/admin' component={Dashboard} />
+
+<Route exact path='/admin'component={Dashboard} /> */}
 
 
 export default connect(null, {})(App);
