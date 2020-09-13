@@ -26,6 +26,6 @@ export default function user (state = initialState, action){
             ...state,
             email: action.payload
         }
-    } 
+    }
     return state;
 }
