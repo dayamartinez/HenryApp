@@ -47,6 +47,16 @@ universoverde.henry@gmail.com
 Password: HenryAppG01
 
 
+* 11/09/2020 se sube las rutas de cohortes put/post/get junto al form de crear cohortes
+y modificar, con las  funciones. Se crea actions y reducer de este.
+se conecta al dashboard el componente crear cohortes
 
+* 12/09/2020 -se crea ruta put para asignar cohortes a un estudiante,
+-se crea ruta put para asignar grupos a un estudiante,
+-se crea ruta delete de cohortes
+-Se conecta al dashboard funcion de ver todos los estudiantes y todos los cohortes
+-el componente modificar cohorte tiene la opcion de eliminar
+-se crea componentes dque muestran todos los estudiantes (falta darle estilo adecuado)
+-se crea componente todos los cohortes(falta darle estilo adecuado)
 
 
