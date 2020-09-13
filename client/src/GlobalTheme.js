@@ -1,9 +1,13 @@
 import {createMuiTheme} from "@material-ui/core/styles"
-import {yellow} from "@material-ui/core/colors"
+import {yellow, grey} from "@material-ui/core/colors"
+
 const theme = createMuiTheme({
     palette: {
         primary:{
-            main: yellow[600]
+          main: yellow[600]
+        },
+        secondary:{
+          main:grey[900]
         }
     }
 })
