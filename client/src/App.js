@@ -6,6 +6,8 @@ import Register from './components/Landing/Register.js'
 import Cohort from './components/Cohort/FormCohort.jsx'
 import Profile from './components/Landing/User/profile.js';
 import Settings from './components/Landing/User/Settings.js';
+import Students from './components/Cohort/Students.jsx'
+import AllCohorts from './components/Cohort/AllCohorts'
 
 // import {Redirect} from 'react-router';
 import Landing from './components/Landing/Landing.js';
@@ -29,8 +31,14 @@ function App() {
 
       <Route path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
+      <Route path='/students' render={() => <Students/>} />
+      <Route path='/cohorts' render={() => <AllCohorts/>} />
       
+<<<<<<< HEAD
+      <Route exact path='/admin' component={Dashboard} />
+=======
       <Route exact path='/admin'component={Dashboard} />
+>>>>>>> master
     </ThemeProvider>
   )
 }

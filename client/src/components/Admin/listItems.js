@@ -26,7 +26,10 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupIcon />
       </ListItemIcon>
+      <Link to='/students'>
       <ListItemText primary="Alumnos" />
+      </Link>
+      
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -44,7 +47,10 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupWorkIcon />
       </ListItemIcon>
-      <ListItemText primary="Cohortes" />
+      <Link to='/cohorts' >
+        <ListItemText primary="Cohortes" />
+        </Link>
+      
     </ListItem>
     <ListItem button>
       <ListItemIcon>
