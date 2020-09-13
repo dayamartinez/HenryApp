@@ -21,8 +21,12 @@ export function addCohort(cohort) {
            dispatch({
           type: 'ADD_COHORT',
           payload: data.cohort,
+<<<<<<< HEAD
         })
        swal(data.message)         
+=======
+        })        
+>>>>>>> master
       })
       .catch(err => swal(err, '', 'error'))
   }
@@ -45,10 +49,15 @@ export function updateCohort(id, cohort) {
         dispatch({
           type: 'UPDATE_COHORT',
           payload: res.cohort,
+<<<<<<< HEAD
         })
         swal('Cohorte modificado correctamente','', 'success')
       }
+=======
+        })   
+>>>>>>> master
     })
+    .catch(err => swal(err, '', 'error'))
   }
 }
 

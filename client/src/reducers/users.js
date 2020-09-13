@@ -4,7 +4,11 @@ const initialState ={
     user:[{
         id: 0,
         isAdmin: false
+<<<<<<< HEAD
     }],
+=======
+    },
+>>>>>>> master
     email: []
 }
 

@@ -34,7 +34,11 @@ function App() {
       <Route path='/students' render={() => <Students/>} />
       <Route path='/cohorts' render={() => <AllCohorts/>} />
       
+<<<<<<< HEAD
       <Route exact path='/admin' component={Dashboard} />
+=======
+      <Route exact path='/admin'component={Dashboard} />
+>>>>>>> master
     </ThemeProvider>
   )
 }

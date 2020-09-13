@@ -6,8 +6,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
+<<<<<<< HEAD
 import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
+=======
+import {addCohort, updateCohort} from '../../actions/cohort'
+import { useHistory } from 'react-router-dom'
+>>>>>>> master
 import swal from 'sweetalert'
 
   const useStyles = makeStyles((theme) => ({
@@ -32,7 +37,11 @@ import swal from 'sweetalert'
     }
   }));
   
+<<<<<<< HEAD
   export function FormCohort({ match, addCohort, updateCohort, removeCohort}) {
+=======
+  export function FormCohort({ match, addCohort, updateCohort}) {
+>>>>>>> master
      let id = match.params.id
      const history = useHistory()
 
@@ -76,7 +85,22 @@ import swal from 'sweetalert'
           startDate: input.startDate,
           about: input.about
         }
+<<<<<<< HEAD
        id ? updateCohort(id, cohort) : addCohort(cohort)      
+=======
+        if(id){
+          updateCohort(id, newCohort)
+        }  
+         else {
+        addCohort(newCohort) 
+        swal('bien').then(res => {
+          if(res){
+            history.push("/")
+          } else{ return null}
+        })              
+             
+         }
+>>>>>>> master
 	}
 
     return (
