@@ -20,12 +20,12 @@ import Home from './components/Home/home.js';
 function App() {
   return (
     <ThemeProvider theme = {theme}>
-       <Route  exact path='/Home'component={Home} />
+      <Route  exact path='/Home'component={Home} />
       <Route  exact path='/profile'component={Profile} />
       <Route  exact path='/profile/Settings'component={Settings} />
-      <Route exact path='/'component={Landing} />
+      <Route  exact path='/'component={Landing} />
       <Route  exact path='/forgotPassword'component={forgotPassword} />
-      <Route exact path = '/register' component={Register}/>
+      <Route  exact path = '/register' component={Register}/>
 
       <Route path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
