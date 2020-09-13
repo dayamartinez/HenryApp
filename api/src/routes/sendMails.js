@@ -80,6 +80,46 @@ const mailOptions = {
     })
 });
 
+//enviar mail en caso de haber olvidado la contraseña
+
+app.post('/send-email/forgotPassword/:email', (req, res) => {
+    const email = req.body.email;
+  
+    console.log(req.body);
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.ethereal.email',
+    port: 587,
+    secure: false,
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+    },
+    tls: {
+        rejectUnauthorized: false
+      }
+})
+
+const mailOptions = {
+    from: "Remitente",
+    to: email,
+    subject: "Enviado desde HenryApp",
+    text: "Entre a este link para poder crear su nueva contraseña"
+}
+
+    transporter.sendMail(mailOptions, (err, info) => {
+        if(err){
+            res.status(500).send(err.message)
+        } else {
+            console.log("Email enviado")
+            res.status(200).json(req.body)
+        }
+    })
+});
+
+
+
+
 
 
 

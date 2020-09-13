@@ -7,7 +7,12 @@ const bcrypt = require("bcrypt");
 const Sequelize = require('sequelize');
 
 //app.use(cors());
-
+server.get('/', (req,res,next) => {
+  Usuario.findAll()
+  .then( usuario => {
+      res.status(200).send(usuario);
+  }).catch(next)
+})
 //Creamos los usuarios en la BD
 
 server.post('/', (req, res, next) => {
