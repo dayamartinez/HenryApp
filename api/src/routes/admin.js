@@ -6,7 +6,7 @@ const {isAuthenticated,isAdmin} =require('./helpers')
 //rutas para ver todos los usuarios, modificar un usuario, borrar un usuario
 
 //se trae todos los usuarios
-app.get('/users',isAuthenticated,isAdmin,(req,res,next) => {
+app.get('/users', (req,res,next) => {
     Usuario.findAll()
     .then( usuario => {
         res.status(200).send(usuario);
@@ -15,7 +15,7 @@ app.get('/users',isAuthenticated,isAdmin,(req,res,next) => {
 
 
 //Busca un usuario por su ID
-app.get('/users/:id',isAuthenticated,isAdmin,(req,res,next) => {
+app.get('/users/:id',(req,res,next) => {
   Usuario.findByPk(req.params.id)
   .then(usuario => {
     if (!usuario) {
@@ -37,7 +37,6 @@ app.put('/isAdmin/:id',isAuthenticated,isAdmin,(req,res,next) => {
     res.status(201).send("Este usuario ahora es administrador")
   })
 })
-
 
 //borra un usuario (no lo borra de la base, sino que lo pasa a estado inactivo)
 app.delete('/users/:id',isAuthenticated,isAdmin,(req,res,next)=>{
@@ -62,5 +61,28 @@ app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
   })
 })
 
+//ASIGNA UN COHORTE A UN USUARIO
+app.put('/setcohort/:id', (req,res)=> {
+  Usuario.findByPk(req.body.id)
+    .then(user => {
+     user,
+     user.cohortId = req.params.id
+
+     user.save().then(user => res.status(201).send(user))
+  })
+  .catch(err => res.status(404).send(err))
+})
+
+//asigna un grupo a un usuario
+app.put('/setgroup/:id', (req,res)=> {
+  Usuario.findByPk(req.body.id)
+    .then(user => {
+     user,
+     user.groupId = req.params.id
+
+     user.save().then(user => res.status(201).send(user))
+  })
+  .catch(err => res.status(404).send(err))
+})
 
 module.exports = app;

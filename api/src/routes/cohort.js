@@ -15,7 +15,9 @@ server.post('/create',  (req, res) => {
       Cohort.create({
           name: capName,
           startDate,
-          about    
+          about,
+         
+      include: [Usuario]
     }) 
       .then(cohort => {
           res.status(201).json({
@@ -72,7 +74,7 @@ server.post('/create',  (req, res) => {
   
   //Trae TODOS los cohortes 
   server.get('/', (req, res) => {
-    Cohort.findAll()
+    Cohort.findAll({include: [Usuario]})
       .then(cohorts => res.send(cohorts))
       .catch(() => res.status(400).json({
         error: true,
