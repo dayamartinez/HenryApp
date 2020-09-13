@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -24,7 +26,10 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupIcon />
       </ListItemIcon>
+      <Link to='/students'>
       <ListItemText primary="Alumnos" />
+      </Link>
+      
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -42,7 +47,10 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupWorkIcon />
       </ListItemIcon>
-      <ListItemText primary="Cohortes" />
+      <Link to='/cohorts' >
+        <ListItemText primary="Cohortes" />
+        </Link>
+      
     </ListItem>
     <ListItem button>
       <ListItemIcon>
@@ -54,7 +62,9 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupAddIcon/>
       </ListItemIcon>
+      <Link to='/admin/createCohort'>
       <ListItemText primary="Crear Cohorte" />
+      </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
