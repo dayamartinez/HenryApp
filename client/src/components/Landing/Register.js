@@ -8,13 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {addUser} from '../../actions/user.js';
 import {connect} from 'react-redux';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 65-67) me tiraban error
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function Register(props) {
-  const history = useHistory();
+  // const history = useHistory();
     const classes = useStyles();
     const [input,setInput]=useState({
         name:'',
@@ -55,8 +55,19 @@ export function Register(props) {
 
     const onSend = function(e){
       e.preventDefault();
-      props.addUser(input)
-      history.push("/Home")
+      console.log(input);
+      //pasar al modelo de user!
+      if (!input.name || !input.lastName){
+        alert ("completar nombre y apellido!")
+        return;
+      } else if (/\S+@\S+\.\S+/.test(input.email) && /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,}$/.test(input.password)){ 
+        props.addUser(input)
+      } else {
+        alert("USUARIO ERRADO")
+        return;
+      }
+      //props.addUser(input)
+      // history.push("/Home")
     }
 
     //MANEJO DE ONCHANGE()
@@ -71,9 +82,9 @@ export function Register(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}>
+        <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
-        </Avatar> */}
+        </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
@@ -81,11 +92,13 @@ export function Register(props) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                //error={input.name.length===0 ? true : false}
                 autoComplete="fname"
                 name="name"
                 variant="outlined"
                 required
                 fullWidth
+                //helperText={false ? "Este campo es requerido" : null}
                 id="firstName"
                 label="First Name"
                 autoFocus
@@ -106,6 +119,8 @@ export function Register(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+               // error={!/\S+@\S+\.\S+/.test(input.email) ? true : false}
+                //helperText={true ? "Debe ser un mail valido" : null}
                 variant="outlined"
                 required
                 fullWidth
