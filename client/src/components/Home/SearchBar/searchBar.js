@@ -14,33 +14,33 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
-    search: {
-        display: 'flex',
-        marginTop: '50px',
-        marginTop: '10px',
-        marginLeft: '130px'
+  search: {
+    display: 'flex',
+    marginTop: '-40px',
+    marginTop: '10px',
+    marginLeft: '90px'
+},
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+      background: 'dimgray',
+      width: '400px',
+      borderRadius: '20px',
+
     },
-      inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-          width: '20ch',
-          background: 'dimgray',
-          width: '400px',
-          borderRadius: '20px',
-          
-        },
-    },
-    searchIcon: {
-        display: 'flex',
-        position: 'absolute',
-        marginLeft: '15px',
-        zIndex: '10',
-        marginTop: '5px'
-    }
+},
+searchIcon: {
+    display: 'flex',
+    position: 'absolute',
+    marginLeft: '5px',
+    zIndex: '10',
+    marginTop: '-5px'
+}
 }));
 
 export default function SearchBar(props) {
