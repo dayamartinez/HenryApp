@@ -45,7 +45,7 @@ server.post('/', async (req, res, next) => {
     })
     .catch(next);
   } else {
-    res.status(400).send("Falta llenar un campo!")
+    res.status(500).send(err)
   }
 })
 

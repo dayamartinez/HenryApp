@@ -61,6 +61,7 @@ app.get('/cohortes',isAuthenticated,isAdmin,(req,res,next) => {
   })
 })
 
+
 //ASIGNA UN COHORTE A UN USUARIO
 app.put('/setcohort/:id', (req,res)=> {
   Usuario.findByPk(req.body.id)
@@ -84,5 +85,6 @@ app.put('/setgroup/:id', (req,res)=> {
   })
   .catch(err => res.status(404).send(err))
 })
+
 
 module.exports = app;

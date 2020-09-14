@@ -8,11 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-//import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import Axios from 'axios';
+import {setUser} from '../../actions/user.js';
+import {connect} from 'react-redux';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 71-73) me tiraban error
@@ -49,7 +51,7 @@ export function Copyright() {
   
 
   //LOGIN PRINCIPAL DE LA PAGINA!
-  export  default function Login() {
+  export function Login(props) {
     
     const classes = useStyles();
     const [input,setInput]=React.useState({
@@ -65,14 +67,21 @@ export function Copyright() {
       })
     }
 
+    const loginUser = function(e){
+      e.preventDefault();
+      Axios.post('http://localhost:3001/login',input,{withCredentials:true})
+      .then(resp=>{
+        props.setUser(resp)
+      })
+    }
     //COMPONENTE DE MATERIAL UI
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          {/* <Avatar className={classes.avatar}>
+          <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
-          </Avatar> */}
+          </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -84,7 +93,7 @@ export function Copyright() {
               fullWidth
               id="email"
               label="Email Address"
-              name="email"
+              name="username"
               autoComplete="email"
               autoFocus
               onChange={(e) => handleInputChange(e)}
@@ -111,6 +120,7 @@ export function Copyright() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e)=>loginUser(e)}
             >
               Sign In
             </Button>
@@ -137,3 +147,17 @@ export function Copyright() {
       </Container>
     );
   }
+
+  const mapStateToProps = state => {		
+    return {		
+      user: state.user,
+    }		
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      setUser: (resp)=>dispatch(setUser(resp)),
+    }
+  }
+      
+  export default connect(mapStateToProps, mapDispatchToProps)(Login);  
