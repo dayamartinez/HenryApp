@@ -40,7 +40,8 @@ import {connect} from 'react-redux';
 
   //LOGIN PRINCIPAL DE LA PAGINA!
   export function ForgotPassword(props) {
-    
+
+    const [errors, setErrors] = useState({});
     const classes = useStyles();
     const [email, setMail]= useState({
         email: '',
@@ -58,6 +59,10 @@ import {connect} from 'react-redux';
             ...email,
           [e.target.name]:e.target.value
         })
+        setErrors(validate({
+          ...email,
+          [e.target.name]: e.target.value,
+        }));
       }
 
     
@@ -75,6 +80,8 @@ import {connect} from 'react-redux';
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              error={errors.email}
+              helperText={errors.email}
               variant="outlined"
               margin="normal"
               required
@@ -114,6 +121,16 @@ function mapDispatchToProps(dispatch) {
     ForgotPass: state => dispatch(ForgotPass(state))
   };
 }
+//el primer email es el state [email, setEmail]
+export function validate(email) {
+  let errors = {};
+  if (!email.email) {
+    errors.email = 'Por favor introduzca su email';
+  } else if (!/\S+@\S+\.\S+/.test(email.email)) {
+    errors.email = 'El email es invalido';
+  }
+  return errors;
+};
 
 export default connect(
   mapStateToProps,
