@@ -41,7 +41,10 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupIcon/>
       </ListItemIcon>
-      <ListItemText primary="PMs" />
+      <Link to='/pms'>
+       <ListItemText primary="PMs" />
+      </Link>
+     
     </ListItem>
     <ListItem button>
       <ListItemIcon>
