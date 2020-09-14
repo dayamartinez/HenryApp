@@ -85,4 +85,29 @@ app.put('/setgroup/:id', (req,res)=> {
   .catch(err => res.status(404).send(err))
 })
 
+//ASIGNA UN COHORTE A UN USUARIO
+app.put('/setcohort/:id', (req,res)=> {
+  Usuario.findByPk(req.body.id)
+    .then(user => {
+     user,
+     user.cohortId = req.params.id
+
+     user.save().then(user => res.status(201).send(user))
+  })
+  .catch(err => res.status(404).send(err))
+})
+
+//asigna un grupo a un usuario
+app.put('/setgroup/:id', (req,res)=> {
+  Usuario.findByPk(req.body.id)
+    .then(user => {
+     user,
+     user.groupId = req.params.id
+
+     user.save().then(user => res.status(201).send(user))
+  })
+  .catch(err => res.status(404).send(err))
+})
+
+
 module.exports = app;
