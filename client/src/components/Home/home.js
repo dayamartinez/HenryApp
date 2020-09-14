@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     tabcontainer: {
         justifyContent: 'flex-start',
         height: '50px',
-        marginTop: '50px'
     }
   }));
 

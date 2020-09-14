@@ -88,13 +88,13 @@ export function Register(props) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                // error={errors.name}
+                error={errors.name}
                 //error={input.name.length===0 ? true : false}
                 autoComplete="fname"
                 name="name"
                 variant="outlined"
                 required
-                // helperText={errors.name}
+                helperText={errors.name}
                 fullWidth
                 //helperText={false ? "Este campo es requerido" : null}
                 id="firstName"
