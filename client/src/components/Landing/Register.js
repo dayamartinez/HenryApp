@@ -72,7 +72,7 @@ export function Register(props) {
         }));
       }
 
-      
+    
       const [errors, setErrors] = useState({});
 
   return (
