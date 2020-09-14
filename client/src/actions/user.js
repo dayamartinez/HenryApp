@@ -2,6 +2,7 @@ import axios from 'axios';
 export const ADD_USER = 'ADD_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
+export const SET_USER = 'SET_USER';
 // const instance = axios.create({
 //     withCredentials: true
 //   })
@@ -20,6 +21,12 @@ export function addUser(data){
         })
         
     }
+}
+
+//LOGUEAR USUARIO!!
+export function setUser (user){
+    console.log(user);
+    return {type:SET_USER, payload:user}
 }
 
 
