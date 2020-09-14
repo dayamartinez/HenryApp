@@ -11,7 +11,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 export const mainListItems = (
@@ -20,13 +19,15 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
+      <Link to='/admin'>
       <ListItemText primary="Dashboard" />
+      </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <GroupIcon />
       </ListItemIcon>
-      <Link to='/students'>
+      <Link to='/admin/students'>
       <ListItemText primary="Alumnos" />
       </Link>
       
@@ -47,7 +48,7 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupWorkIcon />
       </ListItemIcon>
-      <Link to='/cohorts' >
+      <Link to='/admin/cohorts' >
         <ListItemText primary="Cohortes" />
         </Link>
       
