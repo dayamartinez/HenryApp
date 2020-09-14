@@ -46,6 +46,7 @@ Para ingresar a Elephant DB:
 universoverde.henry@gmail.com 
 Password: HenryAppG01
 
+
 * 11/09/2020 se sube las rutas de cohortes put/post/get junto al form de crear cohortes
 y modificar, con las  funciones. Se crea actions y reducer de este.
 se conecta al dashboard el componente crear cohortes
@@ -57,4 +58,7 @@ se conecta al dashboard el componente crear cohortes
 -el componente modificar cohorte tiene la opcion de eliminar
 -se crea componentes dque muestran todos los estudiantes (falta darle estilo adecuado)
 -se crea componente todos los cohortes(falta darle estilo adecuado)
+
+*13/09/2020 se crean rutas: put para promover a pm, get para ver todos los pm y para ver un pm. componente conectado al dashboad(falta dar estilo adecuado)(falta reducer para ver un pm en particular). Se crea rutas put para asignar un usuario como estudiante, get para traer todos los estudantes y get para traer uno en particular. 
+
 

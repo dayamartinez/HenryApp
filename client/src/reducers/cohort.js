@@ -1,4 +1,4 @@
-import {ADD_COHORT, UPDATE_COHORT, GET_COHORT_DETAIL, GET_COHORTS} from '../actions/cohort.js'
+import {ADD_COHORT, UPDATE_COHORT, GET_COHORT_DETAIL, GET_COHORTS, REMOVE_COHORT} from '../actions/cohort.js'
 
 const initialState = {
     cohorts: [],
@@ -26,6 +26,11 @@ export default function cohort(state = initialState, action) {
             return {
                 ...state,
                 cohortDetail: action.payload
+            }
+        case REMOVE_COHORT:
+            return {
+                ...state,
+                cohorts: state.cohorts.filter(cohort => cohort.id !== action.payload) 
             }
             default:
                 return state

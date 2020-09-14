@@ -1,8 +1,8 @@
 const server = require('express').Router();
-const { Usuario, Cohort } = require('../db.js');
+const { Usuario, Group } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
-//Crear cohorte
+//Creamos un grupo
 server.post('/create',  (req, res) => {
     const { name, startDate, about} = req.body
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
@@ -12,18 +12,16 @@ server.post('/create',  (req, res) => {
               message: 'Debe enviar los campos requeridos'
           })
       }
-      Cohort.create({
+      Group.create({
           name: capName,
           startDate,
-          about,
-         
-      include: [Usuario]
+          about    
     }) 
-      .then(cohort => {
+      .then(group => {
           res.status(201).json({
               success: true,
-              message: 'Nuevo Cohorte creado correctamente',
-              cohort
+              message: 'Nuevo grupo creado correctamente',
+              group
           })
       })
       .catch( err => {
@@ -31,18 +29,22 @@ server.post('/create',  (req, res) => {
       })
   })
   
-  //Mofificar cohorte 
+  //Mofificamos el grupo
   server.put('/update/:id',  (req, res) => {
     const { name, about, startDate } = req.body
       const capName = name.charAt(0).toUpperCase() + name.slice(1)
-      Cohort.findByPk(req.params.id)
-          .then(cohort => {
-              cohort.name = capName || cohort.name
-              cohort.startDate = startDate || cohort.startDate
-              cohort.about = about || cohort.about
+      Group.findByPk(req.params.id)
+          .then(group => {
+              cohort.name = capName || group.name
+              cohort.startDate = startDate || group.startDate
+              cohort.about = about || group.about
   
-              cohort.save().then(cohort => {
-                  res.status(201).send(cohort)
+              cohort.save().then(group => {
+                  res.status(201).json({
+            success: true,
+            message: 'Grupo modificado correctamente',
+            group
+          })
               })
           })
           .catch(() => res.status(400).json({
@@ -52,18 +54,18 @@ server.post('/create',  (req, res) => {
       )
   })
   
-  //Busca UN cohorte
+  //Busca UN grupo
   server.get('/:id', (req, res) => {
-    Cohort.findOne({
+    Group.findOne({
       where: {
         id: req.params.id,
       },
       include: [Usuario]
     })
-      .then(cohort =>{
-        !cohort
+      .then(group =>{
+        !group
           ? res.status(404).json([])
-          : res.json(cohort)
+          : res.json(group)
       })
       .catch(() => res.status(400).json({
                 error: true,
@@ -72,29 +74,15 @@ server.post('/create',  (req, res) => {
       )
   })
   
-  //Trae TODOS los cohortes 
+  //Trae TODOS los grupos
   server.get('/', (req, res) => {
-    Cohort.findAll({include: [Usuario]})
-      .then(cohorts => res.send(cohorts))
+    Group.findAll()
+      .then(cohorts => res.send(groups))
       .catch(() => res.status(400).json({
         error: true,
-        message: 'error al buscar los cohortes'
+        message: 'error al buscar los grupos'
        })
       )
   })
-
-  //Elimina un cohort 
-  server.delete('/:id', (req, res) => {
-    Cohort.findByPk(req.params.id)
-		.then(cohort => {
-			cohort.destroy().then(() => {
-				res.status(200).json(cohort)
-			})
-		})
-		.catch(() => res.status(404).json({
-      error: true,
-      message: 'el id no es valido'
-      })
-    )
-  })
+  
   module.exports = server;

@@ -1,18 +1,18 @@
-import {ADD_USER, UPDATE_USER, RESET_PASSWORD} from '../actions/user.js'
+import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER} from '../actions/user.js'
 
 const initialState ={
-    user:{
+    user:[{
         id: 0,
         isAdmin: false
-    },
-    email: [] 
+    }],
+    email: []
 }
 
 export default function user (state = initialState, action){
     if (action.type === ADD_USER){
         return {
             ...state,
-            user: action.payload
+            user: state.user.concat(action.payload)
         }
     }
     if (action.type === UPDATE_USER){
@@ -25,6 +25,12 @@ export default function user (state = initialState, action){
         return {
             ...state,
             email: action.payload
+        }
+    }
+    if (action.type === SET_USER){
+        return {
+            ...state,
+            user: action.payload
         }
     }
     return state;

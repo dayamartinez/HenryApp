@@ -8,13 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {addUser} from '../../actions/user.js';
 import {connect} from 'react-redux';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 65-67) me tiraban error
@@ -78,9 +78,9 @@ export function Register(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        {/* <Avatar className={classes.avatar}>
+        <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
-        </Avatar> */}
+        </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
@@ -89,12 +89,14 @@ export function Register(props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 // error={errors.name}
+                //error={input.name.length===0 ? true : false}
                 autoComplete="fname"
                 name="name"
                 variant="outlined"
                 required
                 // helperText={errors.name}
                 fullWidth
+                //helperText={false ? "Este campo es requerido" : null}
                 id="firstName"
                 label="First Name"
                 autoFocus
@@ -119,6 +121,8 @@ export function Register(props) {
               <TextField
                 error={errors.email}
                 helperText={errors.email}
+               // error={!/\S+@\S+\.\S+/.test(input.email) ? true : false}
+                //helperText={true ? "Debe ser un mail valido" : null}
                 variant="outlined"
                 required
                 fullWidth
