@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
+import {getPm} from '../../actions/pm'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -13,33 +14,33 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function Student(){
-    const [student, setStudent] = useState()
+export function ListPM({getPm}){
+    const [pm, setPm] = useState()
     const classes = useStyles()
     
     useEffect(()=>{
-        fetch(`http://localhost:3001/admin/users`)
-        .then(res => res.json())
-        .then(users => setStudent(users))    
+        getPm()
+        .then(data => setPm(data.payload))     
     }, [])
 
     return (
         <div> 
-          {student && student.length === 0 ? (
+          {pm && pm.length === 0 ? (
         <div>
           <h4>
             {' '}
-            No hay estudiantes para mostrar
+            No hay Project Managers para mostrar
           </h4>
         </div>
       ) : (
         <div className={classes.paper} >
-          <h3>Alumnos</h3>
-          {student &&
-            student.map(u => (
-            <div key={u.id} > 
+          <h3>Project Managers</h3>
+          <ListItemText primary={'Nombre' + ' ' + 'Apellido' + ' ' + 'Cohorte'} />
+          {pm &&
+            pm.map(pm => (
+            <div key={pm.id} > 
             <ListItem button>
-            <ListItemText primary={u.name + " " + u.lastName} />
+            <ListItemText primary={pm.name + " " + pm.lastName + " " + pm.cohortId} />
             </ListItem>
             </div>
             ))}
@@ -47,5 +48,10 @@ export function Student(){
       </div>
     )
 }
-    
-export default connect(null, {})(Student)
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getPm:() => dispatch(getPm())
+    }
+}
+export default connect(null, mapDispatchToProps)(ListPM)

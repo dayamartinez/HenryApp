@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import {Route} from 'react-router-dom';
 import Register from './components/Landing/Register.js'
 import Cohort from './components/Cohort/FormCohort.jsx'
-import CohortList from './components/Cohort/CohortList.jsx'
+import Students from './components/Cohort/CohortList.jsx'
 import Profile from './components/Landing/User/profile.js';
 import Settings from './components/Landing/User/Settings.js';
-import Students from './components/Cohort/Students.jsx'
 import AllCohorts from './components/Cohort/AllCohorts'
-
+import Pms from './components/Pms/ListPm'
 // import {Redirect} from 'react-router';
 import Landing from './components/Landing/Landing.js';
 import forgotPassword from './components/Landing/forgotPassword.js';
@@ -35,8 +34,10 @@ function App() {
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/students' render={() => <Students/>} />
       <Route path='/cohorts' render={() => <AllCohorts/>} />
-      <Route path='/admin/cohortsList' render={({match}) => <CohortList match={match}/>} />
-  </ThemeProvider>
+      
+      
+      <Route path='/pms' render={() => <Pms/>} />
+    </ThemeProvider>
   )
 }
 // const mapStateToProps = state => {

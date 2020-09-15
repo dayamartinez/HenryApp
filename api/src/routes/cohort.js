@@ -54,7 +54,7 @@ server.post('/create',  (req, res) => {
   
   //Busca UN cohorte
   server.get('/:id', (req, res) => {
-    Cohort.findOne({
+    Cohort.findAll({
       where: {
         id: req.params.id,
       },
