@@ -1,6 +1,7 @@
 import React from 'react';
-import {makeStyles, Box, Grid, Paper, Container} from '@material-ui/core';
-import BarraLateral from './BarraLateral';
+import {makeStyles, Grid, Paper, Container, Button, Divider} from '@material-ui/core';
+import Chart from './Chart';
+import Title from './Title'; 
 import clsx from 'clsx';
 
 const estilos = makeStyles(theme => ({
@@ -10,7 +11,6 @@ const estilos = makeStyles(theme => ({
     height: '100vh',
   },
   content:{
-    //backgroundColor: theme.palette.background.default,
     padding: theme.spacing(2),
     marginLeft: 240,
     width: '100%'
@@ -22,24 +22,32 @@ const estilos = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
-    overflow: 'auto',
     flexDirection: 'column',
+    margin:theme.spacing(2),
+    padding:theme.spacing(3),
+  },
+  fixedHeightChart: {
+    height: 300,
   },
   fixedHeight: {
-    height: 240,
+    height: 160,
+  },
+  divider: {
+    margin: `${theme.spacing.unit * 2}px 0`,
   },
   toolbar: theme.mixins.toolbar
 }))
 const Contenedor = () => {
 
   const s = estilos();
+  const fixedHeightChart = clsx(s.paper, s.fixedHeightChart);
   const fixedHeightPaper = clsx(s.paper, s.fixedHeight);
   return(
     <div className={s.root}>
       <div className={s.toolbar}></div>
       <div className={s.content}>
       <Container maxWidth="lg" className={s.container}> 
-        <Grid container spacing={3}>
+        {/*<Grid container spacing={3}>
           <Grid item xs={12} sm ={12} md={6} lg={6}>
           <Paper className={fixedHeightPaper}>
                 Prueba 2
@@ -60,7 +68,46 @@ const Contenedor = () => {
                 Prueba 2
               </Paper>
           </Grid>
+  </Grid>*/}
+
+      <Grid container spacing={24}>
+        <Grid item xs={3}>
+          <Button className={fixedHeightPaper} variant='contained' color='primary' fullWidth>
+            <Title>Alumnos</Title>
+          </Button>
         </Grid>
+        <Grid item xs={3}>
+          <Button className={fixedHeightPaper} variant='contained' color='primary'fullWidth>
+            <Title>Alumnos contratados</Title>
+          </Button>
+        </Grid>
+        <Grid item xs={3}>
+          <Button className={fixedHeightPaper} variant='contained' color='primary'fullWidth>
+            <Title>Grupos</Title>
+          </Button>
+        </Grid>
+        <Grid item xs={3}>
+          <Button className={fixedHeightPaper} variant='contained' color='primary'fullWidth>
+            <Title>Pair Programming</Title>
+          </Button>
+        </Grid>
+        <Grid item xs={9}>
+          <Paper className={fixedHeightChart}>
+            <Chart />
+          </Paper>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper className={fixedHeightChart}>
+            <Title>RANGO DE TIEMPO</Title>
+            <Divider className={s.divider} />
+            <Button variant='outlined' fullWidth> Diario </Button>
+            <Divider className={s.divider} />
+            <Button variant='outlined' fullWidth> Mensual </Button>
+            <Divider className={s.divider} />
+            <Button variant='outlined' fullWidth> Anual </Button>
+          </Paper>
+        </Grid>
+      </Grid>
         </Container>
       </div>
     </div>
