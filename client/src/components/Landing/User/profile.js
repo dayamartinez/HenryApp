@@ -37,9 +37,10 @@ const useStyles = makeStyles((theme) => ({
     },
     nameLastName: {
       display: 'flex',
-      position: 'absolute',
+      //position: 'absolute',
+      justifyContent: 'center',
       marginTop: '-5px',
-      marginLeft: '200px',
+      //marginLeft: '350 px',
     },
     container: {
       borderBottom: 'groove',
@@ -48,13 +49,16 @@ const useStyles = makeStyles((theme) => ({
       height: '150px',
       },
       settingContainer: {
-        display:'flex',
+      display:'flex',
       position: 'absolute',
       left: '900px',
       marginTop: '-140px'
       },
       text: {
-        position: 'absolute',
+        display: 'flex',
+        //position: 'absolute',
+        justifyContent: 'center',
+        marginTop: '-5px',
         left: '250px',
         color: 'darkgray',
         marginTop: '25px'
@@ -71,15 +75,17 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '100px'
       },
   }));
-
-
-  export function Profile(){
+  
+  export function Profile(props){
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
 
+    const mostrarDatos = function(e){
+
+    }
     return(
         <div className={classes.totalBackground}>
 
@@ -87,14 +93,14 @@ const useStyles = makeStyles((theme) => ({
           <Avatar  className={classes.profile} alt="Remy Sharp" src={HenryIcon} />
         </div>
         <div className={classes.container}>
-           <h2 className={classes.nameLastName}>Nombre Apellido </h2>
+           <h2 className={classes.nameLastName}>{`${props.user.user.name } ${props.user.user.lastName}`} </h2>
         <Typography variant="subtitle1" gutterBottom> 
-         <p className={classes.text}>email@gmail.com</p>
+          <p className={classes.text}>{`${props.user.user.email}`}</p>
          </Typography> 
          
-         <Typography variant="body1" gutterBottom> 
+         {/* <Typography variant="body1" gutterBottom> 
          <article className={classes.textAbout}>About</article>
-         </Typography>
+         </Typography> */}
         
          <Typography variant="body1" gutterBottom className={classes.textBirthday}> 
          <p><CalendarTodayIcon />Fecha de nacimiento</p>
@@ -115,13 +121,25 @@ const useStyles = makeStyles((theme) => ({
       >
         <Tab label="Posts" />
         <Tab label="Interacciones" />
-        <Tab label="Biblioteca" />
+        <Tab label="Biblioteca"  />  
         <Tab label="Información" />
       </Tabs>
     </Paper>
         </div>
     )
   }
+  const mapStateToProps = state => {		
+    return {		
+      user: state.user,
+    }		
+  }
+  
+  // const mapDispatchToProps = dispatch => {
+  //   return {
+  //     setUser: (resp)=>dispatch(setUser(resp)),
+  //   }
+  // }
+      
+  export default connect(mapStateToProps)(Profile); 
 
-
-  export default Profile;
+  // export default Profile;

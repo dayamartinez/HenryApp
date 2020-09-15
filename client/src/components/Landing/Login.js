@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import Axios from 'axios';
 import {setUser} from '../../actions/user.js';
 import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 71-73) me tiraban error
@@ -52,7 +53,7 @@ export function Copyright() {
 
   //LOGIN PRINCIPAL DE LA PAGINA!
   export function Login(props) {
-    
+    const history = useHistory();
     const classes = useStyles();
     const [input,setInput]=React.useState({
       email:'',
@@ -67,12 +68,13 @@ export function Copyright() {
       })
     }
 
-    const loginUser = function(e){
+    const loginUser = function  (e){
       e.preventDefault();
       Axios.post('http://localhost:3001/login',input,{withCredentials:true})
-      .then(resp=>{
-        props.setUser(resp)
+      .then( async resp=> {
+        await props.setUser(resp.data)
       })
+      history.push("/profile");
     }
     //COMPONENTE DE MATERIAL UI
     return (

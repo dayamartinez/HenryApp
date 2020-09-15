@@ -101,7 +101,7 @@ server.use('/', routes);
 server.post('/login',
   passport.authenticate('local',{failureRedirect: '/login'}),
   function(req, res) {
-    res.status(200).send("Sesion iniciada!");
+    res.status(200).send(req.user);
   });
 
   server.get('/logout', function(req, res){
