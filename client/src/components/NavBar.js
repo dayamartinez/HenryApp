@@ -16,8 +16,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const NavBar = () => {
+const NavBar = (props) => {
   const s = useStyles()
+  const{location}=props
+  if (location.pathname==="/"||location.pathname==="/register"){
+    return null;
+  }
   return (
     <div>
       <AppBar position='fixed' className={s.fija} color='secondary'>
