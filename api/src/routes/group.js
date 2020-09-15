@@ -27,7 +27,21 @@ server.post('/create',  (req, res) => {
           res.status(500).json(err)
       })
   })
-  
+
+  server.put('/setCohort/:id', (req,res) => {
+    Group.findByPk(req.body.id)
+    .then(group => {
+      group,
+      group.cohortId = req.params.id
+      group.save().then(group => {
+        res.status(201).send(group)
+      })
+    })
+    .catch(err => {
+      res.status(404).send(err)
+    })
+  })
+
   //Mofificamos el grupo
   server.put('/update/:id',  (req, res) => {
     const { name, pairProgramming } = req.body

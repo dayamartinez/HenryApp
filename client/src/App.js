@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import {Route} from 'react-router-dom';
 import Register from './components/Landing/Register.js'
 import Cohort from './components/Cohort/FormCohort.jsx'
+import Students from './components/Cohort/CohortList.jsx'
 import Profile from './components/Landing/User/profile.js';
 import Settings from './components/Landing/User/Settings.js';
-import Students from './components/Cohort/Students.jsx'
 import AllCohorts from './components/Cohort/AllCohorts'
 import Pms from './components/Pms/ListPm'
 // import {Redirect} from 'react-router';
@@ -34,8 +34,9 @@ function App() {
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/students' render={() => <Students/>} />
       <Route path='/cohorts' render={() => <AllCohorts/>} />
-      <Route path='/pms' render={() => <Pms/>} />
       
+      
+      <Route path='/pms' render={() => <Pms/>} />
     </ThemeProvider>
   )
 }
