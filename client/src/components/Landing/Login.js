@@ -83,7 +83,7 @@ export function Copyright() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Ingresar
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -92,7 +92,7 @@ export function Copyright() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Email"
               name="username"
               autoComplete="email"
               autoFocus
@@ -104,7 +104,7 @@ export function Copyright() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Contraseña"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -112,7 +112,7 @@ export function Copyright() {
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Recordarme"
             />
             <Button
               type="submit"
@@ -122,18 +122,18 @@ export function Copyright() {
               className={classes.submit}
               onClick={(e)=>loginUser(e)}
             >
-              Sign In
+              Ingresar
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link to="/forgotPassword" variant="body2">
-                  Forgot password?
+                  ¿Olvido la contraseña?
                 </Link>
               </Grid>
               <Grid item>
                 <Link to = "/register">
                   <span>
-                  "Don't have an account? Sign Up"
+                  ¿No tiene una cuenta? Registrese
 
                   </span>
                 </Link>
