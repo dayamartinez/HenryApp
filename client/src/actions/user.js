@@ -3,11 +3,14 @@ export const ADD_USER = 'ADD_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SET_USER = 'SET_USER';
+export const CLEAN_USER = 'CLEAN_USER'
 // const instance = axios.create({
 //     withCredentials: true
 //   })
 
 //CREAR USUARIO
+
+
 export function addUser(data){
     return function (dispatch){
         console.log(data)
@@ -70,4 +73,8 @@ export function ForgotPass(data){
         })
     }
 }
+
+export function cleanUser(){
+    return{type:CLEAN_USER}
+} 
 
