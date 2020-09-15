@@ -36,7 +36,7 @@ function App() {
       <Route path='/students' render={() => <Students/>} />
       <Route path='/cohorts' render={() => <AllCohorts/>} />
       <Route path='/admin/cohortsList' render={({match}) => <CohortList match={match}/>} />
-    </ThemeProvider>
+  </ThemeProvider>
   )
 }
 // const mapStateToProps = state => {
