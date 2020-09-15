@@ -19,7 +19,7 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <Link to='/admin'>
+      <Link href='/admin'  color="inherit" underline="none">
       <ListItemText primary="Dashboard" />
       </Link>
     </ListItem>
