@@ -4,20 +4,20 @@ import { connect } from 'react-redux'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { getCohorts } from '../../actions/cohort';
-
+import {yellow, grey} from "@material-ui/core/colors"
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  }
+  },
 }));
 
 export function AllCohorts({getCohorts}){
   const [cohorts, setCohorts] = useState()
   const classes = useStyles()
-    
+  const yellowText = {color:yellow[500]}
   useEffect(()=>{
     getCohorts()
     .then(data => setCohorts(data.payload))    
@@ -48,12 +48,12 @@ export function AllCohorts({getCohorts}){
       ) : (
         <TableContainer>
           <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Cohorte</TableCell>
-                <TableCell>Fecha de inicio</TableCell>
-                <TableCell>Intructor</TableCell>
-                <TableCell>Alumnos</TableCell>
+            <TableHead style={{backgroundColor:grey[900]}}>
+              <TableRow  >
+                <TableCell style={yellowText} >Cohorte</TableCell>
+                <TableCell style={yellowText} >Fecha de inicio</TableCell>
+                <TableCell style={yellowText} >Intructor</TableCell>
+                <TableCell style={yellowText} >Alumnos</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
