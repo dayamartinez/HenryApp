@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
   },
   title:{
     flexGrow: 1
+  },
+  fija:{
+    zIndex: 1201
   }
 }))
 
@@ -21,7 +24,7 @@ const NavBar = (props) => {
   }
   return (
     <div>
-      <AppBar position='fixed' color='secondary'>
+      <AppBar position='fixed' className={s.fija} color='secondary'>
         <Toolbar>
           <IconButton color='primary' className={s.menuButton}>
             <MenuIcon />
