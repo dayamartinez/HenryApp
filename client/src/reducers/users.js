@@ -1,4 +1,5 @@
 import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER} from '../actions/user.js'
+import { PROMOTE_PM, GET_PM, GET_PM_DETAIL} from '../actions/pm'
 
 const initialState ={
     user:[{
@@ -27,11 +28,25 @@ export default function user (state = initialState, action){
             email: action.payload
         }
     }
+
+    if (action.type === PROMOTE_PM){
+        return {
+            ...state,
+            user: action.payload
+        }
+    }
+    if (action.type === GET_PM){
+        return {
+            ...state,
+            user: action.payload
+        }
+    }
+
     if (action.type === SET_USER){
         return {
             ...state,
             user: action.payload
         }
     }
-    return state;
+    return state
 }

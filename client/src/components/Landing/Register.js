@@ -44,30 +44,20 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function Register(props) {
-  // const history = useHistory();
+  
     const classes = useStyles();
     const [input,setInput]=useState({
         name:'',
         lastName:'',
         email:'',
-        password:''
+        password:'',
+        confirmPassword: ''
     });
 
     const onSend = function(e){
       e.preventDefault();
-      console.log(input);
-      //pasar al modelo de user!
-      if (!input.name || !input.lastName){
-        alert ("completar nombre y apellido!")
-        return;
-      } else if (/\S+@\S+\.\S+/.test(input.email) && /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,}$/.test(input.password)){ 
-        props.addUser(input)
-      } else {
-        alert("USUARIO ERRADO")
-        return;
-      }
-      //props.addUser(input)
-      // history.push("/Home")
+      props.addUser(input)
+    
     }
 
     //MANEJO DE ONCHANGE()
@@ -76,7 +66,14 @@ export function Register(props) {
           ...input,
           [e.target.name]:e.target.value
         })
+        setErrors(validate({
+          ...input,
+          [e.target.name]: e.target.value,
+        }));
       }
+
+    
+      const [errors, setErrors] = useState({});
 
   return (
     <Container component="main" maxWidth="xs">
@@ -92,11 +89,13 @@ export function Register(props) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={errors.name}
                 //error={input.name.length===0 ? true : false}
                 autoComplete="fname"
                 name="name"
                 variant="outlined"
                 required
+                helperText={errors.name}
                 fullWidth
                 //helperText={false ? "Este campo es requerido" : null}
                 id="firstName"
@@ -107,6 +106,8 @@ export function Register(props) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={errors.lastName}
+                helperText={errors.lastName}
                 variant="outlined"
                 required
                 fullWidth
@@ -119,6 +120,8 @@ export function Register(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={errors.email}
+                helperText={errors.email}
                // error={!/\S+@\S+\.\S+/.test(input.email) ? true : false}
                 //helperText={true ? "Debe ser un mail valido" : null}
                 variant="outlined"
@@ -133,11 +136,26 @@ export function Register(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={errors.password}
+                helperText={errors.password}
                 variant="outlined"
                 required
                 fullWidth
                 name="password"
                 label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(e) => handleInputChange(e)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Confirm Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -189,4 +207,28 @@ const mapDispatchToProps = dispatch => {
   }
 }
     
+export function validate(input) {
+  let errors = {};
+ if(!input.name){
+   errors.name= 'Por favor introduzca su nombre'
+ }
+ if(!input.lastName){
+  errors.lastName= 'Por favor introduzca su apellido'
+}
+  if (!input.email) {
+    errors.email = 'Por favor introduzca su email';
+  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
+    errors.email = 'El email es invalido';
+  }
+if(!input.password){
+  errors.password = 'Por favor introduzca su contraseña';
+} else if (!/([A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9])/.test(input.password)) {
+  errors.password = 'La contraseña debe contener una letra mayuscula y al menos dos numeros';
+
+  }else if(input.password !== input.confirmPassword){
+  errors.password= "Las contraseñas no coinciden"
+}
+  return errors;
+};
+
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

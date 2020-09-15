@@ -4,9 +4,9 @@ const { Usuario, Group } = require('../db.js');
 
 //Creamos un grupo
 server.post('/create',  (req, res) => {
-    const { name, startDate, about} = req.body
+    const { name, pairProgramming} = req.body
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
-      if (!name || !startDate || !about ) {
+      if (!name || !pairProgramming ) {
           res.status(400).json({
               error: true,
               message: 'Debe enviar los campos requeridos'
@@ -14,8 +14,7 @@ server.post('/create',  (req, res) => {
       }
       Group.create({
           name: capName,
-          startDate,
-          about    
+          pairProgramming 
     }) 
       .then(group => {
           res.status(201).json({
@@ -28,18 +27,31 @@ server.post('/create',  (req, res) => {
           res.status(500).json(err)
       })
   })
-  
+
+  server.put('/setCohort/:id', (req,res) => {
+    Group.findByPk(req.body.id)
+    .then(group => {
+      group,
+      group.cohortId = req.params.id
+      group.save().then(group => {
+        res.status(201).send(group)
+      })
+    })
+    .catch(err => {
+      res.status(404).send(err)
+    })
+  })
+
   //Mofificamos el grupo
   server.put('/update/:id',  (req, res) => {
-    const { name, about, startDate } = req.body
+    const { name, pairProgramming } = req.body
       const capName = name.charAt(0).toUpperCase() + name.slice(1)
       Group.findByPk(req.params.id)
           .then(group => {
-              cohort.name = capName || group.name
-              cohort.startDate = startDate || group.startDate
-              cohort.about = about || group.about
+            group.name = capName || group.name
+            group.pairProgramming = pairProgramming || group.pairProgramming
   
-              cohort.save().then(group => {
+            group.save().then(group => {
                   res.status(201).json({
             success: true,
             message: 'Grupo modificado correctamente',
@@ -77,7 +89,7 @@ server.post('/create',  (req, res) => {
   //Trae TODOS los grupos
   server.get('/', (req, res) => {
     Group.findAll()
-      .then(cohorts => res.send(groups))
+      .then(groups => res.send(groups))
       .catch(() => res.status(400).json({
         error: true,
         message: 'error al buscar los grupos'
