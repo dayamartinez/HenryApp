@@ -8,7 +8,10 @@ const theme = createMuiTheme({
         },
         secondary:{
           main:grey[900]
-        }
+        },
+        third:{
+          main:grey[700]
+        },
     }
 })
 

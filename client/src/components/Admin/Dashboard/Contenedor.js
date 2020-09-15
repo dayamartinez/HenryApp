@@ -16,22 +16,21 @@ const estilos = makeStyles(theme => ({
     width: '100%'
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(4),
+    marginRight: theme.spacing(4)
   },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
-    margin:theme.spacing(2),
-    padding:theme.spacing(3),
+    margin:theme.spacing(1),
+    marginBottom: theme.spacing(5),
   },
   fixedHeightChart: {
     height: 300,
   },
-  fixedHeight: {
-    height: 160,
-  },
+
   divider: {
     margin: `${theme.spacing.unit * 2}px 0`,
   },
@@ -41,35 +40,13 @@ const Contenedor = () => {
 
   const s = estilos();
   const fixedHeightChart = clsx(s.paper, s.fixedHeightChart);
-  const fixedHeightPaper = clsx(s.paper, s.fixedHeight);
+  const fixedHeightPaper = clsx(s.paper);
   return(
     <div className={s.root}>
       <div className={s.toolbar}></div>
       <div className={s.content}>
       <Container maxWidth="lg" className={s.container}> 
-        {/*<Grid container spacing={3}>
-          <Grid item xs={12} sm ={12} md={6} lg={6}>
-          <Paper className={fixedHeightPaper}>
-                Prueba 2
-              </Paper>
-          </Grid >
-          <Grid item xs={12} sm ={12} md={6} lg={6}>
-          <Paper className={fixedHeightPaper}>
-                Prueba 2
-              </Paper>
-          </Grid>
-          <Grid item xs={12} sm ={12} md={6} lg={6}>
-          <Paper className={fixedHeightPaper}>
-                Prueba 2
-              </Paper>
-          </Grid>
-          <Grid item xs={12} sm ={12} md={6} lg={6}>
-          <Paper className={fixedHeightPaper}>
-                Prueba 2
-              </Paper>
-          </Grid>
-  </Grid>*/}
-
+      
       <Grid container spacing={24}>
         <Grid item xs={3}>
           <Button className={fixedHeightPaper} variant='contained' color='primary' fullWidth>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { BarChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
 
 // Generate Sales Data
@@ -27,7 +27,7 @@ export default function Chart() {
     <React.Fragment>
       <Title>Today</Title>
       <ResponsiveContainer>
-        <BarChart
+        <LineChart
           data={data}
           margin={{
             top: 16,
