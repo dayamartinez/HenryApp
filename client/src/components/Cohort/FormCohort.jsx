@@ -11,6 +11,7 @@ import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
 import ExcelLoader from './ExcelLoader';
+import axios from 'axios';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,17 +35,17 @@ import ExcelLoader from './ExcelLoader';
     }
   }));
   
-  export function FormCohort({ match, addCohort, updateCohort, removeCohort}) {
+  export function FormCohort({ match, addCohort, updateCohort, removeCohort, emails}) {
 
      let id = match.params.id
      const history = useHistory()
 
     const classes = useStyles();
+    
     const [input, setInput]= useState({
       name:'',
       startDate: '',
       about:''
-      
     });
 
     useEffect(() =>{
@@ -78,10 +79,24 @@ import ExcelLoader from './ExcelLoader';
         const cohort = {
           name: input.name,
           startDate: input.startDate,
-          about: input.about
+          about: undefined
         }
        id ? updateCohort(id, cohort) : addCohort(cohort)
-	}
+    }
+
+    const sendMail = function(e){
+      e.preventDefault();
+      if(emails){
+        axios.post('http://localhost:3001/email/send-email/:email', emails)
+        .then(() => {
+          alert("Todo bien")
+        })
+        .catch(err =>{
+          alert(err)
+        })
+      }
+    }
+  
 
     return (
       <Container component="main" maxWidth="xs">
@@ -137,6 +152,7 @@ import ExcelLoader from './ExcelLoader';
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e)=> sendMail(e)}
             >
               Crear
             </Button>}
@@ -175,6 +191,12 @@ import ExcelLoader from './ExcelLoader';
       </Container>
     )
   }
+
+  const mapStateToProps = (state) => {
+    return {
+      emails: state.cohort.emails
+    }
+  }
  
   const mapDispatchToProps = dispatch => { 
     return {
@@ -183,4 +205,4 @@ import ExcelLoader from './ExcelLoader';
       removeCohort: (id) => dispatch(removeCohort(id))
     }
   }
-  export default connect(null, mapDispatchToProps)(FormCohort)
+  export default connect(mapStateToProps, mapDispatchToProps)(FormCohort)

@@ -39,7 +39,6 @@ export default function cohort(state = initialState, action) {
                 emails: action.payload
             }
         default:
-            console.log("Reducer");
             return state
     }
 }

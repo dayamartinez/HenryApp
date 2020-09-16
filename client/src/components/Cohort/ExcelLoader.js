@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Typography from '@material-ui/core/Typography';
 import {setUsersEmails} from '../../actions/cohort';
 
-export function ExcelLoader(props) {
+export function ExcelLoader({setUsersEmails}) {
     var XLSX = require("xlsx");
     
     function Upload() {
@@ -45,7 +45,7 @@ export function ExcelLoader(props) {
 
 function mapStateToProps(state) {
     return {
-      emails: state.emails
+      emails: state.cohort.emails
     };
   }
   
