@@ -79,17 +79,18 @@ import axios from 'axios';
         const cohort = {
           name: input.name,
           startDate: input.startDate,
-          about: undefined
+          about: input.about
         }
        id ? updateCohort(id, cohort) : addCohort(cohort)
     }
 
+    //se agrega función para que al hacer click en crear, se envien al back los correos que fueron cargados
     const sendMail = function(e){
       e.preventDefault();
       if(emails){
         axios.post('http://localhost:3001/email/send-email/:email', emails)
         .then(() => {
-          alert("Todo bien")
+          console.log("Todo bien")
         })
         .catch(err =>{
           alert(err)
@@ -134,6 +135,18 @@ import axios from 'axios';
             onChange={handleInputChange}
             required
             />
+             <TextField
+              variant="outlined"
+              margin="normal"
+              fullWidth
+              name="about"
+              label="Acerca del Cohorte"
+              type="about"
+              id="about"
+              value={input.about}
+              onChange={handleInputChange}
+            />
+            {/*Se llama a la función para cargar las direcciones de email de los alumnos */}
             <ExcelLoader/>
 
             {id?

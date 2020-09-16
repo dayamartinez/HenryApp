@@ -107,8 +107,7 @@ export function removeCohort(id) {
 
 //Setea el estado EMAIL como un arreglo de direcciones de correo
 export function setUsersEmails(data) {
-  console.log("Action");
   return function (dispatch){
-    return dispatch({ type: 'SET_USERS_EMAILS', payload:data});
+    return dispatch({ type: SET_USERS_EMAILS, payload:data});
   }
 }

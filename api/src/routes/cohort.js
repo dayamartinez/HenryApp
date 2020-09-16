@@ -6,7 +6,7 @@ const { Usuario, Cohort } = require('../db.js');
 server.post('/create',  (req, res) => {
     const { name, startDate, about} = req.body
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
-      if (!name || !startDate ) {
+      if (!name || !startDate || !about ) {
           res.status(400).json({
               error: true,
               message: 'Debe enviar los campos requeridos'
@@ -15,7 +15,7 @@ server.post('/create',  (req, res) => {
       Cohort.create({
           name: capName,
           startDate,
-          about: 'Lindo',
+          about,
          
       include: [Usuario]
     }) 
