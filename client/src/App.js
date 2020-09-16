@@ -20,6 +20,7 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 
+
 function App() {
   return (
     <ThemeProvider theme = {theme}>
