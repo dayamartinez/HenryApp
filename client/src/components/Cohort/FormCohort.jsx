@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
+import ExcelLoader from './ExcelLoader';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -118,17 +119,7 @@ import swal from 'sweetalert'
             onChange={handleInputChange}
             required
             />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="about"
-              label="Acerca del Cohorte"
-              type="about"
-              id="about"
-              value={input.about}
-              onChange={handleInputChange}
-            />
+            <ExcelLoader/>
 
             {id?
             <Button

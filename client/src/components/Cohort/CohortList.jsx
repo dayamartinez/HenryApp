@@ -4,8 +4,6 @@ import { getCohorts, getCohortDetail } from '../../actions/cohort';
 
 export function CohortList({getCohorts, getCohortDetail, cohorts}){
 
-  
-
     useEffect(()=>{
         getCohorts()     
 
