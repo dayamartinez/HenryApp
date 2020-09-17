@@ -19,6 +19,7 @@ import {ThemeProvider} from "@material-ui/core"
 import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
+import Instructor from './components/Instructor';
 
 
 function App() {
@@ -37,7 +38,8 @@ function App() {
       <Route exact path='/admin/students' render={() => <Students/>} />
       <Route exact path='/admin/cohorts' render={() => <AllCohorts/>} />
       <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
-      <Route path='/pms' render={() => <Pms/>} />
+      <Route exact path='/admin/pms' render={() => <Pms/>} />
+      <Route exact path='/admin/instructors' render={() => <Instructor/>} />
 
     </ThemeProvider>
   )
