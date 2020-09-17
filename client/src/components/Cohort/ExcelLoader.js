@@ -37,9 +37,13 @@ export function ExcelLoader({setUsersEmails}) {
     }
     
     return (
-        <Typography component="h2" variant="h6" color="secondary" gutterBottom>
-            <input class="upload-excel" type="file" id="fileUpload" onChange={() => Upload()}/>
+        
+         <Typography component="h3" variant="h6" color="secondary" >
+
+           <input class="input-group" color="primary" type="file" id="fileUpload" onChange={() => Upload()}/>
+       
         </Typography>
+       
   );
 }
 
