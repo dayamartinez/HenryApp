@@ -19,10 +19,11 @@ import {ThemeProvider} from "@material-ui/core"
 import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
-import Instructor from './components/Instructor';
+// import Instructor from './components/Instructor';
 
 
 function App() {
+  const margen = {marginLeft:"240px"}
   return (
     <ThemeProvider theme = {theme}>
       <Route path='/' component={NavBar} />
@@ -35,11 +36,11 @@ function App() {
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
-      <Route exact path='/admin/students' render={() => <Students/>} />
-      <Route exact path='/admin/cohorts' render={() => <AllCohorts/>} />
-      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
-      <Route exact path='/admin/pms' render={() => <Pms/>} />
-      <Route exact path='/admin/instructors' render={() => <Instructor/>} />
+      <Route exact path='/admin/students' render={() => <Students style={margen}/>} />
+      <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
+      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match} style={margen}/>} />
+      <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
+      {/* <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} /> */}
 
     </ThemeProvider>
   )

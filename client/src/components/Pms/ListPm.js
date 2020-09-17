@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function ListPM({getPm}){
+export function ListPM({getPm,style}){
     const [pm, setPm] = useState()
     const classes = useStyles()
     const yellowText = {color:yellow[500]}
@@ -36,7 +36,7 @@ export function ListPM({getPm}){
     console.log(data)
   }
     return (
-        <div> 
+        <div style={style}> 
           {pm && pm.length === 0 ? (
         <div>
           <h4>

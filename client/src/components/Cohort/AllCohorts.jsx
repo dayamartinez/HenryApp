@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function AllCohorts({getCohorts}){
+export function AllCohorts({getCohorts,style}){
   const [cohorts, setCohorts] = useState()
   const classes = useStyles()
   const yellowText = {color:yellow[500]}
@@ -37,7 +37,7 @@ export function AllCohorts({getCohorts}){
   }
   console.log(cohorts)
   return (
-    <div> 
+    <div style={style}>  
       {cohorts && cohorts.length === 0 ? (
         <div>
           <h4>
