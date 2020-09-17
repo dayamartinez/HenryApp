@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from "react-redux";
 import Typography from '@material-ui/core/Typography';
 import {setUsersEmails} from '../../actions/cohort';
+var XLSX = require("xlsx");
 
 export function ExcelLoader({setUsersEmails}) {
-    var XLSX = require("xlsx");
     
     function Upload() {
         const fileUpload = (document.getElementById('fileUpload'));
@@ -38,7 +38,7 @@ export function ExcelLoader({setUsersEmails}) {
     
     return (
         
-         <Typography component="h3" variant="h6" color="secondary" >
+         <Typography component="h3" variant="h6" color="secondary">
 
            <input class="input-group" color="primary" type="file" id="fileUpload" onChange={() => Upload()}/>
        
