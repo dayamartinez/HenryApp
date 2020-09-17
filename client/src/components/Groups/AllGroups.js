@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { getGroups } from '../../actions/groups';
+import { getGroups } from '../../actions/group';
 import {yellow, grey} from "@material-ui/core/colors"
 
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function AllGroups({getGroups}){
+export function AllGroups({getGroups,style}){
   const [groups, setGroups] = useState()
   const classes = useStyles()
   const yellowText = {color:yellow[500]}
@@ -31,7 +31,7 @@ export function AllGroups({getGroups}){
         group: group.name,
         inicio: group.startDate,
         sobre: group.about,
-        alumnos: group.usuarios.length,
+        alumnos: group.usuarios?(group.usuarios.length):(undefined),
         id: group.id
       })
     )
@@ -39,7 +39,7 @@ export function AllGroups({getGroups}){
   }
   console.log(groups)
   return (
-    <div> 
+    <div style={style}> 
       {groups && groups.length === 0 ? (
         <div>
           <h4>
@@ -53,9 +53,9 @@ export function AllGroups({getGroups}){
             <TableHead style={{backgroundColor:grey[900]}}>
               <TableRow  >
                 <TableCell style={yellowText} >Grupo</TableCell>
-                <TableCell style={yellowText} >Fecha de inicio</TableCell>
-                <TableCell style={yellowText} >Intructor/PM</TableCell>
-                <TableCell style={yellowText} >Alumnos</TableCell>
+                <TableCell style={yellowText} >PM</TableCell>
+                <TableCell style={yellowText} >Cohorte</TableCell>
+                <TableCell style={yellowText} >Alumnos del Grupo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -67,11 +67,11 @@ export function AllGroups({getGroups}){
                       href={"/admin/groups/"+celda.id} 
                       color="inherit" 
                       underline="none">
-                        {celda.groups}
+                        {celda.group}
                     </Link>
                   </TableCell>
 
-                  <TableCell>{celda.inicio}</TableCell>
+                  <TableCell>{['Hola', 'Mundo']}</TableCell>
 
                   <TableCell>{celda.sobre}</TableCell>
 
@@ -88,8 +88,12 @@ export function AllGroups({getGroups}){
     )
 }
 
+const mapStateToProps = (state) => ({
+  groups: state.group.groups
+ })
+
 const mapDispatchToProps = dispatch => ({
   getGroups: () =>  dispatch(getGroups())
 })
     
-export default connect(null, mapDispatchToProps)(AllGroups)
+export default connect(mapStateToProps, mapDispatchToProps)(AllGroups)

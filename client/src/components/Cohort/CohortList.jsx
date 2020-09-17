@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getCohorts, getCohortDetail } from '../../actions/cohort';
 
-export function CohortList({getCohorts, getCohortDetail, cohorts}){
+export function CohortList({getCohorts, getCohortDetail, cohorts, style}){
 
     useEffect(()=>{
         getCohorts()     
@@ -10,7 +10,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts}){
     }, [])
 
     return (
-        <div class="bg-dark">
+        <div class="bg-dark" style = {style}>
             <h2 class="bg-dark text-warning text-center"> Alumnos </h2>
             <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                 <button class="btn btn-outline-warning mb-2 mt-2 " onClick={() => getCohorts()}> Ver Todos </button>

@@ -15,53 +15,57 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <Link href='/admin'  color="inherit" underline="none">
-      <ListItemText primary="Dashboard" />
-      </Link>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <GroupIcon />
-      </ListItemIcon>
-      <Link href='/admin/students'  color="inherit" underline="none">
-      <ListItemText primary="Alumnos" />
-      </Link>
-      
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <GroupIcon />
-      </ListItemIcon>
-      <ListItemText primary="Intructores" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <GroupIcon/>
-      </ListItemIcon>
-      <Link href='/pms' color="inherit" underline="none">
-       <ListItemText primary="PMs" />
-      </Link>
-     
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <GroupWorkIcon />
-      </ListItemIcon>
-      <Link href='/admin/cohorts' color="inherit" underline="none">
+    <Link href='/admin' color="secondary" underline="none">
+      <ListItem button>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItem>
+    </Link>
+    <Link href='/admin/students' color="secondary" underline="none">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="Alumnos" />
+      </ListItem>
+    </Link>
+    <Link href='/admin/instructors' color="secondary" underline="none">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon />
+        </ListItemIcon>
+        <ListItemText primary="Intructores" />
+      </ListItem>
+    </Link>
+    <Link href='/admin/pms' color="secondary" underline="none">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupIcon/>
+        </ListItemIcon>
+      <ListItemText primary="PMs" />
+      </ListItem>
+    </Link>
+
+    <Link href='/admin/cohorts' color="secondary" underline="none">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupWorkIcon />
+        </ListItemIcon>
         <ListItemText primary="Cohortes" />
-        </Link>
-      
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <GroupWorkIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Grupos" />
-    </ListItem>
+      </ListItem>
+    </Link>
+
+    <Link href='/admin/groups' color="secondary" underline="none"> 
+      <ListItem button>
+        <ListItemIcon>
+          <GroupWorkIcon/>
+        </ListItemIcon>
+        <ListItemText primary="Grupos" />
+      </ListItem>
+    </Link>
+
     <ListItem button>
       <ListItemIcon>
         <GroupAddIcon/>

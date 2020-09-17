@@ -2,7 +2,7 @@ import swal from 'sweetalert'
 export const ADD_GROUP = 'ADD_GROUP'
 export const UPDATE_GROUP = 'UPDATE_GROUP'
 export const GET_GROUP_DETAIL = 'GET_GROUP_DETAIL'
-export const GET_GROUP = 'GET_GROUP'
+export const GET_GROUPS = 'GET_GROUPS'
 export const REMOVE_GROUP = 'REMOVE_GROUP'
 
 export function addGroup(group) {
