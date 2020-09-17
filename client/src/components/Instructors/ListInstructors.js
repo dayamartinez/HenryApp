@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {getPm} from '../../actions/pm'
+import {getInstructor} from '../../actions/instructor'
 import {yellow, grey} from "@material-ui/core/colors"
 
 const useStyles = makeStyles(theme => ({
@@ -14,22 +14,22 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function ListInstructors({getPm,style}){
-    const [pm, setPm] = useState()
+export function ListInstructors({getInstructor,style}){
+    const [instructor, setInstructor] = useState()
     const classes = useStyles()
     const yellowText = {color:yellow[500]}
 
     useEffect(()=>{
-        getPm()
-        .then(data => setPm(data.payload))     
+        getInstructor()
+        .then(data => setInstructor(data.payload))     
     }, [])
     var data
-  if(pm){
-    data = pm.map(p => 
+  if(instructor){
+    data = instructor.map(p => 
       ({
         name: p.name,
         mail: p.email,
-        cohorte:p.cohort,
+        cohorte:p.cohort.name,
         id: p.id
       })
     )
@@ -37,7 +37,7 @@ export function ListInstructors({getPm,style}){
   }
     return (
         <div style={style}> 
-          {pm && pm.length === 0 ? (
+          {instructor && instructor.length === 0 ? (
         <div>
           <h4>
             {' '}
@@ -83,7 +83,7 @@ export function ListInstructors({getPm,style}){
 
 const mapDispatchToProps = dispatch => {
     return {
-        getPm:() => dispatch(getPm())
+        getInstructor:() => dispatch(getInstructor())
     }
 }
 export default connect(null, mapDispatchToProps)(ListInstructors)

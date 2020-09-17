@@ -47,21 +47,25 @@ export const mainListItems = (
       <ListItemText primary="PMs" />
       </ListItem>
     </Link>
-    <ListItem button>
-      <ListItemIcon>
-        <GroupWorkIcon />
-      </ListItemIcon>
-      <Link href='/admin/cohorts' color="inherit" underline="none">
+
+    <Link href='/admin/cohorts' color="secondary" underline="none">
+      <ListItem button>
+        <ListItemIcon>
+          <GroupWorkIcon />
+        </ListItemIcon>
         <ListItemText primary="Cohortes" />
-        </Link>
-      
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <GroupWorkIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Grupos" />
-    </ListItem>
+      </ListItem>
+    </Link>
+
+    <Link href='/admin/groups' color="secondary" underline="none"> 
+      <ListItem button>
+        <ListItemIcon>
+          <GroupWorkIcon/>
+        </ListItemIcon>
+        <ListItemText primary="Grupos" />
+      </ListItem>
+    </Link>
+
     <ListItem button>
       <ListItemIcon>
         <GroupAddIcon/>
