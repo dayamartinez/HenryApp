@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { getGroups } from '../../actions/groups';
+import { getGroups } from '../../actions/group';
 import {yellow, grey} from "@material-ui/core/colors"
 
 
@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function AllGroups({getGroups}){
+export function AllGroups({getGroups,style}){
   const [groups, setGroups] = useState()
   const classes = useStyles()
   const yellowText = {color:yellow[500]}
@@ -31,7 +31,7 @@ export function AllGroups({getGroups}){
         group: group.name,
         inicio: group.startDate,
         sobre: group.about,
-        alumnos: group.usuarios.length,
+        alumnos: group.usuarios?(group.usuarios.length):(undefined),
         id: group.id
       })
     )
@@ -39,7 +39,7 @@ export function AllGroups({getGroups}){
   }
   console.log(groups)
   return (
-    <div> 
+    <div style={style}> 
       {groups && groups.length === 0 ? (
         <div>
           <h4>
