@@ -20,6 +20,7 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
+import FormGroup from './components/Groups/FormGroup';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
       <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
       <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
       <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
+      <Route exact path='/admin/formGroup' render={() => <FormGroup style={margen}/>} />
 
     </ThemeProvider>
   )

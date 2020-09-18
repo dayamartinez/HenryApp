@@ -6,19 +6,32 @@ const { Usuario, Group, Cohort } = require('../db.js');
 //Creamos un grupo
 server.post('/create',  (req, res) => {
     const { name, pairProgramming} = req.body
+    const emails = req.body;
+    
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
-      if (!name || !pairProgramming ) {
+      if (!name) {
           res.status(400).json({
               error: true,
               message: 'Debe enviar los campos requeridos'
           })
       }
       Group.create({
-          name: capName,
-          pairProgramming 
-    }) 
+          name: capName
+          
+    }) //recorremos la lista de alumnos y les asignamos el grupo que se acaba de crear
       .then(group => {
-          res.status(201).json({
+        emails.map((email) => {
+          Usuario.findOne({
+            where: {
+              email:email
+            }
+          }).then(user =>{
+              user.groupId = group.id
+              user.save()
+          })
+        })
+
+        res.status(201).json({
               success: true,
               message: 'Nuevo grupo creado correctamente',
               group
@@ -42,6 +55,7 @@ server.post('/create',  (req, res) => {
       res.status(404).send(err)
     })
   })
+
 
   //Mofificamos el grupo
   server.put('/update/:id',  (req, res) => {
