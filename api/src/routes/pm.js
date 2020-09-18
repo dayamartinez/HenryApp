@@ -41,10 +41,6 @@ server.put('/set', (req,res)=> {
         }
     })
       .then(pms => res.send(pms))
-      .catch(() => res.status(400).json({
-        error: true,
-        message: 'error al buscar los pms'
-       })
-      )
+      .catch(() => res.status(400).send([]))
   })
   module.exports = server;

@@ -9,6 +9,7 @@ import Profile from './components/Landing/User/profile.js';
 import Settings from './components/Landing/User/Settings.js';
 import AllCohorts from './components/Cohort/AllCohorts'
 import Pms from './components/Pms/ListPm'
+import CohortDetail from './components/CohortDetail/CohortDetail'
 // import {Redirect} from 'react-router';
 import Landing from './components/Landing/Landing.js';
 import forgotPassword from './components/Landing/forgotPassword.js';
@@ -40,12 +41,21 @@ function App(props) {
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
+
+      <Route exact path='/admin/students' render={() => <Students/>} />
+      <Route exact path='/admin/cohorts' render={() => <AllCohorts/>} />
+      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
+      <Route path='/pms' render={() => <Pms/>} />
+      <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
+      <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
+      <Route path='/cohortDetail/:id' render={({match}) => <CohortDetail match={match}/>} />
+
       <Route exact path='/admin/students' render={() => <Students style={margen}/>} />
       <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
       <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match} style={margen}/>} /> 
       <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
-      <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
-      <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
+      
+
 
     </ThemeProvider>
   )
