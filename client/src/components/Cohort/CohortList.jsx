@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getCohorts, getCohortDetail } from '../../actions/cohort';
 
-export function CohortList({getCohorts, getCohortDetail, cohorts, style}){
+export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, style}){
 
     useEffect(()=>{
         getCohorts()     
 
-    }, [])
+    },[])
 
     return (
         <div class="bg-dark" style = {style}>
@@ -19,7 +19,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, style}){
                 <h6 class="text-light mt-2">Filtrar por cohorte: </h6>
                 <div>
                     {cohorts && cohorts.map((c) => (
-                        <button type="button" onClick={() => getCohortDetail(c.id)}class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
+                        <button type="button" onClick={() => getCohortDetail(c.id)} class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
                         ))
                     } 
                 </div>
@@ -35,19 +35,26 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, style}){
                 </thead>
                 <tbody>
                 
-                {cohorts && cohorts.map((c) => (
+                {cohortDetail.length ? cohortDetail.map((c) => (
+                    c.usuarios.map(u => (
+                        <tr class="bg-light"> 
+                        <td>{u.name}</td>
+                        <td>{u.lastName}</td>
+                        <td>{c.name}</td>
+                        <td>{u.groupId}</td>
+                        </tr> 
+                    ))   
+                )): cohorts.map((c) => (
                     c.usuarios.map(u => (
                     <tr class="bg-light"> 
                     <td>{u.name}</td>
                     <td>{u.lastName}</td>
-                    <td>{u.cohortId}</td>
+                    <td>{c.name}</td>
                     <td>{u.groupId}</td>
                     </tr> 
-                    ))
-                    
-                ))}
-                
-                
+                    ))   
+                ))
+                }                
                 </tbody>
             </table>
         </div>
@@ -55,7 +62,8 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, style}){
 }
 
 const mapStateToProps = (state) => ({
-   cohorts: state.cohort.cohorts
+   cohorts: state.cohort.cohorts,
+   cohortDetail: state.cohort.cohortDetail
   })
   
   const mapDispatchToProps = dispatch => ({

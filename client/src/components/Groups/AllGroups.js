@@ -20,17 +20,21 @@ export function AllGroups({getGroups,style}){
   const [groups, setGroups] = useState()
   const classes = useStyles()
   const yellowText = {color:yellow[500]}
+  
   useEffect(()=>{
     getGroups()
     .then(data => setGroups(data.payload))    
   }, [])
+
+
+
   var data
   if(groups){
     data = groups.map(group => 
       ({
         group: group.name,
-        inicio: group.startDate,
-        sobre: group.about,
+        pm:group.name,
+        cohorte: group.cohort ? (group.cohort.name):('Sin cohorte asignado'),
         alumnos: group.usuarios?(group.usuarios.length):(undefined),
         id: group.id
       })
@@ -73,7 +77,7 @@ export function AllGroups({getGroups,style}){
 
                   <TableCell>{['Hola', 'Mundo']}</TableCell>
 
-                  <TableCell>{celda.sobre}</TableCell>
+                  <TableCell>{celda.cohorte}</TableCell>
 
                   <TableCell>{celda.alumnos}</TableCell>
                   

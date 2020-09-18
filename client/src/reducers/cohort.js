@@ -21,12 +21,13 @@ export default function cohort(state = initialState, action) {
         case GET_COHORTS:
             return {
                 ...state,
-                cohorts: action.payload
+                cohorts: action.payload,
+                cohortDetail:[]
             }
         case GET_COHORT_DETAIL:
             return {
                 ...state,
-                cohorts: action.payload
+                cohortDetail: action.payload
             }
         case REMOVE_COHORT:
             return {

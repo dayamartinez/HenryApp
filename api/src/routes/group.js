@@ -1,5 +1,6 @@
 const server = require('express').Router();
-const { Usuario, Group } = require('../db.js');
+//const { CohortList } = require('../../../client/src/components/Cohort/CohortList.jsx');
+const { Usuario, Group, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Creamos un grupo
@@ -91,9 +92,7 @@ server.post('/create',  (req, res) => {
   //Trae TODOS los grupos
   server.get('/', (req, res) => {
     Group.findAll({
-      include: {
-        model:Usuario
-      }
+      include:[{model: Usuario}, {model: Cohort}]
     }
     ).then(groups => res.send(groups))
       .catch(() => res.status(400).json({
