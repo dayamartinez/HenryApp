@@ -55,7 +55,7 @@ module.exports = (sequelize) => {
 
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       // validate: {
       //   is: {
       //     args: ["[A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9]"],
