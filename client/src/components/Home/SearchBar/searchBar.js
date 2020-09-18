@@ -13,6 +13,7 @@ import Avatar from '@material-ui/core/Avatar';
 import HenryIcon from '../../../images/henryUserIcon.jpg'
 import Link from '@material-ui/core/Link';
 import userCard from './userCards.js';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     search: {
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchBar(props) {
     const classes = useStyles();
     const [state, setState] = useState([])
+    const history = useHistory();
 
 async function getUsers(state) {
   
@@ -60,6 +62,7 @@ async function getUsers(state) {
       .then((response) => response.json())
       .then(usuarios => {
               userCard(usuarios)
+            history.push(`/Home/search/?search=${state}`)
             })
       .catch(error => {
         return error;

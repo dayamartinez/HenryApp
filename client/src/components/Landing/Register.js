@@ -113,9 +113,6 @@ export function Register(props) {
 
       const [errors, setErrors] = useState({});
 
-      
-
-  if (!props.redirect){
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -290,25 +287,20 @@ export function Register(props) {
         </Box> */}
       </Container>
     );
-  } else{
-  return (
-    <UserData />
-  )
- }
 }
 
 const mapStateToProps = state => {		
   return {		
     user: state.user,
-    redirect: state.global.redirect
+  //  redirect: state.global.redirect
   }		
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     setUser: (user)=>dispatch(setUser(user)),
-    setRedirect:(status)=>dispatch(setRedirect(status)),
-    setRedirectOff:()=>dispatch(setRedirectOff())
+    //setRedirect:(status)=>dispatch(setRedirect(status)),
+    //setRedirectOff:()=>dispatch(setRedirectOff())
   }
 }
     

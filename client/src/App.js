@@ -13,6 +13,7 @@ import Pms from './components/Pms/ListPm'
 import Landing from './components/Landing/Landing.js';
 import forgotPassword from './components/Landing/forgotPassword.js';
 import Contenedor from './components/Admin/Dashboard/Contenedor.js';
+import NewUser from './components/Landing/newUser.js'
 import AllGroups from "./components/Groups/AllGroups.js"
 import theme from "./GlobalTheme.js"
 import {ThemeProvider} from "@material-ui/core"
@@ -20,19 +21,22 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
+import userCard from './components/Home/SearchBar/userCards'
 
-
-function App() {
+function App(props) {
   const margen = {marginLeft:"240px"} // guardo el estilo en una unica variable y se las paso al componente por props
   return (
     <ThemeProvider theme = {theme}>
-      <Route path='/' component={NavBar} />
-      <Route  exact path='/Home'component={Home} />
-      <Route  exact path='/profile'component={Profile} />
+      {props.user.user.id === 0 && <Route exact path='/' component={NewUser}/>}
+      {props.user.user.id !== 0 && <Route path='/' component={NavBar} />}
+      {props.user.user.id !== 0 && <Route  exact path='/Home'component={Home} />}
+      {props.user.user.id !== 0 && <Route  exact path='/profile'component={Profile} />}
       <Route  exact path='/profile/Settings'component={Settings} />
-      <Route  exact path='/'component={Landing} />
       <Route  exact path='/forgotPassword'component={forgotPassword} />
-      <Route  exact path = '/register' component={Register}/>
+      <Route exact path='/Landing' component={Landing}/>
+      <Route exact path='/Home/search' component={userCard}/>
+      {/* MACHEA DESDE NEWUSER!! */}
+      {props.user.user.id !==0 && <Route  exact path = '/' component={Register}/>}
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
@@ -46,15 +50,16 @@ function App() {
     </ThemeProvider>
   )
 }
-// const mapStateToProps = state => {
-//   return {
-//     algo: state.algo
-//   }
-// }
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  }
+}
 
 {/* <Route exact path='/admin' component={Dashboard} />
 
 <Route exact path='/admin'component={Dashboard} /> */}
 
 
-export default connect(null, {})(App);
+export default connect(mapStateToProps,null)(App);

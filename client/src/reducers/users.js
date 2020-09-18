@@ -4,10 +4,10 @@ import { PROMOTE_PM, GET_PM, GET_PM_DETAIL} from '../actions/pm'
 
 
 const initialState ={
-    user:[{
+    user:{
         id: 0,
         isAdmin: false
-    }],
+    },
     email: [],
     searchUsers: []
 }

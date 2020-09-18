@@ -24,7 +24,8 @@ export  function userCard(usuarios){
   
     return(
       <List> 
-            {usuarios.map && usuarios.map(UsuarioEncontrado => (
+        <p>hola</p>
+            {(typeof usuarios !== 'object') && usuarios.map(UsuarioEncontrado => (
              
                 
               <div key={UsuarioEncontrado.id}>
