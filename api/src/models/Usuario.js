@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
         allowNull: true,
     },
 
-  //   provincia: {
+  //   state: {
   //     type: DataTypes.STRING,
   //     allowNull: true,
   // },
@@ -57,12 +57,6 @@ module.exports = (sequelize) => {
           isEmail: true
         },
       },
-
-    // mobilehone: {
-    //   type: DataTypes.STRING,
-    //   unique: true,
-    //   allowNull: true,
-    // },
 
     // gmail: {
     //   type: DataTypes.STRING,
