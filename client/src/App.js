@@ -13,14 +13,17 @@ import Pms from './components/Pms/ListPm'
 import Landing from './components/Landing/Landing.js';
 import forgotPassword from './components/Landing/forgotPassword.js';
 import Contenedor from './components/Admin/Dashboard/Contenedor.js';
-
+import AllGroups from "./components/Groups/AllGroups.js"
 import theme from "./GlobalTheme.js"
 import {ThemeProvider} from "@material-ui/core"
 import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
+import Instructor from './components/Instructors/ListInstructors';
+
 
 function App() {
+  const margen = {marginLeft:"240px"} // guardo el estilo en una unica variable y se las paso al componente por props
   return (
     <ThemeProvider theme = {theme}>
       <Route path='/' component={NavBar} />
@@ -33,10 +36,12 @@ function App() {
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
-      <Route exact path='/admin/students' render={() => <Students/>} />
-      <Route exact path='/admin/cohorts' render={() => <AllCohorts/>} />
-      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
-      <Route path='/pms' render={() => <Pms/>} />
+      <Route exact path='/admin/students' render={() => <Students style={margen}/>} />
+      <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
+      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match} style={margen}/>} /> 
+      <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
+      <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
+      <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
 
     </ThemeProvider>
   )

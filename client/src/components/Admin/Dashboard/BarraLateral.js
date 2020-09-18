@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles, Drawer, List} from '@material-ui/core';
-import {mainListItems} from '../listItems';
+import {mainListItems} from './listItems';
 
 const estilos = makeStyles(theme => ({
   drawer:{

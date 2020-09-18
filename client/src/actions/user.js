@@ -10,8 +10,6 @@ export const GET_USERS = 'GET_USERS'
 //   })
 
 //CREAR USUARIO
-
-
 export function addUser(data){
     return function (dispatch){
         console.log(data)
@@ -35,7 +33,6 @@ export function setUser (user){
 
 
 //MODIFICAR DATOS DE MI USUARIO
-
 export function updateUser(data){
     return function (dispatch){
         console.log(data)
