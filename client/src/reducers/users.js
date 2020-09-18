@@ -1,5 +1,6 @@
-import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER,CLEAN_USER} from '../actions/user.js'
+import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER, CLEAN_USER, USER_LOGOUT} from '../actions/user.js'
 import { PROMOTE_PM, GET_PM, GET_PM_DETAIL} from '../actions/pm'
+
 
 const initialState ={
     user:{
@@ -47,6 +48,12 @@ export default function user (state = initialState, action){
             ...state,
             user: action.payload
         }
+    }
+    if (action.type === USER_LOGOUT){
+        return{
+          ...state,
+          user: {}
+      }
     }
 
     if (action.type === CLEAN_USER){

@@ -4,6 +4,7 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SET_USER = 'SET_USER';
 export const CLEAN_USER = 'CLEAN_USER'
+export const USER_LOGOUT = 'USER_LOGOUT';
 // const instance = axios.create({
 //     withCredentials: true
 //   })
@@ -28,6 +29,12 @@ export function addUser(data){
 export function setUser (user){
     console.log(user);
     return {type:SET_USER, payload:user}
+}
+
+//DESLOGUEAR USUARIO!!
+export function userLogout (user){
+    console.log(user);
+    return {type:USER_LOGOUT, payload:user}
 }
 
 
