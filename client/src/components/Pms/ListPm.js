@@ -29,7 +29,7 @@ export function ListPM({getPm}){
       ({
         name: p.name,
         mail: p.email,
-        cohorte:p.cohort,
+        cohorte:p.cohortId,
         id: p.id
       })
     )

@@ -8,6 +8,7 @@ const Cohort = require('./cohort')
 const Pm = require('./pm')
 const Student = require('./student')
 const Group = require('./group.js')
+const Instructor = require ('./instructor')
 
 const router = Router();
 
@@ -21,5 +22,6 @@ router.use('/cohort', Cohort)
 router.use('/pm', Pm)
 router.use('/student', Student)
 router.use('/group', Group)
+router.use('/instructor', Instructor)
 
 module.exports = router;

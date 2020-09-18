@@ -5,6 +5,7 @@ export const GET_COHORT_DETAIL = 'GET_COHORT_DETAIL'
 export const GET_COHORTS = 'GET_COHORTS'
 export const REMOVE_COHORT = 'REMOVE_COHORT'
 
+
 export function addCohort(cohort) {
   return function (dispatch) {
     return fetch(`http://localhost:3001/cohort/create`, {
@@ -53,6 +54,8 @@ export function updateCohort(id, cohort) {
     .catch(err => swal(err, '', 'error'))
   }
 }
+
+
 
 export function getCohorts() {
   return function (dispatch) {

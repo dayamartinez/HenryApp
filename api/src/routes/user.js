@@ -36,7 +36,7 @@ server.post('/', async (req, res, next) => {
     }
   })
   var {email, password, name, lastName, birthday, address, country} = req.body;
-  if (email && password && name && lastName && birthday && address && country){
+  if (email && password && name && lastName){
     password = await hash(req.body.password,10);
     //SE COMENTARON VARIOS CAMPOS PARA PODER CREAR USUARIOS, LA IDEA ES QUE SE LLENE UN FORMULARIO DESPUES PARA CAMBIAR ESOS CAMPOS!
     db.Usuario.create({
@@ -47,8 +47,8 @@ server.post('/', async (req, res, next) => {
       country,
       // about: req.body.about,
       email,
-      password
-      // profile: req.body.profile,
+      password,
+      profile: req.body.profile,
       // rol: req.body.rol,
     })
     .then((user) =>{
@@ -56,7 +56,7 @@ server.post('/', async (req, res, next) => {
     })
     .catch(next);
   } else {
-    res.status(500).send(err)
+    res.status(500).send('error')
   }
 })
 
