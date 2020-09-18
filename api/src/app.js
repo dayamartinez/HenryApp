@@ -104,6 +104,8 @@ server.post('/login',
     res.status(200).send(req.user);
   });
 
+
+  //ESTA FUNCION ES PARA CERRAR SESION
   server.get('/logout', function(req, res){
     req.logOut();
     if (req.session) {
@@ -118,6 +120,8 @@ server.post('/login',
       })
     }
   });
+
+
 
 // Error catching endware.
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
