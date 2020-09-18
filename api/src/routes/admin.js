@@ -67,11 +67,19 @@ app.put('/setcohort/:id', (req,res)=> {
   Usuario.findByPk(req.body.id)
     .then(user => {
      user,
-     user.cohortId = req.params.id
+     user.cohortId = req.params.id 
 
      user.save().then(user => res.status(201).send(user))
   })
   .catch(err => res.status(404).send(err))
+})
+
+app.delete('/deleteCohort', (req,res) => {
+  Usuario.findByPk(req.body.id)
+  .then(user => {
+    user.cohortId.destroy()
+  })
+  .then(user => res.status(201).send(user))
 })
 
 //asigna un grupo a un usuario

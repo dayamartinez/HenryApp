@@ -62,7 +62,7 @@ export function AllCohorts({getCohorts,style}){
 
                   <TableCell>
                     <Link 
-                      href={"/admin/cohorts/"+celda.id} 
+                      href={"/cohortDetail/"+celda.id} 
                       color="inherit" 
                       underline="none">
                         {celda.cohorte}
