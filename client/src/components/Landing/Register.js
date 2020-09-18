@@ -17,11 +17,14 @@ import {setUser} from '../../actions/user.js';
 import {setRedirect, setRedirectOff} from '../../actions/global'
 import {connect} from 'react-redux';
 import UserData from './UserData.js';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 // import { useHistory } from 'react-router-dom';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 65-67) me tiraban error
-
+//Argentina, uruguay, chile, colombia
 */
 
 //ESTILOS DE MATERIAL UI
@@ -43,6 +46,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  formControl:{
+    width: '100%'
+  },
+  birthday: {
+    width: '100%'
+  }
 }));
 
 
@@ -52,10 +61,13 @@ export function Register(props) {
     const [input,setInput]=useState({
         name:'',
         lastName:'',
-        email:'',
-        password:'',
-        confirmPassword: ''
-  
+        birthday: '',
+        country:'',
+        address:'',
+        provincia: '',
+        github: '',
+        gmail: '',
+        mobilephone: ''
     });
 
     const verifyUser = function(e){
@@ -75,9 +87,10 @@ export function Register(props) {
           props.setRedirect(status)
 
         }else{alert("El mail ya esta en uso")}
-   
       })
     }
+
+
 
     const onSend = function(e){
       e.preventDefault();
@@ -100,9 +113,6 @@ export function Register(props) {
 
       const [errors, setErrors] = useState({});
 
-      
-
-  if (!props.redirect){
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -146,33 +156,85 @@ export function Register(props) {
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
-              <Grid item xs={12}>
+
+              <Grid  item xs={12} className={classes.birthday}>
                 <TextField
-                  error={errors.email}
-                  helperText={errors.email}
-                // error={!/\S+@\S+\.\S+/.test(input.email) ? true : false}
-                  //helperText={true ? "Debe ser un mail valido" : null}
+                  defaultValue="2017-05-24"
                   variant="outlined"
                   required
                   fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
+                  id="date"
+                  type="date"
+                  label="birthday"
+                  name="lastName"
+                  autoComplete="off"
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </Grid>
+   
+              <Grid item xs={12}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel htmlFor="outlined-age-native-simple">Pais</InputLabel>
+                <Select
+                  native
+                  // value={state.age}
+                  // onChange={handleChange}
+                  onChange={(e) => handleInputChange(e)}
+                  label="country"
+                  inputProps={{
+                    name: 'country',
+                    id: 'outlined-age-native-simple',
+                  }}
+                >
+                  <option aria-label="None" value="" />
+                  <option >Argentina</option>
+                  <option >Uruguay</option>
+                  <option >Colombia</option>
+                  <option >Chile</option>
+                  <option >Peru</option>
+                  <option >Venezuela</option>
+                  <option >Paraguay</option>
+                  <option >Ecuador</option>
+                </Select>
+               </FormControl>
+                
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="address"
+                  label="Direccion"
+                  id="address"
+                  autoComplete="off"
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="provincia"
+                  label="Provincia"
+                  id="provincia"
                   autoComplete="off"
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  error={errors.password}
-                  helperText={errors.password}
                   variant="outlined"
                   required
                   fullWidth
-                  name="password"
-                  label="Contraseña"
-                  type="password"
-                  id="password"
+                  name="mobilephone"
+                  label="Numero de celular"
+                  id="mobilephone"
+                  type="number"
                   autoComplete="off"
                   onChange={(e) => handleInputChange(e)}
                 />
@@ -182,21 +244,32 @@ export function Register(props) {
                   variant="outlined"
                   required
                   fullWidth
-                  name="confirmPassword"
-                  label="Confirmar Contraseña"
-                  type="password"
-                  id="password"
+                  name="github"
+                  label="cuenta de Github"
+                  id="github"
                   autoComplete="off"
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="google"
+                  label="cuenta de google"
+                  id="github"
+                  autoComplete="off"
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </Grid>
+              <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Deseo recibir notificaciones e información via email."
                 />
-              </Grid>
+
             </Grid>
+
             <Button
               type="submit"
               fullWidth
@@ -207,13 +280,6 @@ export function Register(props) {
             >
               Continuar
             </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Ya tiene una cuenta? Ingresar
-                </Link>
-              </Grid>
-            </Grid>
           </form>
         </div>
         {/* <Box mt={5}>
@@ -221,25 +287,20 @@ export function Register(props) {
         </Box> */}
       </Container>
     );
-  } else{
-  return (
-    <UserData />
-  )
- }
 }
 
 const mapStateToProps = state => {		
   return {		
     user: state.user,
-    redirect: state.global.redirect
+  //  redirect: state.global.redirect
   }		
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     setUser: (user)=>dispatch(setUser(user)),
-    setRedirect:(status)=>dispatch(setRedirect(status)),
-    setRedirectOff:()=>dispatch(setRedirectOff())
+    //setRedirect:(status)=>dispatch(setRedirect(status)),
+    //setRedirectOff:()=>dispatch(setRedirectOff())
   }
 }
     
@@ -250,21 +311,7 @@ export function validate(input) {
  }
  if(!input.lastName){
   errors.lastName= 'Por favor introduzca su apellido'
-}
-  if (!input.email) {
-    errors.email = 'Por favor introduzca su email';
-  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = 'El email es invalido';
-  }
-if(!input.password){
-  errors.password = 'Por favor introduzca su contraseña';
-} else if (!/([A-Za-z][A-Za-z0-9]*[0-9][A-Za-z0-9])/.test(input.password)) {
-  errors.password = 'La contraseña debe contener una letra mayuscula y al menos dos numeros';
-
-}else if(input.password !== input.confirmPassword){
-  errors.password= "Las contraseñas no coinciden"
-
-}
+ }
   return errors;
 };
 

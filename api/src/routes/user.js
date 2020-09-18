@@ -20,8 +20,37 @@ server.get('/:email',(req,res,next)=>{
   return}
   })})
 
-//Creamos los usuarios en la BD
+//ESTA RUTA ES PARA QUE UN USUARIO INVITADO PUEDA ENTRAR POR PRIMERA VEZ
+server.put('/inviteuser', (req,res,next)=>{
+  //VALORES PASADOS POR BODY
+  var {email,password} = req.body;
+  //BUSCA EL MAIL EN LA BASE DE DATOS
+  db.Usuario.findOne({
+    where:{
+      email
+    }
+  })
+  //DEVUELVE EL MAIL MODIFICA LA PASSWORD Y GUARDA!
+  .then ( async user=> {
+    if (!user.password){
+      password = await hash(password,10);
+      user.update({
+        password
+      })
+      res.status(201).send(user);
+    } else {
+      res.status(400).json({err:"El usuario tiene un perfil asociado!"})
+      console.log(res.send);
+    }
+  })
+  //MANEJO DE ERROR POR SI EL MAIL NOSE ENCUENTRA EN LA BASE DE DATOS!
+  .catch(err=>{
+    res.status(404).json({err:"El usuario no existe en la base de datos!"})
+  })
+})
 
+
+//Creamos los usuarios en la BD
 server.post('/', async (req, res, next) => {
   db.Usuario.findOne({
     where:{
@@ -40,14 +69,14 @@ server.post('/', async (req, res, next) => {
     password = await hash(req.body.password,10);
     //SE COMENTARON VARIOS CAMPOS PARA PODER CREAR USUARIOS, LA IDEA ES QUE SE LLENE UN FORMULARIO DESPUES PARA CAMBIAR ESOS CAMPOS!
     db.Usuario.create({
-      name,
-      lastName,
-      birthday,
-      address,
-      country,
+      //name,
+      //lastName,
+      //birthday,
+      //address,
+      //country,
       // about: req.body.about,
       email,
-      password
+      //password
       // profile: req.body.profile,
       // rol: req.body.rol,
     })
