@@ -24,6 +24,7 @@ export function promoteInstructor(instructor) {
   }
 }
 
+
 export function getInstructor() {
   return function (dispatch) {
     return fetch('http://localhost:3001/instructor', {
@@ -38,7 +39,7 @@ export function getInstructor() {
   }
 }
 
-//FALTA REDUCERS EN USER
+
 export function getInstructorDetail(id) {
   return function (dispatch) {
     return fetch(`http://localhost:3001/instructor/${id}`, {

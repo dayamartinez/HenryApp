@@ -10,6 +10,8 @@ import { connect } from 'react-redux'
 import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
+import ExcelLoader from './ExcelLoader';
+import axios from 'axios';
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -33,17 +35,17 @@ import swal from 'sweetalert'
     }
   }));
   
-  export function FormCohort({ match, addCohort, updateCohort, removeCohort}) {
+  export function FormCohort({ match, addCohort, updateCohort, removeCohort, emails}) {
 
      let id = match.params.id
      const history = useHistory()
 
     const classes = useStyles();
+    
     const [input, setInput]= useState({
       name:'',
       startDate: '',
       about:''
-      
     });
 
     useEffect(() =>{
@@ -80,7 +82,22 @@ import swal from 'sweetalert'
           about: input.about
         }
        id ? updateCohort(id, cohort) : addCohort(cohort)
-	}
+    }
+
+    //se agrega función para que al hacer click en crear, se envien al back los correos que fueron cargados
+    const sendMail = function(e){
+      e.preventDefault();
+      if(emails){
+        axios.post('http://localhost:3001/email/send-email/:email', emails)
+        .then(() => {
+          console.log("Todo bien")
+        })
+        .catch(err =>{
+          alert(err)
+        })
+      }
+    }
+  
 
     return (
       <Container component="main" maxWidth="xs">
@@ -118,7 +135,7 @@ import swal from 'sweetalert'
             onChange={handleInputChange}
             required
             />
-            <TextField
+             <TextField
               variant="outlined"
               margin="normal"
               fullWidth
@@ -129,6 +146,8 @@ import swal from 'sweetalert'
               value={input.about}
               onChange={handleInputChange}
             />
+            {/*Se llama a la función para cargar las direcciones de email de los alumnos */}
+            <ExcelLoader/>
 
             {id?
             <Button
@@ -146,6 +165,7 @@ import swal from 'sweetalert'
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e)=> sendMail(e)}
             >
               Crear
             </Button>}
@@ -184,6 +204,12 @@ import swal from 'sweetalert'
       </Container>
     )
   }
+
+  const mapStateToProps = (state) => {
+    return {
+      emails: state.cohort.emails
+    }
+  }
  
   const mapDispatchToProps = dispatch => { 
     return {
@@ -192,4 +218,4 @@ import swal from 'sweetalert'
       removeCohort: (id) => dispatch(removeCohort(id))
     }
   }
-  export default connect(null, mapDispatchToProps)(FormCohort)
+  export default connect(mapStateToProps, mapDispatchToProps)(FormCohort)

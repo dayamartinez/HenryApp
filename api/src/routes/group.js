@@ -72,7 +72,9 @@ server.post('/create',  (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [Usuario]
+      include: {
+        model: Usuario
+      }
     })
       .then(group =>{
         !group
@@ -88,8 +90,12 @@ server.post('/create',  (req, res) => {
   
   //Trae TODOS los grupos
   server.get('/', (req, res) => {
-    Group.findAll()
-      .then(groups => res.send(groups))
+    Group.findAll({
+      include: {
+        model:Usuario
+      }
+    }
+    ).then(groups => res.send(groups))
       .catch(() => res.status(400).json({
         error: true,
         message: 'error al buscar los grupos'
