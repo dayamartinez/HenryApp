@@ -8,7 +8,16 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
         getCohorts()     
 
     },[])
+    const buscarGrupo= (cohorte,grupoId)=>{
+        var grupoName = "el aulumno no tiene un grupo asignado"
+        cohorte.groups.forEach(grupo => {
+            if(grupoId=grupo.id){
+                grupoName = grupo.name
+            }
+        })
+        return grupoName
 
+    }
     return (
         <div class="bg-dark" style = {style}>
             <h2 class="bg-dark text-warning text-center"> Alumnos </h2>
@@ -41,7 +50,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
                         <td>{c.name}</td>
-                        <td>{u.groupId}</td>
+                        <td>{buscarGrupo(c,u.grupoId)}</td>
                         </tr> 
                     ))   
                 )): cohorts.map((c) => (
@@ -50,7 +59,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                     <td>{u.name}</td>
                     <td>{u.lastName}</td>
                     <td>{c.name}</td>
-                    <td>{u.groupId}</td>
+                    <td>{buscarGrupo(c,u.grupoId)}</td>
                     </tr> 
                     ))   
                 ))
