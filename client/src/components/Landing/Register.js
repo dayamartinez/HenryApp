@@ -13,14 +13,15 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {setUser} from '../../actions/user.js';
+import {setData} from '../../actions/user.js';
 import {setRedirect, setRedirectOff} from '../../actions/global'
 import {connect} from 'react-redux';
 import UserData from './UserData.js';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 65-67) me tiraban error
@@ -56,9 +57,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function Register(props) {
-  
+    const [errors, setErrors] = useState({});
     const classes = useStyles();
+
     const [input,setInput]=useState({
+        id: props.user.user.id,
         name:'',
         lastName:'',
         birthday: '',
@@ -70,31 +73,30 @@ export function Register(props) {
         mobilephone: ''
     });
 
-    const verifyUser = function(e){
-      e.preventDefault();
-      Axios.get("http://localhost:3001/user/"+input.email)
-      .then(res=>{
-        console.log(res.data)
-        if (res.data.length===0){
-          let user = {
-            name:input.name,
-            lastName:input.lastName,
-            email:input.email,
-            password:input.password
-          }
-          let status = true
-          props.setUser(user)
-          props.setRedirect(status)
+    // const verifyUser = function(e){
+    //   e.preventDefault();
+    //   Axios.get("http://localhost:3001/user/"+input.email)
+    //   .then(res=>{
+    //     console.log(res.data)
+    //     if (res.data.length===0){
+    //       let user = {
+    //         name:input.name,
+    //         lastName:input.lastName,
+    //         email:input.email,
+    //         password:input.password
+    //       }
+    //       let status = true
+    //       props.setUser(user)
+    //       props.setRedirect(status)
 
-        }else{alert("El mail ya esta en uso")}
-      })
-    }
-
-
+    //     }else{alert("El mail ya esta en uso")}
+    //   })
+    // }
 
     const onSend = function(e){
       e.preventDefault();
-      props.addUser(input)
+      console.log(input)
+      props.setData(input)
     
     }
 
@@ -111,7 +113,23 @@ export function Register(props) {
         }));
       }
 
-      const [errors, setErrors] = useState({});
+      // const logout = function(e) {
+      //   e.preventDefault(e)
+      //     props.userLogout()
+      
+      //   //CON ESTA LLAMADA LE PEGAMOS A LOGOUT EN EL BACK
+      //   axios.get('http://localhost:3001/logout')
+      //   .then(async res=>{
+      //     await alert("Sesión cerrada");
+      //     history.push('/')
+      //   })
+      
+      //   //MANEJO DE ERRORES...
+      //   .catch(err=>{
+      //     alert(err);
+      //   })
+      //   return;
+      // }
 
     return (
       <Container component="main" maxWidth="xs">
@@ -166,7 +184,7 @@ export function Register(props) {
                   id="date"
                   type="date"
                   label="birthday"
-                  name="lastName"
+                  name="birthday"
                   autoComplete="off"
                   onChange={(e) => handleInputChange(e)}
                 />
@@ -276,9 +294,9 @@ export function Register(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(e)=>verifyUser(e)}
+              onClick={(e)=>onSend(e)}
             >
-              Continuar
+              Registrar
             </Button>
           </form>
         </div>
@@ -298,7 +316,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setUser: (user)=>dispatch(setUser(user)),
+    setData: (user)=>dispatch(setData(user)),
     //setRedirect:(status)=>dispatch(setRedirect(status)),
     //setRedirectOff:()=>dispatch(setRedirectOff())
   }

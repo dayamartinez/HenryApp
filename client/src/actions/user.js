@@ -6,6 +6,7 @@ export const SET_USER = 'SET_USER';
 export const CLEAN_USER = 'CLEAN_USER';
 export const GET_USERS = 'GET_USERS';
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const COMPLETE_USER = 'COMPLETE_USER';
 // const instance = axios.create({
 //     withCredentials: true
 //   })
@@ -95,5 +96,20 @@ export function getAllUser(data) {
                     });
                 });
         }
+    }
+}
+
+//COMPLETAR EL RESTO DE LOS DATOS DEL USUARIO INVITADO
+export function setData(data){
+    return function (dispatch){
+        console.log(data)
+        return axios.put(`http://localhost:3001/user/completeprofile/${data.id}`, data)
+        .then(res => {
+            dispatch({type: COMPLETE_USER, payload: res.data})
+            alert("Datos Actualizados correctamente, ya puede iniciar sesion en HenryApp")
+        })
+        .catch(err =>{
+            alert(err)
+        })
     }
 }
