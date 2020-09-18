@@ -1,6 +1,7 @@
 import React from 'react';
 import {AppBar, Toolbar, Typography, IconButton, Button, makeStyles} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import SearchBar from './Home/SearchBar/searchBar.js'
 import { userLogout } from '../actions/user';
 import axios from 'axios';
 import {connect} from 'react-redux';
@@ -56,6 +57,7 @@ const logout = function(e) {
          <Typography variant='h6' className={s.title}>
           HenryApp
          </Typography>
+         <SearchBar />
           <Button variant='text' color = 'primary'>
             Perfil
           </Button>

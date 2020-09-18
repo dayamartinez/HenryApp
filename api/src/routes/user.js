@@ -119,4 +119,38 @@ server.put('/settings/:id', (req, res, next) => {
   }).catch(next)
 })
 
+
+//traer perfiles de usuario que matcheen con la busqueda searchBar
+server.get('/users/:id', (req,res,next) => {
+  console.log('hola')
+  console.log(req.body)
+  console.log('hola')
+  console.log(req.params)
+  db.Usuario.findAll({
+    where: {
+			name: {
+				[Sequelize.Op.iLike]: `%${req.params.id}%`
+			}
+		},
+		where: {
+			lastName: {
+				[Sequelize.Op.iLike]: `%${req.params.id}%`
+			}
+		},
+		where: {
+			email: {
+				[Sequelize.Op.iLike]: `%${req.params.id}%`
+			}
+		}
+	})
+  .then( usuario => {
+    console.log(usuario)
+      res.status(200).json(usuario);
+  }).catch(err => res.status(404).send(err))
+  
+})
+
+
+
+
 module.exports = server;

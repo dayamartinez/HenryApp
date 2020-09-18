@@ -1,4 +1,5 @@
-import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER, CLEAN_USER, USER_LOGOUT} from '../actions/user.js'
+
+import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER, CLEAN_USER, GET_USERS, USER_LOGOUT} from '../actions/user.js'
 import { PROMOTE_PM, GET_PM, GET_PM_DETAIL} from '../actions/pm'
 
 
@@ -7,7 +8,8 @@ const initialState ={
         id: 0,
         isAdmin: false
     },
-    email: []
+    email: [],
+    searchUsers: []
 }
 
 export default function user (state = initialState, action){
@@ -58,6 +60,12 @@ export default function user (state = initialState, action){
 
     if (action.type === CLEAN_USER){
         return state = initialState
+    }
+    if (action.type === GET_USERS){
+        return {
+            ...state,
+            searchUsers: action.payload
+        }
     }
     return state
 }

@@ -21,19 +21,20 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
-
+import userCard from './components/Home/SearchBar/userCards'
 
 function App(props) {
   const margen = {marginLeft:"240px"} // guardo el estilo en una unica variable y se las paso al componente por props
   return (
     <ThemeProvider theme = {theme}>
-      {props.user.user.id === 0 && <Route path='/' component={NewUser}/>}
+      {props.user.user.id === 0 && <Route exact path='/' component={NewUser}/>}
       {props.user.user.id !== 0 && <Route path='/' component={NavBar} />}
       {props.user.user.id !== 0 && <Route  exact path='/Home'component={Home} />}
       {props.user.user.id !== 0 && <Route  exact path='/profile'component={Profile} />}
       <Route  exact path='/profile/Settings'component={Settings} />
       <Route  exact path='/forgotPassword'component={forgotPassword} />
-      
+      <Route exact path='/Landing' component={Landing}/>
+      <Route exact path='/Home/search' component={userCard}/>
       {/* MACHEA DESDE NEWUSER!! */}
       {props.user.user.id !==0 && <Route  exact path = '/' component={Register}/>}
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
