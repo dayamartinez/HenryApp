@@ -25,7 +25,7 @@ export default function cohort(state = initialState, action) {
         case GET_COHORT_DETAIL:
             return {
                 ...state,
-                cohortDetail: action.payload
+                cohorts: action.payload
             }
         case REMOVE_COHORT:
             return {

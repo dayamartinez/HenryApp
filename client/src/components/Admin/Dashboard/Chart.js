@@ -43,11 +43,11 @@ export default function Chart() {
               position="left"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
             >
-              Sales ($)
+              Alumnos contratados
             </Label>
           </YAxis>
           <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
-        </BarChart>
+        </LineChart>
       </ResponsiveContainer>
     </React.Fragment>
   );

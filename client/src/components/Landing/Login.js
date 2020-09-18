@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import Axios from 'axios';
 import {setUser} from '../../actions/user.js';
 import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
 /*
 
 este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 71-73) me tiraban error
@@ -52,7 +53,7 @@ export function Copyright() {
 
   //LOGIN PRINCIPAL DE LA PAGINA!
   export function Login(props) {
-    
+    const history = useHistory();
     const classes = useStyles();
     const [input,setInput]=React.useState({
       email:'',
@@ -67,12 +68,13 @@ export function Copyright() {
       })
     }
 
-    const loginUser = function(e){
+    const loginUser = function  (e){
       e.preventDefault();
       Axios.post('http://localhost:3001/login',input,{withCredentials:true})
-      .then(resp=>{
-        props.setUser(resp)
+      .then( async resp=> {
+        await props.setUser(resp.data)
       })
+      history.push("/profile");
     }
     //COMPONENTE DE MATERIAL UI
     return (
@@ -83,7 +85,7 @@ export function Copyright() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Ingresar
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -92,7 +94,7 @@ export function Copyright() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Email"
               name="username"
               autoComplete="email"
               autoFocus
@@ -104,7 +106,7 @@ export function Copyright() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Contraseña"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -112,7 +114,7 @@ export function Copyright() {
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Recordarme"
             />
             <Button
               type="submit"
@@ -122,18 +124,18 @@ export function Copyright() {
               className={classes.submit}
               onClick={(e)=>loginUser(e)}
             >
-              Sign In
+              Ingresar
             </Button>
             <Grid container>
               <Grid item xs>
                 <Link to="/forgotPassword" variant="body2">
-                  Forgot password?
+                  ¿Olvido la contraseña?
                 </Link>
               </Grid>
               <Grid item>
                 <Link to = "/register">
                   <span>
-                  "Don't have an account? Sign Up"
+                  ¿No tiene una cuenta? Registrese
 
                   </span>
                 </Link>

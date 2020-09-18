@@ -9,6 +9,17 @@ const Sequelize = require('sequelize');
 
 //app.use(cors());
 
+//Busca usuario por email
+server.get('/:email',(req,res,next)=>{
+  let email = req.params.email
+  console.log(email)
+  db.Usuario.findAll({
+    where:{email:email}
+  })
+  .then(user=>{if(user){res.status(200).send(user);
+  return}
+  })})
+
 //Creamos los usuarios en la BD
 
 server.post('/', async (req, res, next) => {
@@ -24,16 +35,16 @@ server.post('/', async (req, res, next) => {
       res.status(400).send("Usuario existente!")
     }
   })
-  var {email, password, name, lastName} = req.body;
-  if (email && password && name && lastName){
-    password = await hash(password,10);
+  var {email, password, name, lastName, birthday, address, country} = req.body;
+  if (email && password && name && lastName && birthday && address && country){
+    password = await hash(req.body.password,10);
     //SE COMENTARON VARIOS CAMPOS PARA PODER CREAR USUARIOS, LA IDEA ES QUE SE LLENE UN FORMULARIO DESPUES PARA CAMBIAR ESOS CAMPOS!
     db.Usuario.create({
       name,
       lastName,
-      // birthday: req.body.birthday,
-      // address: req.body.address,
-      // country: req.body.country,
+      birthday,
+      address,
+      country,
       // about: req.body.about,
       email,
       password
@@ -78,5 +89,39 @@ server.put('/settings/:id', (req, res, next) => {
       })
   }).catch(next)
 })
+
+
+//traer perfiles de usuario que matcheen con la busqueda searchBar
+server.get('/users/:id', (req,res,next) => {
+  console.log('hola')
+  console.log(req.body)
+  console.log('hola')
+  console.log(req.params)
+  db.Usuario.findAll({
+    where: {
+			name: {
+				[Sequelize.Op.iLike]: `%${req.params.id}%`
+			}
+		},
+		where: {
+			lastName: {
+				[Sequelize.Op.iLike]: `%${req.params.id}%`
+			}
+		},
+		where: {
+			email: {
+				[Sequelize.Op.iLike]: `%${req.params.id}%`
+			}
+		}
+	})
+  .then( usuario => {
+    console.log(usuario)
+      res.status(200).json(usuario);
+  }).catch(err => res.status(404).send(err))
+  
+})
+
+
+
 
 module.exports = server;

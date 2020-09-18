@@ -3,11 +3,15 @@ export const ADD_USER = 'ADD_USER';
 export const UPDATE_USER = 'UPDATE_USER';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SET_USER = 'SET_USER';
+export const CLEAN_USER = 'CLEAN_USER';
+export const GET_USERS = 'GET_USERS'
 // const instance = axios.create({
 //     withCredentials: true
 //   })
 
 //CREAR USUARIO
+
+
 export function addUser(data){
     return function (dispatch){
         console.log(data)
@@ -71,3 +75,21 @@ export function ForgotPass(data){
     }
 }
 
+export function cleanUser(){
+    return{type:CLEAN_USER}
+} 
+
+export function getAllUser(data) {
+    if (typeof data !== "object") {
+        return function (dispatch) {
+            return fetch(`http://localhost:3001/user/users/${data}`)
+                .then(response => response.json())
+                .then(json => {
+                    dispatch({
+                        type: 'GET_USERS',
+                        payload: json
+                    });
+                });
+        }
+    }
+}

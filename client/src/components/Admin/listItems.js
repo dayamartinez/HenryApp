@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from '@material-ui/core'
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -11,7 +11,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 export const mainListItems = (
@@ -20,13 +19,15 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
+      <Link href='/admin'  color="inherit" underline="none">
       <ListItemText primary="Dashboard" />
+      </Link>
     </ListItem>
     <ListItem button>
       <ListItemIcon>
         <GroupIcon />
       </ListItemIcon>
-      <Link to='/students'>
+      <Link href='/admin/students'  color="inherit" underline="none">
       <ListItemText primary="Alumnos" />
       </Link>
       
@@ -41,7 +42,7 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupIcon/>
       </ListItemIcon>
-      <Link to='/pms'>
+      <Link href='/pms' color="inherit" underline="none">
        <ListItemText primary="PMs" />
       </Link>
      
@@ -50,7 +51,7 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupWorkIcon />
       </ListItemIcon>
-      <Link to='/cohorts' >
+      <Link href='/admin/cohorts' color="inherit" underline="none">
         <ListItemText primary="Cohortes" />
         </Link>
       
@@ -65,7 +66,7 @@ export const mainListItems = (
       <ListItemIcon>
         <GroupAddIcon/>
       </ListItemIcon>
-      <Link to='/admin/createCohort'>
+      <Link href='/admin/createCohort' color="inherit" underline="none">
       <ListItemText primary="Crear Cohorte" />
       </Link>
     </ListItem>
