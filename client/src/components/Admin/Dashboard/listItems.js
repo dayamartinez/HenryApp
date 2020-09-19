@@ -74,12 +74,13 @@ export const mainListItems = (
       <ListItemText primary="Crear Cohorte" />
       </Link>
     </ListItem>
+    <Link href='/admin/formGroup' color="secondary" underline="none">
     <ListItem button>
       <ListItemIcon>
         <GroupAddIcon/>
       </ListItemIcon>
       <ListItemText primary="Crear Grupos" />
     </ListItem>
-    
+    </Link>
   </div>
 );

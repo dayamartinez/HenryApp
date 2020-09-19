@@ -22,7 +22,11 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
+
+import FormGroup from './components/Groups/FormGroup';
+
 import UserCard from './components/Home/SearchBar/userCards'
+
 
 function App(props) {
   const margen = {marginLeft:"240px"} // guardo el estilo en una unica variable y se las paso al componente por props
@@ -46,19 +50,24 @@ function App(props) {
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
 
-      <Route exact path='/admin/students' render={() => <Students/>} />
-      <Route exact path='/admin/cohorts' render={() => <AllCohorts/>} />
-      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match}/>} />
-      <Route path='/pms' render={() => <Pms/>} />
-      <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
-      <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
-      <Route path='/cohortDetail/:id' render={({match}) => <CohortDetail match={match}/>} />
-
-      <Route exact path='/admin/students' render={() => <Students style={margen}/>} />
-      <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
-      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match} style={margen}/>} /> 
-      <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
       
+      {/*---------------------------------------------------------------------------------
+      rutas del admin */}
+
+      {/* Cohortes */}
+      <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
+      <Route exact path='/cohortDetail/:id' render={({match}) => <CohortDetail match={match}/>} />
+      <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
+      <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match} style={margen}/>} /> 
+      
+      {/* Grupos */}
+      <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
+      <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
+      <Route exact path='/admin/formGroup' render={() => <FormGroup style={margen}/>} />
+      
+      {/* Estudiantes */}
+      <Route exact path='/admin/students' render={() => <Students style={margen}/>} />
+    {/*----------------------------------------------------------------------------------*/}
 
 
     </ThemeProvider>
