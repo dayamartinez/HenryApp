@@ -72,7 +72,7 @@ export function Copyright() {
       e.preventDefault();
       Axios.post('http://localhost:3001/login',input,{withCredentials:true})
       .then( async resp=> {
-        await props.setUser(resp.data)
+        await props.setUser(resp)
       })
       history.push("/profile");
     }
@@ -112,10 +112,10 @@ export function Copyright() {
               autoComplete="current-password"
               onChange={(e)=>handleInputChange(e)}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Recordarme"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -130,14 +130,6 @@ export function Copyright() {
               <Grid item xs>
                 <Link to="/forgotPassword" variant="body2">
                   ¿Olvido la contraseña?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to = "/register">
-                  <span>
-                  ¿No tiene una cuenta? Registrese
-
-                  </span>
                 </Link>
               </Grid>
             </Grid>
