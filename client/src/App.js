@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { connect } from "react-redux";
-import {Route} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import Register from './components/Landing/Register.js'
 import Cohort from './components/Cohort/FormCohort.jsx'
 import Students from './components/Cohort/CohortList.jsx'
@@ -22,22 +22,25 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
-import userCard from './components/Home/SearchBar/userCards'
+import UserCard from './components/Home/SearchBar/userCards'
 
 function App(props) {
   const margen = {marginLeft:"240px"} // guardo el estilo en una unica variable y se las paso al componente por props
   return (
     <ThemeProvider theme = {theme}>
-      {props.user.user.id === 0 && <Route exact path='/' component={NewUser}/>}
-      {props.user.user.id !== 0 && <Route path='/' component={NavBar} />}
-      {props.user.user.id !== 0 && <Route  exact path='/Home'component={Home} />}
-      {props.user.user.id !== 0 && <Route  exact path='/profile'component={Profile} />}
+      <Route exact path='/inviteuser'>
+        {!props.user.user.id ? <NewUser/> : <Register/>}
+      </Route>
+      {/* {!props.user.user.id ? <Route exact path='/' component={NewUser}/> : } */}
+      {props.user.user.id ? <Route path='/' component={NavBar} />:null}
+      {props.user.user.id ? <Route  exact path='/Home'component={Home} />:null}
+      {props.user.user.id ? <Route  exact path='/profile'component={Profile} />:null}
       <Route  exact path='/profile/Settings'component={Settings} />
       <Route  exact path='/forgotPassword'component={forgotPassword} />
-      <Route exact path='/Landing' component={Landing}/>
-      <Route exact path='/Home/search' component={userCard}/>
+      {!props.user.user.id ? <Route exact path='/' component={Landing}/>:null}
+      <Route exact path='/profile/search' component={UserCard}/>
       {/* MACHEA DESDE NEWUSER!! */}
-      {props.user.user.id !==0 && <Route  exact path = '/' component={Register}/>}
+      {/* {props.user.user.id !==0 && <Route  exact path = '/' component={Register}/>} */}
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
