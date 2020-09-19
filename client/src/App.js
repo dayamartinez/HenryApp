@@ -32,15 +32,16 @@ function App(props) {
         {!props.user.user.id ? <NewUser/> : <Register/>}
       </Route>
       {/* {!props.user.user.id ? <Route exact path='/' component={NewUser}/> : } */}
-      {props.user.user.id ? <Route path='/' component={NavBar} />:null}
-      {props.user.user.id ? <Route  exact path='/Home'component={Home} />:null}
-      {props.user.user.id ? <Route  exact path='/profile'component={Profile} />:null}
-      <Route  exact path='/profile/Settings'component={Settings} />
-      <Route  exact path='/forgotPassword'component={forgotPassword} />
-      {!props.user.user.id ? <Route exact path='/' component={Landing}/>:null}
-      <Route exact path='/profile/search' component={UserCard}/>
-      {/* MACHEA DESDE NEWUSER!! */}
-      {/* {props.user.user.id !==0 && <Route  exact path = '/' component={Register}/>} */}
+      {props.user.user.name && <Route path='/' component={NavBar} />}
+      {props.user.user.name ? <Route  exact path='/Home'component={Home} />:null}
+      {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
+      {/* <Route  exact path='/profile/Settings'component={Settings} /> */}
+      {/* <Route  exact path='/forgotPassword'component={forgotPassword} /> */}
+      <Route exact path='/'>
+        {!props.user.user.name ? <Landing/> :<Redirect to='/'/>}
+      </Route>
+      {/* {!props.user.user.id ? <Route exact path='/' component={Landing}/>:null} */}
+      {props.user.user.name ? <Route exact path='/profile/search' component={UserCard}/>:null}
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />

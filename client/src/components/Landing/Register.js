@@ -1,32 +1,26 @@
 import React,{useState} from 'react';
-import Axios from 'axios';
+//import Axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+//import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+//import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {setData} from '../../actions/user.js';
-import {setRedirect, setRedirectOff} from '../../actions/global'
+//import {setRedirect, setRedirectOff} from '../../actions/global'
 import {connect} from 'react-redux';
-import UserData from './UserData.js';
+//import UserData from './UserData.js';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios'
-/*
-
-este es el inicio de sesion, los pedazos de codigo comentados(linea 11 y 65-67) me tiraban error
-//Argentina, uruguay, chile, colombia
-*/
 
 //ESTILOS DE MATERIAL UI
 const useStyles = makeStyles((theme) => ({
@@ -57,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function Register(props) {
-    const [errors, setErrors] = useState({});
     const classes = useStyles();
-
+    const history = useHistory();
+    //SE MANEJA EL ESTADO COMPLETO!
     const [input,setInput]=useState({
         id: props.user.user.id,
         name:'',
@@ -72,51 +66,20 @@ export function Register(props) {
         gmail: '',
         mobilephone: ''
     });
-
-    // const verifyUser = function(e){
-    //   e.preventDefault();
-    //   Axios.get("http://localhost:3001/user/"+input.email)
-    //   .then(res=>{
-    //     console.log(res.data)
-    //     if (res.data.length===0){
-    //       let user = {
-    //         name:input.name,
-    //         lastName:input.lastName,
-    //         email:input.email,
-    //         password:input.password
-    //       }
-    //       let status = true
-    //       props.setUser(user)
-    //       props.setRedirect(status)
-    const verifyUser = function(e){
-      e.preventDefault();
-      Axios.get("http://localhost:3001/user/"+input.email)
-      .then(res=>{
-        console.log(res.data)
-        if (res.data.length===0){
-          let user = {
-            name:input.name,
-            lastName:input.lastName,
-            email:input.email,
-            password:input.password
-          }
-          // let status = true
-          // props.setUser(user)
-          // props.setRedirect(status)
-
-        }else{alert("El mail ya esta en uso")}
-      })
-    }
-
-
-    //     }else{alert("El mail ya esta en uso")}
-    //   })
-    // }
+    
 
     const onSend = function(e){
       e.preventDefault();
-      console.log(input)
-      props.setData(input)
+      //SE VALIDAN TODOS LOS CAMPOS PARA MANDAR AL BACK!
+      if (!input.name || !input.lastName || !input.birthday || !input.country || !input.address || !input.provincia || !input.mobilephone){
+        alert("Se deben completar todos los campos!")
+        return;
+      } else {
+        //SI TODO ESTA OK-> MANDA LOS DATOS!
+        props.setData(input)
+        alert("Datos Actualizados correctamente, ya puede iniciar sesion en HenryApp");
+        return history.push('/');
+      }
     
     }
 
@@ -126,30 +89,7 @@ export function Register(props) {
           ...input,
           [e.target.name]:e.target.value
         })
-        console.log(input)
-        setErrors(validate({
-          ...input,
-          [e.target.name]: e.target.value,
-        }));
       }
-
-      // const logout = function(e) {
-      //   e.preventDefault(e)
-      //     props.userLogout()
-      
-      //   //CON ESTA LLAMADA LE PEGAMOS A LOGOUT EN EL BACK
-      //   axios.get('http://localhost:3001/logout')
-      //   .then(async res=>{
-      //     await alert("Sesión cerrada");
-      //     history.push('/')
-      //   })
-      
-      //   //MANEJO DE ERRORES...
-      //   .catch(err=>{
-      //     alert(err);
-      //   })
-      //   return;
-      // }
 
     return (
       <Container component="main" maxWidth="xs">
@@ -165,13 +105,13 @@ export function Register(props) {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  error={errors.name}
+                  //error={errors.name}
                   //error={input.name.length===0 ? true : false}
                   autoComplete="fname"
                   name="name"
                   variant="outlined"
                   required
-                  helperText={errors.name}
+                 // helperText={errors.name}
                   fullWidth
                   //helperText={false ? "Este campo es requerido" : null}
                   id="firstName"
@@ -182,8 +122,8 @@ export function Register(props) {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  error={errors.lastName}
-                  helperText={errors.lastName}
+                  //error={errors.lastName}
+                  //helperText={errors.lastName}
                   variant="outlined"
                   required
                   fullWidth
@@ -320,9 +260,6 @@ export function Register(props) {
             </Button>
           </form>
         </div>
-        {/* <Box mt={5}>
-          <Copyright />
-        </Box> */}
       </Container>
     );
 }
@@ -330,27 +267,13 @@ export function Register(props) {
 const mapStateToProps = state => {		
   return {		
     user: state.user,
-  //  redirect: state.global.redirect
   }		
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     setData: (user)=>dispatch(setData(user)),
-    //setRedirect:(status)=>dispatch(setRedirect(status)),
-    //setRedirectOff:()=>dispatch(setRedirectOff())
   }
 }
     
-export function validate(input) {
-  let errors = {};
- if(!input.name){
-   errors.name= 'Por favor introduzca su nombre'
- }
- if(!input.lastName){
-  errors.lastName= 'Por favor introduzca su apellido'
- }
-  return errors;
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
