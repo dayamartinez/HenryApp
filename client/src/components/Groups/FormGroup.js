@@ -11,7 +11,7 @@ import {addGroup} from '../../actions/group'
 import {useHistory } from 'react-router-dom'
 
 import ExcelLoader from '../Cohort/ExcelLoader';
-
+/* componente de creacion de grupos  */
 
   const useStyles = makeStyles((theme) => ({
     paper: {

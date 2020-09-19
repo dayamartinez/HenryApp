@@ -52,9 +52,17 @@ server.post('/create',  (req, res) => {
       )
   })
   
-  //Busca UN cohorte
+  //Busca UN cohorte y lo trae con los usuarios y grupos del mismo
   server.get('/:id', (req, res) => {
-    Cohort.findAll({ where: {id: req.params.id },include: [{model: Usuario}, {model: Group}]})
+    Cohort.findAll({
+       where: {
+         id: req.params.id 
+        },include: [
+          {model: Usuario}, 
+          {model: Group}
+        ]
+      })
+
       .then(cohort =>{
         !cohort
           ? res.status(404).json([])
@@ -67,7 +75,7 @@ server.post('/create',  (req, res) => {
       )
   })
   
-  //Trae TODOS los cohortes 
+  //Trae TODOS los cohortes con sus usuarios y grupos correspondientes
   server.get('/', (req, res) => {
     Cohort.findAll({
       include: [{model: Usuario}, {model: Group}]

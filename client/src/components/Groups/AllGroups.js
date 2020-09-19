@@ -32,6 +32,7 @@ export function AllGroups({getGroups,style}){
   if(groups){
     data = groups.map(group => 
       ({
+        /* se sacaron el about y la fecha de inicio para los grupos, en cambio se agregaron las columnas de pm y la de cohorte*/
         group: group.name,
         pm:group.name,
         cohorte: group.cohort ? (group.cohort.name):('Sin cohorte asignado'),

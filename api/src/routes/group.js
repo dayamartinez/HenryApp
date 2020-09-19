@@ -4,6 +4,8 @@ const { Usuario, Group, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Creamos un grupo
+
+//se elimino todo lo relacionado con el pairprograming
 server.post('/create',  (req, res) => {
     const { name, pairProgramming} = req.body
     const emails = req.body;
@@ -103,7 +105,7 @@ server.post('/create',  (req, res) => {
       )
   })
   
-  //Trae TODOS los grupos
+  //Trae TODOS los grupos, con sus usuarios y cohortes correspondientes
   server.get('/', (req, res) => {
     Group.findAll({
       include:[{model: Usuario}, {model: Cohort}]
