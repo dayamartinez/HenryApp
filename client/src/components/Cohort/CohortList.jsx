@@ -54,7 +54,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                         </tr> 
                     ))   
                 )): cohorts.map((c) => (
-                    c.usuarios.map(u => (
+                    c.usuarios.filter(u => u.profile === "student").map(u => (
                     <tr class="bg-light"> 
                     <td>{u.name}</td>
                     <td>{u.lastName}</td>
