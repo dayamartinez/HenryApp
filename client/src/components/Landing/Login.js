@@ -3,8 +3,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+//import FormControlLabel from '@material-ui/core/FormControlLabel';
+//import Checkbox from '@material-ui/core/Checkbox';
 import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -70,11 +70,18 @@ export function Copyright() {
 
     const loginUser = function  (e){
       e.preventDefault();
-      Axios.post('http://localhost:3001/login',input,{withCredentials:true})
-      .then( async resp=> {
-        await props.setUser(resp)
-      })
-      history.push("/profile");
+      console.log(input);
+      if (/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,}$/.test(input.password) && /\S+@\S+\.\S+/.test(input.username)){
+        Axios.post('http://localhost:3001/login',input,{withCredentials:true})
+        .then( async resp=> {
+          await props.setUser(resp.data)
+          history.push("/profile");
+        })
+        .catch(err=>{
+          alert(err);
+        })
+      }
+      return;
     }
     //COMPONENTE DE MATERIAL UI
     return (

@@ -30,7 +30,7 @@ export function addUser(data){
 //LOGUEAR USUARIO!!
 export function setUser (user){
     console.log(user);
-    return {type:SET_USER, payload:user.data}
+    return {type:SET_USER, payload:user}
 }
 
 //DESLOGUEAR USUARIO!!
@@ -105,8 +105,8 @@ export function setData(data){
         console.log(data)
         return axios.put(`http://localhost:3001/user/completeprofile/${data.id}`, data)
         .then(res => {
-            dispatch({type: COMPLETE_USER, payload: res.data})
-            alert("Datos Actualizados correctamente, ya puede iniciar sesion en HenryApp")
+            dispatch({type: USER_LOGOUT, payload: res.data})
+            
         })
         .catch(err =>{
             alert(err)
