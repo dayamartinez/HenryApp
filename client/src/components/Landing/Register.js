@@ -64,14 +64,13 @@ export function Register(props) {
         provincia: '',
         github: '',
         gmail: '',
-        mobilephone: ''
     });
     
 
     const onSend = function(e){
       e.preventDefault();
       //SE VALIDAN TODOS LOS CAMPOS PARA MANDAR AL BACK!
-      if (!input.name || !input.lastName || !input.birthday || !input.country || !input.address || !input.provincia || !input.mobilephone){
+      if (!input.name || !input.lastName || !input.birthday || !input.country || !input.address || !input.provincia){
         alert("Se deben completar todos los campos!")
         return;
       } else {
@@ -82,6 +81,13 @@ export function Register(props) {
       }
     
     }
+
+    // const onSend = function(e){
+    //   e.preventDefault();
+    //   console.log(input)
+    //   props.setData(input)
+    //   logout(input)
+    // }
 
     //MANEJO DE ONCHANGE()
     const handleInputChange = function(e) {
@@ -134,7 +140,6 @@ export function Register(props) {
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
-
               <Grid  item xs={12} className={classes.birthday}>
                 <TextField
                   defaultValue="2017-05-24"
@@ -209,19 +214,6 @@ export function Register(props) {
                   variant="outlined"
                   required
                   fullWidth
-                  name="mobilephone"
-                  label="Numero de celular"
-                  id="mobilephone"
-                  type="number"
-                  autoComplete="off"
-                  onChange={(e) => handleInputChange(e)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
                   name="github"
                   label="cuenta de Github"
                   id="github"
@@ -234,9 +226,9 @@ export function Register(props) {
                   variant="outlined"
                   required
                   fullWidth
-                  name="google"
+                  name="gmail"
                   label="cuenta de google"
-                  id="github"
+                  id="gmail"
                   autoComplete="off"
                   onChange={(e) => handleInputChange(e)}
                 />
@@ -245,16 +237,14 @@ export function Register(props) {
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Deseo recibir notificaciones e información via email."
                 />
-
             </Grid>
-
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(e)=>onSend(e)}
+              onClick={(e)=>onSend(e, input)}
             >
               Registrar
             </Button>
@@ -272,6 +262,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    //setRedirect:(status)=>dispatch(setRedirect(status)),
+    //setRedirectOff:()=>dispatch(setRedirectOff())
     setData: (user)=>dispatch(setData(user)),
   }
 }

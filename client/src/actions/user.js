@@ -6,7 +6,7 @@ export const SET_USER = 'SET_USER';
 export const CLEAN_USER = 'CLEAN_USER';
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const USER_LOGOUT = 'USER_LOGOUT';
-export const COMPLETE_USER = 'COMPLETE_USER';
+
 // const instance = axios.create({
 //     withCredentials: true
 //   })
