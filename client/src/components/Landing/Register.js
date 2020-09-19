@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {setData, userLogout} from '../../actions/user.js';
+import {userLogout} from '../../actions/user.js';
 import {setRedirect, setRedirectOff} from '../../actions/global'
 import {connect} from 'react-redux';
 import UserData from './UserData.js';
@@ -122,7 +122,7 @@ export function Register(props) {
         if(resp){
           props.userLogout()
         await alert("Datos Actualizados correctamente, ya puede iniciar sesion en HenryApp")
-        history.push('/Landing')
+        history.push('/')
       }
     })
     .catch(err => {
@@ -321,7 +321,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setData: (user)=>dispatch(setData(user)),
     userLogout:() => dispatch(userLogout()),
     //setRedirect:(status)=>dispatch(setRedirect(status)),
     //setRedirectOff:()=>dispatch(setRedirectOff())

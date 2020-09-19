@@ -126,11 +126,5 @@ export default function user (state = initialState, action){
             usuario: action.payload
         }
     }
-    if (action.type === COMPLETE_USER){
-        return {
-            ...state,
-            user: {}
-        }
-    }
     return state
 }
