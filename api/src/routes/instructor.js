@@ -2,8 +2,6 @@ const server = require('express').Router();
 const { Usuario, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
 
-
-
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a instructor 

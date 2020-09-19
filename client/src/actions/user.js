@@ -30,7 +30,7 @@ export function addUser(data){
 //LOGUEAR USUARIO!!
 export function setUser (user){
     console.log(user);
-    return {type:SET_USER, payload:user.data}
+    return {type:SET_USER, payload:user}
 }
 
 //DESLOGUEAR USUARIO!!
@@ -100,7 +100,19 @@ export function getAllUser(data) {
 }
 
 //COMPLETAR EL RESTO DE LOS DATOS DEL USUARIO INVITADO
-
+export function setData(data){
+    return function (dispatch){
+        console.log(data)
+        return axios.put(`http://localhost:3001/user/completeprofile/${data.id}`, data)
+        .then(res => {
+            dispatch({type: USER_LOGOUT, payload: res.data})
+            
+        })
+        .catch(err =>{
+            alert(err)
+        })
+    }
+}
 export function getAllUsers(data) {
     console.log(data)
     return {type:GET_ALL_USERS, payload: data}

@@ -16,7 +16,6 @@ import Axios from 'axios';
 import {setUser} from '../../actions/user.js';
 import {connect} from 'react-redux';
 //import {useHistory} from 'react-router-dom';
-import Register from './Register.js'
   
   //LOS ESTILOS DEL FORMULARIO SETEADOS
   const useStyles = makeStyles((theme) => ({
@@ -61,7 +60,7 @@ import Register from './Register.js'
     const loginUser = function  (e,input){  
         //NO REFRESCA LA PAGINA!
       e.preventDefault();
-
+      console.log(input)
       //CONFIRMA MAIL Y CONTRASEÑA
       if (/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,}$/.test(input.password) && /\S+@\S+\.\S+/.test(input.email))
       {
@@ -70,9 +69,9 @@ import Register from './Register.js'
         .then( async resp=> {
             await props.setUser(resp.data)
         })
+        //TODAVIA NO ESTA ARMADO EL JSON DESDE EL BACK!!!
         .catch(error=>{
-            console.log(error)
-            console.log()
+          //POR LA LINEA 72-> SIEMPRE ENTRA AL FALSE!!
             if (error ===404){
                 alert("El mail ingresado no es valido! Por favor ingresa el mail con el que fusite invitado!")
             } else {
@@ -80,6 +79,7 @@ import Register from './Register.js'
             }
         })
       } else {
+        //SI LOS DATOS NO SON CORRECTOS VUELVE PARA INGRESAR DATOS!
           alert("Los datos no son validos!")
         return;
       }
@@ -135,8 +135,7 @@ import Register from './Register.js'
                     </Button>
                 </form>
                 </div>
-            </Container>
-        }
+            </Container>}
         </div>
     );
   }
