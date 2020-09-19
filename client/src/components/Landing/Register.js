@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {setData} from '../../actions/user.js';
+import {setData, userLogout} from '../../actions/user.js';
 import {setRedirect, setRedirectOff} from '../../actions/global'
 import {connect} from 'react-redux';
 import UserData from './UserData.js';
@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 export function Register(props) {
     const [errors, setErrors] = useState({});
     const classes = useStyles();
+    const history = useHistory();
 
     const [input,setInput]=useState({
         id: props.user.user.id,
@@ -93,12 +94,28 @@ export function Register(props) {
     //   })
     // }
 
-    const onSend = function(e){
-      e.preventDefault();
-      console.log(input)
-      props.setData(input)
-    
+    const onSend = function(e, input){
+      var id= input.id; 
+      e.preventDefault()
+      axios.put(`http://localhost:3001/user/completeprofile/${id}`, input)
+      .then( async resp=> {
+        if(resp){
+          props.userLogout()
+        await alert("Datos Actualizados correctamente, ya puede iniciar sesion en HenryApp")
+        history.push('/Landing')
+      }
+    })
+    .catch(err => {
+      alert('Error al completar datos restantes verifique nuevamente cada campo')
+    })
     }
+
+    // const onSend = function(e){
+    //   e.preventDefault();
+    //   console.log(input)
+    //   props.setData(input)
+    //   logout(input)
+    // }
 
     //MANEJO DE ONCHANGE()
     const handleInputChange = function(e) {
@@ -113,24 +130,8 @@ export function Register(props) {
         }));
       }
 
-      // const logout = function(e) {
-      //   e.preventDefault(e)
-      //     props.userLogout()
       
-      //   //CON ESTA LLAMADA LE PEGAMOS A LOGOUT EN EL BACK
-      //   axios.get('http://localhost:3001/logout')
-      //   .then(async res=>{
-      //     await alert("Sesión cerrada");
-      //     history.push('/')
-      //   })
-      
-      //   //MANEJO DE ERRORES...
-      //   .catch(err=>{
-      //     alert(err);
-      //   })
-      //   return;
-      // }
-
+   
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -174,7 +175,6 @@ export function Register(props) {
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
-
               <Grid  item xs={12} className={classes.birthday}>
                 <TextField
                   defaultValue="2017-05-24"
@@ -249,19 +249,6 @@ export function Register(props) {
                   variant="outlined"
                   required
                   fullWidth
-                  name="mobilephone"
-                  label="Numero de celular"
-                  id="mobilephone"
-                  type="number"
-                  autoComplete="off"
-                  onChange={(e) => handleInputChange(e)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
                   name="github"
                   label="cuenta de Github"
                   id="github"
@@ -274,9 +261,9 @@ export function Register(props) {
                   variant="outlined"
                   required
                   fullWidth
-                  name="google"
+                  name="gmail"
                   label="cuenta de google"
-                  id="github"
+                  id="gmail"
                   autoComplete="off"
                   onChange={(e) => handleInputChange(e)}
                 />
@@ -285,16 +272,14 @@ export function Register(props) {
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Deseo recibir notificaciones e información via email."
                 />
-
             </Grid>
-
             <Button
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(e)=>onSend(e)}
+              onClick={(e)=>onSend(e, input)}
             >
               Registrar
             </Button>
@@ -317,6 +302,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     setData: (user)=>dispatch(setData(user)),
+    userLogout:() => dispatch(userLogout()),
     //setRedirect:(status)=>dispatch(setRedirect(status)),
     //setRedirectOff:()=>dispatch(setRedirectOff())
   }

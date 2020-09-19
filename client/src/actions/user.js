@@ -101,15 +101,6 @@ export function getAllUser(data) {
 
 //COMPLETAR EL RESTO DE LOS DATOS DEL USUARIO INVITADO
 export function setData(data){
-    return function (dispatch){
-        console.log(data)
-        return axios.put(`http://localhost:3001/user/completeprofile/${data.id}`, data)
-        .then(res => {
-            dispatch({type: COMPLETE_USER, payload: res.data})
-            alert("Datos Actualizados correctamente, ya puede iniciar sesion en HenryApp")
-        })
-        .catch(err =>{
-            alert(err)
-        })
-    }
+    console.log(data)
+    return {type:COMPLETE_USER, payload:data}
 }

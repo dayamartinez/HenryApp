@@ -3,7 +3,7 @@ const { Usuario, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
 
 
-const { Usuario} = require('../db.js');
+
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a instructor 

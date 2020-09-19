@@ -1,5 +1,5 @@
 
-import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER, CLEAN_USER, GET_USERS, USER_LOGOUT} from '../actions/user.js'
+import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER, CLEAN_USER, GET_USERS, USER_LOGOUT, COMPLETE_USER} from '../actions/user.js'
 import { PROMOTE_PM, GET_PM, GET_PM_DETAIL} from '../actions/pm'
 import { PROMOTE_INSTRUCTOR, GET_INSTRUCTOR, GET_INSTRUCTOR_DETAIL} from '../actions/instructor'
 import { PROMOTE_STUDENT, GET_STUDENT, GET_STUDENT_DETAIL, SET_COHORT } from '../actions/student'
@@ -123,6 +123,12 @@ export default function user (state = initialState, action){
         return {
             ...state,
             searchUsers: action.payload
+        }
+    }
+    if (action.type === COMPLETE_USER){
+        return {
+            ...state,
+            user: {}
         }
     }
     return state
