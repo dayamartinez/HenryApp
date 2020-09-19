@@ -23,7 +23,6 @@ server.get('/:email',(req,res,next)=>{
 //ESTA RUTA ES PARA QUE UN USUARIO INVITADO PUEDA ENTRAR POR PRIMERA VEZ
 server.put('/inviteuser', (req,res,next)=>{
   //VALORES PASADOS POR BODY
-  console.log(req.body.email)
   var {email,password} = req.body;
   //BUSCA EL MAIL EN LA BASE DE DATOS
   db.Usuario.findOne({
@@ -33,7 +32,6 @@ server.put('/inviteuser', (req,res,next)=>{
   })
   //DEVUELVE EL MAIL MODIFICA LA PASSWORD Y GUARDA!
   .then ( async user=> {
-    console.log(user)
     if (!user.password){
       password = await hash(password,10);
       user.update({
