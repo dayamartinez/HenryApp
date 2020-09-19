@@ -23,6 +23,7 @@ passport.use(new Strategy(
         }
       })
       .then((user) => {
+        console.log(user)
         //SINO ENCUENTRA USUARIO VUELVE FALSE
         if(!user){
           return done(null,false);

@@ -5,15 +5,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import {getAllUser} from '../../../actions/user.js'
+import {getAllUsers} from '../../../actions/user.js'
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
 import HenryIcon from '../../../images/henryUserIcon.jpg'
 import Link from '@material-ui/core/Link';
-import userCard from './userCards.js';
+import UserCard from './userCards.js';
 import { useHistory } from 'react-router-dom';
+import {Redirect} from 'react-router';
+import Axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     search: {
@@ -50,23 +52,35 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SearchBar(props) {
+export function SearchBar(props) {
     const classes = useStyles();
     const [state, setState] = useState([])
     const history = useHistory();
+    let array;
 
-async function getUsers(state) {
+    const getUsers = function (state) {
   
-  console.log(state)
-   await fetch(`http://localhost:3001/user/users/${state}`)
-      .then((response) => response.json())
-      .then(usuarios => {
-              userCard(usuarios)
-            history.push(`/Home/search/?search=${state}`)
-            })
+  //console.log(state)
+  // history.push('/Home/search')
+  //  await fetch(`http://localhost:3001/user/users/${state}`)
+  //     .then((response) => response.json())
+  //     .then(usuarios => {
+       // console.log(usuarios);
+           //   UserCard(usuarios)
+              // history.push('/profile/search')
+      //})
+      // var array;
+      Axios.get(`http://localhost:3001/user/users/${state}`)
+      .then( async users=>{
+      let user = users.data;
+      props.getAllUsers(user); 
+      
+
+      })
       .catch(error => {
         return error;
       })
+      history.push('/profile/search')
 }
     
   return (
@@ -95,3 +109,16 @@ async function getUsers(state) {
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    usuario: state.usuario
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllUsers: (user) => dispatch(getAllUsers(user)),
+  }
+}
+    
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);  

@@ -83,7 +83,7 @@ import Register from './Register.js'
           alert("Los datos no son validos!")
         return;
       }
-      //return;
+      return;
     }
     //COMPONENTE DE MATERIAL UI
     return (
@@ -137,7 +137,6 @@ import Register from './Register.js'
                 </div>
             </Container>
         }
-        {props.user.user.id !== 0 && <div><Register/></div>}
         </div>
     );
   }

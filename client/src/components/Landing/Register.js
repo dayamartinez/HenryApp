@@ -82,9 +82,9 @@ export function Register(props) {
             email:input.email,
             password:input.password
           }
-          let status = true
-          props.setUser(user)
-          props.setRedirect(status)
+          // let status = true
+          // props.setUser(user)
+          // props.setRedirect(status)
 
         }else{alert("El mail ya esta en uso")}
       })
