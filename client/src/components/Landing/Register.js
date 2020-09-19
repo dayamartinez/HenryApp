@@ -89,6 +89,26 @@ export function Register(props) {
     //       let status = true
     //       props.setUser(user)
     //       props.setRedirect(status)
+    const verifyUser = function(e){
+      e.preventDefault();
+      Axios.get("http://localhost:3001/user/"+input.email)
+      .then(res=>{
+        console.log(res.data)
+        if (res.data.length===0){
+          let user = {
+            name:input.name,
+            lastName:input.lastName,
+            email:input.email,
+            password:input.password
+          }
+          // let status = true
+          // props.setUser(user)
+          // props.setRedirect(status)
+
+        }else{alert("El mail ya esta en uso")}
+      })
+    }
+
 
     //     }else{alert("El mail ya esta en uso")}
     //   })

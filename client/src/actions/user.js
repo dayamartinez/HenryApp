@@ -4,9 +4,9 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const SET_USER = 'SET_USER';
 export const CLEAN_USER = 'CLEAN_USER';
-export const GET_USERS = 'GET_USERS';
+export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const USER_LOGOUT = 'USER_LOGOUT';
-export const COMPLETE_USER = 'COMPLETE_USER';
+
 // const instance = axios.create({
 //     withCredentials: true
 //   })
@@ -30,7 +30,7 @@ export function addUser(data){
 //LOGUEAR USUARIO!!
 export function setUser (user){
     console.log(user);
-    return {type:SET_USER, payload:user}
+    return {type:SET_USER, payload:user.data}
 }
 
 //DESLOGUEAR USUARIO!!
@@ -100,7 +100,8 @@ export function getAllUser(data) {
 }
 
 //COMPLETAR EL RESTO DE LOS DATOS DEL USUARIO INVITADO
-export function setData(data){
+
+export function getAllUsers(data) {
     console.log(data)
-    return {type:COMPLETE_USER, payload:data}
+    return {type:GET_ALL_USERS, payload: data}
 }
