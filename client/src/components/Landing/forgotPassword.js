@@ -1,19 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import {Link} from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
+// import {Link} from 'react-router-dom';
+ import Grid from '@material-ui/core/Grid';
+// import Box from '@material-ui/core/Box';
 //import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {ForgotPass} from '../../actions/user.js';
 import {connect} from 'react-redux';
+import { useHistory } from 'react-router-dom';
  
   
   //LOS ESTILOS DEL FORMULARIO SETEADOS
@@ -40,27 +41,30 @@ import {connect} from 'react-redux';
 
   //LOGIN PRINCIPAL DE LA PAGINA!
   export function ForgotPassword(props) {
-
+    const history = useHistory();
     const [errors, setErrors] = useState({});
     const classes = useStyles();
-    const [email, setMail]= useState({
+    const [input, setInput]= useState({
         email: '',
+        birthday: ''
     })
 
 
       const onSend =  async (e) =>{
         e.preventDefault();
-        props.ForgotPass(email)
+        console.log(input);
+         await props.ForgotPass(input);
+         history.push('/');
       }
   
       //MANEJO DE ONCHANGE()
       const handleInputChange = function(e) {
-        setMail({
-            ...email,
+        setInput({
+            ...input,
           [e.target.name]:e.target.value
         })
         setErrors(validate({
-          ...email,
+          ...input,
           [e.target.name]: e.target.value,
         }));
       }
@@ -91,9 +95,23 @@ import {connect} from 'react-redux';
               name="email"
               autoComplete="email"
               autoFocus
-              value={email.email}
+              value={input.email}
               onChange={(e) => handleInputChange(e)}
             />
+             <Grid  item xs={12} className={classes.birthday}>
+                <TextField
+                  defaultValue="2017-05-24"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="date"
+                  type="date"
+                  label="birthday"
+                  name="birthday"
+                  autoComplete="off"
+                  onChange={(e) => handleInputChange(e)}
+                />
+              </Grid>
             <Button
               type="submit"
               fullWidth
@@ -122,11 +140,11 @@ function mapDispatchToProps(dispatch) {
   };
 }
 //el primer email es el state [email, setEmail]
-export function validate(email) {
+export function validate(input) {
   let errors = {};
-  if (!email.email) {
+  if (!input.email) {
     errors.email = 'Por favor introduzca su email';
-  } else if (!/\S+@\S+\.\S+/.test(email.email)) {
+  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
     errors.email = 'El email es invalido';
   }
   return errors;

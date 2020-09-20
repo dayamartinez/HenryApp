@@ -30,7 +30,6 @@ export default function user (state = initialState, action){
     if (action.type === RESET_PASSWORD){
         return {
             ...state,
-            email: action.payload
         }
     }
 
@@ -109,7 +108,9 @@ export default function user (state = initialState, action){
     if (action.type === USER_LOGOUT){
         return{
           ...state,
-          user: {id:0}
+          user: {id:0},
+          usuario: {},
+          userDetail:{}
       }
     }
 

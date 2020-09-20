@@ -57,25 +57,27 @@ export function updateUser(data){
 
 // RECUPERAR PASSWORD, RECIBE MAIL USER PARA RECUPERAR PASSWORD
 export function ForgotPass(data){
-    let email = data.email; 
+     
     return function (dispatch){
         console.log(data)
+        const {email,birthday} = data
         return axios({
-            method: "POST",
-            url: `http://localhost:3001/email/send-email/forgotPassword/${data.email}`, 
+            method: "PUT",
+            url: `http://localhost:3001/email/send-email/forgotpassword/`,data, 
             headers: {
                 "Content-Type": "application/json",
             },
             data: {
-                email
+                email,
+                // birthday
             }
     })
         .then(res => {
-            dispatch({type: RESET_PASSWORD, payload: res.data})
-            alert("Datos Actualizados correctamente")
+            dispatch({type: RESET_PASSWORD})
+            alert("Contraseña reiniciada!")
         })
         .catch(err =>{
-            alert(err)
+            alert("Usuario no encontrado!")
         })
     }
 }
