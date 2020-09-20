@@ -38,7 +38,6 @@ import ExcelLoader from '../Cohort/ExcelLoader';
   export function FormGroup({ match, addGroup, emails}) {
 
     const history = useHistory()
-
     const classes = useStyles();
     
     const [input, setInput]= useState({

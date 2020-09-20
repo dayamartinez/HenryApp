@@ -1,8 +1,7 @@
 const { Sequelize, Op, Model, DataTypes } = require('sequelize');
 
-//SE CAMBIARON LOS MODELOS PARA PODER METER DATOS VACIOS!
 module.exports = (sequelize) => {
-  sequelize.define('usuario', {
+  sequelize.define('staff', {
     name: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -75,11 +74,17 @@ module.exports = (sequelize) => {
       //   }
       // }
     },
+
+    profile: {
+      type: DataTypes.ENUM,
+      values: ["instructor", "founder", "henryStaff"],
+      defaultValue: "henryStaff"
+    },
     
     rol: {
       type: DataTypes.ENUM,
-      values: ["user", "admin"],
-      defaultValue: "user"
+      values: ["admin1", "admin2"],
+      defaultValue: "admin1"
     },
 
     status: {
