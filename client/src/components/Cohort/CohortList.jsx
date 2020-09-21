@@ -29,6 +29,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
             <div class="bg-dark" style={{display:"flex", justifyContent:"center", marginTop: '3px'}}>
                 <h6 class="text-light mt-2">Filtrar por cohorte: </h6>
                 <div>
+                    {console.log(cohorts)}
                     {cohorts && cohorts.map((c) => (
                         <button type="button" onClick={() => getCohortDetail(c.id)} class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
                         ))

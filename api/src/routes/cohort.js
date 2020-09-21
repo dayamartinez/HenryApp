@@ -81,10 +81,7 @@ server.post('/create',  (req, res) => {
       include: [{model: Usuario}, {model: Group}]
     })
       .then(cohorts => res.send(cohorts))
-      .catch(() => res.status(400).json({
-        error: true,
-        message: 'error al buscar los cohortes'
-       })
+      .catch(() => res.status(400).send([])
       )
   })
 
