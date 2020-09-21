@@ -64,7 +64,7 @@ let id = match.params.id
   
 
   return (
-    <div className={classes.margin}>
+    <div >
         <div className={classes.root}>
             <div className={classes.button}>
                 <h5 class="text-light">Instructor</h5>
