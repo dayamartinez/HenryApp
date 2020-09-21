@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 //import Axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,7 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {setData} from '../../actions/user.js';
+import {setData, userLogout} from '../../actions/user.js';
 //import {setRedirect, setRedirectOff} from '../../actions/global'
 import {connect} from 'react-redux';
 //import UserData from './UserData.js';
@@ -53,6 +53,13 @@ const useStyles = makeStyles((theme) => ({
 export function Register(props) {
     const classes = useStyles();
     const history = useHistory();
+    useEffect(()=>{
+      if (props.user.user.name){
+        props.userLogout();
+        alert('Contraseña actualizada sera enviado al login!')
+        history.push('/')
+      }
+    })
     //SE MANEJA EL ESTADO COMPLETO!
     const [input,setInput]=useState({
         id: props.user.user.id,
@@ -264,6 +271,7 @@ const mapDispatchToProps = dispatch => {
   return {
     //setRedirect:(status)=>dispatch(setRedirect(status)),
     //setRedirectOff:()=>dispatch(setRedirectOff())
+    userLogout:()=>dispatch(userLogout()),
     setData: (user)=>dispatch(setData(user)),
   }
 }
