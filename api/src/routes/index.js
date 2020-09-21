@@ -8,7 +8,7 @@ const Cohort = require('./cohort')
 const Pm = require('./pm')
 const Student = require('./student')
 const Group = require('./group.js')
-const Instructor = require ('./instructor')
+const Instructor = require('./instructor')
 
 const router = Router();
 

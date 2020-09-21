@@ -1,11 +1,21 @@
+<<<<<<< HEAD
 import {ADD_COHORT, UPDATE_COHORT, GET_COHORT_DETAIL, GET_COHORTS, REMOVE_COHORT, SET_COHORT, GET_GROUP_DETAIL} from '../actions/cohort.js'
+=======
+
+import {ADD_COHORT, UPDATE_COHORT, GET_COHORT_DETAIL, GET_COHORTS, REMOVE_COHORT, SET_COHORT,SET_USERS_EMAILS} from '../actions/cohort.js'
+
+>>>>>>> 1b0f6ba81d1455fb5b17299534b232eb20abc886
 
 const initialState = {
     cohorts: [],
     cohortDetail: {},
+<<<<<<< HEAD
     groups: [],
     groupsDetail: {}
 
+=======
+    emails:[]
+>>>>>>> 1b0f6ba81d1455fb5b17299534b232eb20abc886
 };
 
 export default function cohort(state = initialState, action) {
@@ -23,12 +33,13 @@ export default function cohort(state = initialState, action) {
         case GET_COHORTS:
             return {
                 ...state,
-                cohorts: action.payload
+                cohorts: action.payload,
+                cohortDetail:[]
             }
         case GET_COHORT_DETAIL:
             return {
                 ...state,
-                cohorts: action.payload
+                cohortDetail: action.payload
             }
         
         case REMOVE_COHORT:
@@ -36,6 +47,7 @@ export default function cohort(state = initialState, action) {
                 ...state,
                 cohorts: state.cohorts.filter(cohort => cohort.id !== action.payload) 
             }
+<<<<<<< HEAD
         case GET_GROUP_DETAIL:
             return{
                 ...state,
@@ -44,5 +56,14 @@ export default function cohort(state = initialState, action) {
         
             default:
                 return state
+=======
+        case SET_USERS_EMAILS:
+            return {
+                ...state,
+                emails: action.payload
+            }
+        default:
+            return state
+>>>>>>> 1b0f6ba81d1455fb5b17299534b232eb20abc886
     }
 }

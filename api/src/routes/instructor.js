@@ -1,5 +1,7 @@
 const server = require('express').Router();
-const { Usuario} = require('../db.js');
+const { Usuario, Cohort } = require('../db.js');
+//const {isAuthenticated,isAdmin} =require('./helpers')  
+
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a instructor 
@@ -14,12 +16,16 @@ server.put('/set', (req,res)=> {
     .catch(err => res.status(404).send(err))
   })  
 
+
   //Busca UN instructor
   server.get('/:id', (req, res) => {
     Usuario.findOne({
         where: {
             id: req.params.id,
             profile: 'instructor'
+        },
+        include: {
+            model: Cohort
         }
     }).then(instructor =>{
         !instructor
@@ -28,7 +34,7 @@ server.put('/set', (req,res)=> {
       })
       .catch(() => res.status(400).json({
                 error: true,
-                message: 'el id no es valido'
+                message: 'el id no es válido'
         })
       )
   })
@@ -38,10 +44,16 @@ server.put('/set', (req,res)=> {
     Usuario.findAll({
         where:{
             profile: 'instructor'
+        },
+        include: {
+            model: Cohort
         }
     })
-      .then(instructor => res.send(instructor))
-      .catch(() => res.status(400).send([])
+      .then(instructors => res.send(instructors))
+      .catch(() => res.status(400).json({
+        error: true,
+        message: 'Error al buscar los instructores'
+       })
       )
   })
   module.exports = server;

@@ -1,23 +1,39 @@
 const server = require('express').Router();
-const { Usuario, Group } = require('../db.js');
+//const { CohortList } = require('../../../client/src/components/Cohort/CohortList.jsx');
+const { Usuario, Group, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Creamos un grupo
+
+//se elimino todo lo relacionado con el pairprograming
 server.post('/create',  (req, res) => {
     const { name, pairProgramming} = req.body
+    const emails = req.body;
+    
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
-      if (!name || !pairProgramming ) {
+      if (!name) {
           res.status(400).json({
               error: true,
               message: 'Debe enviar los campos requeridos'
           })
       }
       Group.create({
-          name: capName,
-          pairProgramming 
-    }) 
+          name: capName
+          
+    }) //recorremos la lista de alumnos y les asignamos el grupo que se acaba de crear
       .then(group => {
-          res.status(201).json({
+        emails.map((email) => {
+          Usuario.findOne({
+            where: {
+              email:email
+            }
+          }).then(user =>{
+              user.groupId = group.id
+              user.save()
+          })
+        })
+
+        res.status(201).json({
               success: true,
               message: 'Nuevo grupo creado correctamente',
               group
@@ -41,6 +57,7 @@ server.post('/create',  (req, res) => {
       res.status(404).send(err)
     })
   })
+
 
   //Mofificamos el grupo
   server.put('/update/:id',  (req, res) => {
@@ -72,7 +89,9 @@ server.post('/create',  (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [Usuario]
+      include: {
+        model: Usuario
+      }
     })
       .then(group =>{
         !group
@@ -86,10 +105,12 @@ server.post('/create',  (req, res) => {
       )
   })
   
-  //Trae TODOS los grupos
+  //Trae TODOS los grupos, con sus usuarios y cohortes correspondientes
   server.get('/', (req, res) => {
-    Group.findAll()
-      .then(groups => res.send(groups))
+    Group.findAll({
+      include:[{model: Usuario}, {model: Cohort}]
+    }
+    ).then(groups => res.send(groups))
       .catch(() => res.status(400).json({
         error: true,
         message: 'error al buscar los grupos'

@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { getCohorts } from '../../actions/cohort';
+import { getGroups } from '../../actions/groups';
 import {yellow, grey} from "@material-ui/core/colors"
+
+
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(2),
@@ -14,35 +16,35 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function AllCohorts({getCohorts,style}){
-  const [cohorts, setCohorts] = useState()
+export function AllGroups({getGroups}){
+  const [groups, setGroups] = useState()
   const classes = useStyles()
   const yellowText = {color:yellow[500]}
   useEffect(()=>{
-    getCohorts()
-    .then(data => setCohorts(data.payload))    
+    getGroups()
+    .then(data => setGroups(data.payload))    
   }, [])
   var data
-  if(cohorts){
-    data = cohorts.map(cohort => 
+  if(groups){
+    data = groups.map(group => 
       ({
-        cohorte: cohort.name,
-        inicio: cohort.startDate,
-        sobre: cohort.about,
-        alumnos: cohort.usuarios.length,
-        id: cohort.id
+        group: group.name,
+        inicio: group.startDate,
+        sobre: group.about,
+        alumnos: group.usuarios.length,
+        id: group.id
       })
     )
     console.log(data)
   }
-  console.log(cohorts)
+  console.log(groups)
   return (
-    <div style={style}>  
-      {cohorts && cohorts.length === 0 ? (
+    <div> 
+      {groups && groups.length === 0 ? (
         <div>
           <h4>
             {' '}
-            No hay cohortes para mostrar
+            No hay grupos para mostrar
           </h4>
         </div>
       ) : (
@@ -50,9 +52,9 @@ export function AllCohorts({getCohorts,style}){
           <Table>
             <TableHead style={{backgroundColor:grey[900]}}>
               <TableRow  >
-                <TableCell style={yellowText} >Cohorte</TableCell>
+                <TableCell style={yellowText} >Grupo</TableCell>
                 <TableCell style={yellowText} >Fecha de inicio</TableCell>
-                <TableCell style={yellowText} >Intructor</TableCell>
+                <TableCell style={yellowText} >Intructor/PM</TableCell>
                 <TableCell style={yellowText} >Alumnos</TableCell>
               </TableRow>
             </TableHead>
@@ -62,10 +64,10 @@ export function AllCohorts({getCohorts,style}){
 
                   <TableCell>
                     <Link 
-                      href={"/cohortDetail/"+celda.id} 
+                      href={"/admin/groups/"+celda.id} 
                       color="inherit" 
                       underline="none">
-                        {celda.cohorte}
+                        {celda.groups}
                     </Link>
                   </TableCell>
 
@@ -87,7 +89,7 @@ export function AllCohorts({getCohorts,style}){
 }
 
 const mapDispatchToProps = dispatch => ({
-  getCohorts: () =>  dispatch(getCohorts())
+  getGroups: () =>  dispatch(getGroups())
 })
     
-export default connect(null, mapDispatchToProps)(AllCohorts)
+export default connect(null, mapDispatchToProps)(AllGroups)
