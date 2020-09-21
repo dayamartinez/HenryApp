@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {getInstructor} from '../../actions/instructor';
 import {getCohortDetail, getCohorts} from '../../actions/cohort';
 import {yellow, grey} from "@material-ui/core/colors"
 
@@ -15,25 +14,25 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function ListInstructors({getInstructor, cohorts, cohortDetail, style, getCohorts, getCohortDetail}){
-    const [instructor, setInstructor] = useState()
+export function ListInstructors({cohorts, cohortDetail, style, getCohorts, getCohortDetail}){
+    //const [cohorts, setCohorts] = useState()
     const classes = useStyles()
     const yellowText = {color:yellow[500]}
 
     useEffect(()=>{
-        getInstructor()
-        .then(data => setInstructor(data.payload))     
+        getCohorts()
+//       .then(data => setCohorts(data.payload))     
     }, [])
 
     var data;
-    console.log(instructor);
-    if(instructor){
-      data = instructor.map(p => 
+    
+    if(cohorts){
+      data = cohorts.map(s => 
         ({
-          name: p.name,
-          lastName: p.lastName,
-          cohorte:undefined,
-          id: p.id
+          name: s.staffs.name,
+          lastName: s.staffs.lastName,
+          cohorte: s.id,
+          id: s.staffs.id
         })
       )
       console.log(data)
@@ -65,24 +64,20 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
           </thead>
 
           <tbody>
-            {cohortDetail.length ? cohortDetail.map((c) => (
-              c.usuarios.filter(u => u.profile === "instructor").map(u => (
+            {cohortDetail.length ? cohortDetail.map((u) => (
                 <tr class="bg-light"> 
-                  <td>{u.name}</td>
-                  <td>{u.lastName}</td>
-                  <td>{u.email}</td>
+                  <td>{u.staffs.name}</td>
+                  <td>{u.staffs.lastName}</td>
+                  <td>{u.staffs.email}</td>
                   <td>{u.cohortId}</td>
-                </tr> 
-              ))                         
-            )): cohorts.length ? cohorts.map((c) => (
-                  c.usuarios.filter(u => u.profile === "instructor").map(u => (
+                </tr>       
+            )): cohorts.length ? cohorts.map(u => (
                     <tr class="bg-light"> 
                       <td>{u.name}</td>
                       <td>{u.lastName}</td>
                       <td>{u.email}</td>
                       <td>{u.cohortId}</td>
                     </tr> 
-                ))   
               )) : null
             }                
           </tbody>
@@ -98,7 +93,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => {
     return {
-        getInstructor:() => dispatch(getInstructor()),
         getCohorts: () =>  dispatch(getCohorts()),
         getCohortDetail: (id) => dispatch(getCohortDetail(id))
     }

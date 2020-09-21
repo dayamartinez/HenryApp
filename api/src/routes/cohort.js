@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Usuario, Cohort, Group } = require('../db.js');
+const { Usuario, Cohort, Group, Staff } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Crear cohorte
@@ -38,9 +38,7 @@ server.post('/create',  (req, res) => {
       Cohort.findByPk(req.params.id)
           .then(cohort => {
               cohort.name = capName || cohort.name
-              cohort.startDate = startDate || cohort.startDate
-              cohort.about = about || cohort.about
-  
+              cohort.startDate = startDate || cohort.startDate  
               cohort.save().then(cohort => {
                   res.status(201).send(cohort)
               })
@@ -78,7 +76,7 @@ server.post('/create',  (req, res) => {
   //Trae TODOS los cohortes con sus usuarios y grupos correspondientes
   server.get('/', (req, res) => {
     Cohort.findAll({
-      include: [{model: Usuario}, {model: Group}]
+      include: [{model: Usuario}, {model: Group}, {model: Staff}]
     })
       .then(cohorts => res.send(cohorts))
       .catch(() => res.status(400).send([])
