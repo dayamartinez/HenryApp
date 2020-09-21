@@ -1,25 +1,22 @@
 const server = require('express').Router();
-const { Usuario, Cohort } = require('../db.js');
+const { Usuario, PM } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a PM 
 server.put('/set', (req,res)=> {
     Usuario.findByPk(req.body.id)
       .then(user => {
-       user,
-       user.profile = 'pm'
-  
-       user.save().then(user => res.status(201).send(user))
+       user  
+       PM.create({usuarioId: user.id})
     })
     .catch(err => res.status(404).send(err))
   })  
 
   //Busca UN PM
   server.get('/:id', (req, res) => {
-    Usuario.findOne({
+    PM.findOne({
         where: {
-            id: req.params.id,
-            profile: 'pm'
+            id: req.params.id
         }
     }).then(pm =>{
         !pm
@@ -35,10 +32,8 @@ server.put('/set', (req,res)=> {
   
   //Trae TODOS los PM 
   server.get('/', (req, res) => {
-    Usuario.findAll({
-        where:{
-            profile: 'pm'
-        }
+    PM.findAll({
+        include:[{model: Usuario}]
     })
       .then(pms => res.send(pms))
       .catch(() => res.status(400).send([]))

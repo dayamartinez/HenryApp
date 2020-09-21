@@ -69,12 +69,12 @@ export default function user (state = initialState, action){
         }
     }
 
-    if (action.type === GET_INSTRUCTOR){
+   /* if (action.type === GET_INSTRUCTOR){
         return {
             ...state,
             user: action.payload
         }
-    }
+    }*/
 
     if (action.type === GET_STUDENT){
         return {

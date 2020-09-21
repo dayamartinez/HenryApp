@@ -24,17 +24,19 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
         getInstructor()
         .then(data => setInstructor(data.payload))     
     }, [])
-    var data
-  if(instructor){
-    data = instructor.map(p => 
-      ({
-        name: p.name,
-        mail: p.email,
-        cohorte:p.cohort.name,
-        id: p.id
-      })
-    )
-    console.log(data)
+
+    var data;
+    console.log(instructor);
+    if(instructor){
+      data = instructor.map(p => 
+        ({
+          name: p.name,
+          lastName: p.lastName,
+          cohorte:undefined,
+          id: p.id
+        })
+      )
+      console.log(data)
   }
 
     return (
@@ -46,7 +48,7 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
         <div class="bg-dark" style={{display:"flex", justifyContent:"center", marginTop: '3px'}}>
           <h6 class="text-light mt-2">Filtrar por cohorte: </h6>
           <div>
-              {cohorts.length && cohorts.map((c) => (
+              {cohorts && cohorts.map((c) => (
                 <button type="button" onClick={() => getCohortDetail(c.id)} class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
               ))
               } 
@@ -83,51 +85,6 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
                 ))   
               )) : null
             }                
-
-
-                {/*<div style={style}> 
-                      {instructor && instructor.length === 0 ? (
-                    <div>
-                      <h4>
-                        {' '}
-                        No hay Instructores para mostrar
-                      </h4>
-                    </div>
-                  ) : (
-                    <TableContainer>
-                      <Table>
-                        <TableHead style={{backgroundColor:grey[900]}}>
-                          <TableRow>
-                            <TableCell style={yellowText}>Nombre</TableCell>
-                            <TableCell style={yellowText}>Mail</TableCell>
-                            <TableCell style={yellowText}>Cohorte</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {data && data.map(celda => (
-                            <TableRow>
-
-                              <TableCell>
-                                <Link 
-                                  href={"/admin/instructor/"+celda.id} 
-                                  color="inherit" 
-                                  underline="none">
-                                    {celda.name}
-                                </Link>
-                              </TableCell>
-
-                              <TableCell>{celda.mail}</TableCell>
-
-                              <TableCell>{celda.cohorte}</TableCell>
-
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                    )}
-                          </div>*/}
-
           </tbody>
         </table>
       </div>
@@ -136,7 +93,7 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
 
 const mapStateToProps = (state) => ({
   cohorts: state.cohort.cohorts,
-  cohortDetail: state.cohort.cohortDetail
+  cohortDetail: state.cohort.cohortDetail,
  })
 
 const mapDispatchToProps = dispatch => {

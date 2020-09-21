@@ -1,9 +1,9 @@
-import { GET_INSTRUCTOR, GET_INSTRUCTOR_DETAIL, } from '../actions/instructor'
+import { GET_INSTRUCTOR, GET_INSTRUCTOR_DETAIL } from '../actions/instructor'
 
 const initialState ={
     user:[{
         id: 0,
-        isAdmin: false
+        //isAdmin: false
     }],
     email: []
 }

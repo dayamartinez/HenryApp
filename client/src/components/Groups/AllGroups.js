@@ -26,6 +26,16 @@ export function AllGroups({getGroups,style}){
     .then(data => setGroups(data.payload))    
   }, [])
 
+  const buscarPM = (usuarios,pmId)=>{
+    var pmName = "El grupo no tiene un PM asignado."
+    usuarios.forEach(usuario => {
+        if(pmId === usuario.id){
+            pmName = usuario.name + " " + usuario.lastName
+        }
+    })
+    return pmName
+
+  }
 
 
   var data
@@ -34,7 +44,7 @@ export function AllGroups({getGroups,style}){
       ({
         /* se sacaron el about y la fecha de inicio para los grupos, en cambio se agregaron las columnas de pm y la de cohorte*/
         group: group.name,
-        pm:group.name,
+        pm:buscarPM(group.usuarios, group.PMs[0].usuarioId),
         cohorte: group.cohort ? (group.cohort.name):('Sin cohorte asignado'),
         alumnos: group.usuarios?(group.usuarios.length):(undefined),
         id: group.id
@@ -76,7 +86,7 @@ export function AllGroups({getGroups,style}){
                     </Link>
                   </TableCell>
 
-                  <TableCell>{['Hola', 'Mundo']}</TableCell>
+                  <TableCell>{celda.pm}</TableCell>
 
                   <TableCell>{celda.cohorte}</TableCell>
 
