@@ -29,8 +29,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
             <div class="bg-dark" style={{display:"flex", justifyContent:"center", marginTop: '3px'}}>
                 <h6 class="text-light mt-2">Filtrar por cohorte: </h6>
                 <div>
-                    {console.log(cohorts)}
-                    {cohorts && cohorts.map((c) => (
+                    {cohorts.length && cohorts.map((c) => (
                         <button type="button" onClick={() => getCohortDetail(c.id)} class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
                         ))
                     } 
@@ -49,7 +48,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                 {/* Si se selecciono un cohorte en particular, solo mostrara informacion de los alumnos del mismo,
                  */}
                 {cohortDetail.length ? cohortDetail.map((c) => (
-                    c.usuarios.map(u => (
+                    c.usuarios.filter(u => u.profile === "student").map(u => (
                         <tr class="bg-light"> 
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
@@ -59,7 +58,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                     ))                         
                     /* si no, se mostrara todos los alumnos de todos los cohortes,
                     el filter sirver para sacar a todos los pm e instructores de la lista de alumnos*/   
-                    )): cohorts.map((c) => (
+                    )): cohorts.length ? cohorts.map((c) => (
                     c.usuarios.filter(u => u.profile === "student").map(u => (
                             <tr class="bg-light"> 
                     <td>{u.name}</td>
@@ -68,7 +67,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                     <td>{buscarGrupo(c,u.grupoId)}</td>
                     </tr> 
                     ))   
-                ))
+                )) : null
                 }                
                 </tbody>
             </table>
