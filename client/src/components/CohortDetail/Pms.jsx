@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '5px'
   },
   margin:{
-      padding: "10px"
+      marginRight: "10px"
   }
 }));
 

@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import Pms from './Pms.jsx'
+import StudentList from './StudentList'
 
 export function CohortDetail({match}){
 
     return (
-        <div >
-            <Pms match={match}/>
+        <div style={{display:'flex', direction:'row', justifyContent:"space-between", padding:'20px'}} >
+            <div><Pms match={match}/></div>
+            <div></div>
+            <div><StudentList match={match}/></div>
         </div>
     )
 }

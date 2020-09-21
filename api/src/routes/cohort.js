@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Usuario, Cohort } = require('../db.js');
+const { Usuario, Cohort, Group } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Crear cohorte
@@ -58,7 +58,28 @@ server.post('/create',  (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [Usuario]
+      include: [Usuario, Group]
+    })
+      .then(cohort =>{
+        !cohort
+          ? res.status(404).json([])
+          : res.json(cohort)
+      })
+      .catch(() => res.status(400).json({
+                error: true,
+                message: 'el id no es valido'
+        })
+      )
+  })
+
+
+  //Busca TODOS los grupos de un cohorte
+  server.get('/groups/:id', (req, res) => {
+    Cohort.findAll({
+      where: {
+        id: req.params.id,
+      },
+      include: [Usuario, Group]
     })
       .then(cohort =>{
         !cohort
@@ -74,7 +95,7 @@ server.post('/create',  (req, res) => {
   
   //Trae TODOS los cohortes 
   server.get('/', (req, res) => {
-    Cohort.findAll({include: [Usuario]})
+    Cohort.findAll({include: [Usuario, Group]})
       .then(cohorts => res.send(cohorts))
       .catch(() => res.status(400).json({
         error: true,
