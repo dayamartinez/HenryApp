@@ -55,14 +55,32 @@ server.post('/create',  (req, res) => {
   //Busca UN cohorte y lo trae con los usuarios y grupos del mismo
   server.get('/:id', (req, res) => {
     Cohort.findAll({
-       where: {
-         id: req.params.id 
-        },include: [
-          {model: Usuario}, 
-          {model: Group}
-        ]
+      where: {
+        id: req.params.id,
+      },
+      include: [Usuario, Group]
+    })
+      .then(cohort =>{
+        !cohort
+          ? res.status(404).json([])
+          : res.json(cohort)
       })
+      .catch(() => res.status(400).json({
+                error: true,
+                message: 'el id no es valido'
+        })
+      )
+  })
 
+
+  //Busca TODOS los grupos de un cohorte
+  server.get('/groups/:id', (req, res) => {
+    Cohort.findAll({
+      where: {
+        id: req.params.id,
+      },
+      include: [Usuario, Group]
+    })
       .then(cohort =>{
         !cohort
           ? res.status(404).json([])
@@ -77,9 +95,7 @@ server.post('/create',  (req, res) => {
   
   //Trae TODOS los cohortes con sus usuarios y grupos correspondientes
   server.get('/', (req, res) => {
-    Cohort.findAll({
-      include: [{model: Usuario}, {model: Group}]
-    })
+    Cohort.findAll({include: [Usuario, Group]})
       .then(cohorts => res.send(cohorts))
       .catch(() => res.status(400).json({
         error: true,
