@@ -105,7 +105,7 @@ server.put('/settings/:id', (req, res, next) => {
     rol: req.body.rol,
   }
 
-  Usuario.findOne({
+  db.Usuario.findOne({
     where: {
       id: req.params.id
     }

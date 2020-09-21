@@ -6,7 +6,7 @@ import Register from './components/Landing/Register.js'
 import Cohort from './components/Cohort/FormCohort.jsx'
 import Students from './components/Cohort/CohortList.jsx'
 import Profile from './components/Landing/User/profile.js';
-import Settings from './components/Landing/User/Settings.js';
+import Settings from './components/Landing/User/profileSettings.js';
 import AllCohorts from './components/Cohort/AllCohorts'
 import Pms from './components/Pms/ListPm'
 import CohortDetail from './components/CohortDetail/CohortDetail'
@@ -39,7 +39,7 @@ function App(props) {
       {props.user.user.name && <Route path='/' component={NavBar} />}
       {props.user.user.name ? <Route  exact path='/Home'component={Home} />:null}
       {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
-      {/* <Route  exact path='/profile/Settings'component={Settings} /> */}
+      <Route  exact path='/profile/EditProfile'component={Settings} />
       {/* <Route  exact path='/forgotPassword'component={forgotPassword} /> */}
       <Route exact path='/'>
         {!props.user.user.name ? <Landing/> :<Redirect to='/'/>}

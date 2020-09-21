@@ -74,14 +74,18 @@ export default function CustomizedMenus() {
       >
         <StyledMenuItem>
           <ListItemIcon >
-           <a href='/profile/Settings'>Configuracion</a>
+           <a href='/profile/Settings'>Configuracion Avanzada</a>
           </ListItemIcon>
         </StyledMenuItem>
         <StyledMenuItem>
           <ListItemIcon>
           <a href='/profile/Help'>Ayuda</a>
           </ListItemIcon>
-          <ListItemText/>
+        </StyledMenuItem>
+        <StyledMenuItem>
+          <ListItemIcon>
+          <a href='/profile/EditProfile'>Editar Perfil</a>
+          </ListItemIcon>
         </StyledMenuItem>
       </StyledMenu>
       </div>

@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import {updateUser} from '../../../actions/user.js';
+import { storage } from '../../../firebase/index.js'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -32,21 +33,34 @@ const useStyles = makeStyles((theme) => ({
 export function Settings(props){
     const classes = useStyles();
     const [state, setState]=useState({
-        id: '',
-        name:'',
+        id: props.user.user.id,
+        name: '',
         lastName:'',
+        urlImage: ''
     });
  
 
-    const [password, setPassword]= useState({
-        newPassword: '',
-        confirmNewPassword: ''
-    })
+    const [image, setImage] = useState({
+      id: props.user.user.id,
+      profileImage: ''
+  });
 
 
     const onSend = function(e){
         e.preventDefault();
+        if (!state.name && !state.lastName){
+          alert("Se debe completar alguno de los cambios!")
+          return;
+        } 
+          if(!state.name && state.lastName){
+            state.name = props.user.user.name;
+          }
+        
+          if(!state.lastName && state.name){
+            state.lastName = props.user.user.lastName;
+          } else{
         props.updateUser(state)
+          }
       }
   
       //MANEJO DE ONCHANGE()
@@ -56,6 +70,32 @@ export function Settings(props){
             [e.target.name]:e.target.value
           })
         }
+
+
+
+        const handleUpload = () => {
+          const uploadTask = storage.ref(`images/${image.id}`).put(image);
+          uploadTask.on(
+              "state_changed",
+              snapshot => { },
+              error => {
+              },
+              () => {
+                  storage
+                      .ref("images")
+                      .child(image.id)
+                      .getDownloadURL()
+                      .then(url => {
+                          console.log("url")
+                          console.log(url)
+                          setState({
+                              ...state,
+                              profileImage: url
+                          })
+                      })
+              }
+          )
+      }  
 
     return (
         <Container component="main" maxWidth="xs">
@@ -80,6 +120,7 @@ export function Settings(props){
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                autoComplete="flastName"
                 variant="outlined"
                 required
                 fullWidth
@@ -104,6 +145,22 @@ export function Settings(props){
          
         </form>
 
+        <Grid className="custom-file">
+                        <Grid 
+                            type="file" class="custom-file-input" id="customFileLang" lang="es"
+                            onChange={e => setImage(e.target.files[0])}
+                        /> <br /><br />
+                        <label class="custom-file-label" for="customFileLang" lang="es">Seleccionar Archivo</label>
+                        <Button
+                          className={classes.submit}
+                          color="primary" 
+                          type="submit"
+                          fullWidth
+                          variant="contained" 
+                          onClick={handleUpload}>
+                            GuardarImagen
+                            </Button>
+                    </Grid>
 
                 </div>
             </Container>

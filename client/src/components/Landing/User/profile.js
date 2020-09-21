@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import ProfilePicChange from './passwordSetting';
 
 //ESTILOS DE MATERIAL UI
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +93,9 @@ const useStyles = makeStyles((theme) => ({
         <div className={classes.background}> 
           <Avatar  className={classes.profile} alt="Remy Sharp" src={HenryIcon} />
         </div>
+        <div>
+        <ProfilePicChange/>
+        </div>
         <div className={classes.container}>
            <h2 className={classes.nameLastName}>{`${props.user.user.name } ${props.user.user.lastName}`} </h2>
         <Typography variant="subtitle1" gutterBottom> 
@@ -103,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
          </Typography> */}
         
          <Typography variant="body1" gutterBottom className={classes.textBirthday}> 
-         <p><CalendarTodayIcon />Fecha de nacimiento</p>
+         <p><CalendarTodayIcon />{props.user.user.birthday}</p>
          </Typography>
         </div>
         
