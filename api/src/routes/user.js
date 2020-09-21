@@ -9,6 +9,17 @@ const Sequelize = require('sequelize');
 
 //app.use(cors());
 
+server.get('/', (req, res) => {
+  db.Usuario.findAll()
+    .then(users => res.send(users))
+    .catch(() => res.status(400).json({
+      error: true,
+      message: 'error al buscar los usuarios'
+     })
+    )
+})
+
+
 //Busca usuario por email
 server.get('/:email',(req,res,next)=>{
   let email = req.params.email

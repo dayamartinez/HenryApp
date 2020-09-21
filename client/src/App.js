@@ -41,6 +41,8 @@ function App(props) {
       {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
       <Route  exact path='/profile/EditProfile'component={Settings} />
       {/* <Route  exact path='/forgotPassword'component={forgotPassword} /> */}
+      {/* <Route  exact path='/profile/Settings'component={Settings} /> */}
+      <Route  exact path='/forgotpassword'component={forgotPassword} />
       <Route exact path='/'>
         {!props.user.user.name ? <Landing/> :<Redirect to='/'/>}
       </Route>

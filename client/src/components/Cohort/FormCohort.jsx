@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
 
-import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
+import {addCohort, updateCohort, removeCohort, getCohortDetail} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
 import ExcelLoader from './ExcelLoader';
@@ -35,7 +35,7 @@ import axios from 'axios';
     }
   }));
   
-  export function FormCohort({ match, addCohort, updateCohort, removeCohort, emails}) {
+  export function FormCohort({ match, addCohort, getCohortDetail, updateCohort, removeCohort, emails}) {
 
      let id = match.params.id
      const history = useHistory()
@@ -50,22 +50,21 @@ import axios from 'axios';
 
     useEffect(() =>{
       if(id){
-          fetch(`http://localhost:3001/cohort/${id}`,
-           {credentials: 'include'})
-           .then(res => {
-            return res.json()
-          })
-          .then(cohort => {
+          getCohortDetail(id)
+          .then(data => {
             setInput({
               ...input,
-                name: cohort.name,
-                startDate: cohort.startDate,
-                about: cohort.about  
+              name: data.payload[0].name,
+              startDate: data.payload[0].startDate,
+              about: data.payload[0].about
             })
+            
       }).catch()  
       }  
 
   }, [])
+
+  console.log(input)
 
     const handleInputChange = function(e) {
       setInput({
@@ -215,7 +214,8 @@ import axios from 'axios';
     return {
       addCohort: (cohort) => dispatch(addCohort(cohort)),
       updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort)),
-      removeCohort: (id) => dispatch(removeCohort(id))
+      removeCohort: (id) => dispatch(removeCohort(id)),
+      getCohortDetail: (id) => dispatch(getCohortDetail(id))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormCohort)
