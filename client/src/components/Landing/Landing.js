@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     position:"relative",
     zIndex:0,
     width:340,
+    margin:"auto"
   },
   title:{
     // backgroundColor: theme.palette.primary.main,<h1>Ingrese su email con el que aplico.</h1>
@@ -25,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
     position:"relative",
     top:-20,
     left:30,
+  },
+  elemento:{
+    paddingTop:theme.spacing(8),
+    width: "50vw"
+
   }
 }))
 
@@ -34,9 +40,9 @@ export  default function Landing() {
 
 return (
   <div className={s.fondo}>
-    <Container>
-      <Grid>
-        <Grid item className={s.elemento} xs={12}>
+    <Container className={s.elemento}>
+      <Grid container>
+        <Grid item  xs={12} lg={6}>
           <div className={s.titleBack}>
             <h2 className= {s.title} >
               Bienvenido a HenryApp
@@ -46,7 +52,7 @@ return (
         </Grid>
         
         {/* llamo al componente Login importado */}
-        <Grid item xs={12}>
+        <Grid item xs={12} lg={6}>
           <Login/>
         </Grid>
       </Grid>
