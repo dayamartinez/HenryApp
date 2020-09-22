@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
   sequelize.define('usuario', {
     name: {
       type: DataTypes.TEXT,
-      allowNull: false,
+      allowNull: true,
       validate: {
         is: {
           args: ["^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$"],
@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
     },
     lastName: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
         validate: {
           is: {
             args: ["^[a-zA-Z-,]+(\s{0,1}[a-zA-Z-, ])*$"],
@@ -85,7 +85,7 @@ module.exports = (sequelize) => {
     status: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
-      allowNull: false
+      allowNull: true
     }
 
     //hashea password antes de crearla

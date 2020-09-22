@@ -7,11 +7,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
 
-import {addCohort, updateCohort, removeCohort} from '../../actions/cohort'
+import {addCohort, updateCohort, removeCohort, getCohortDetail} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
 import ExcelLoader from './ExcelLoader';
-import axios from 'axios';
+
 
   const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,7 +35,7 @@ import axios from 'axios';
     }
   }));
   
-  export function FormCohort({ match, addCohort, updateCohort, removeCohort, emails}) {
+  export function FormCohort({ match, addCohort, getCohortDetail, updateCohort, removeCohort, emails}) {
 
      let id = match.params.id
      const history = useHistory()
@@ -44,11 +44,10 @@ import axios from 'axios';
     
     const [input, setInput]= useState({
       name:'',
-      startDate: '',
-      about:''
+      startDate: ''
     });
 
-    useEffect(() =>{
+    /*useEffect(() =>{
       if(id){
           fetch(`http://localhost:3001/cohort/${id}`,
            {credentials: 'include'})
@@ -65,6 +64,20 @@ import axios from 'axios';
       }).catch()  
       }  
 
+  }, [])*/
+
+  useEffect(() => {
+    if(id){
+      getCohortDetail(id)
+      .then(data => {
+        setInput({
+          ...input,
+          name: data.payload[0].name,
+          startDate: data.payload[0].startDate
+        })
+      })
+      .catch()  
+    }  
   }, [])
 
     const handleInputChange = function(e) {
@@ -75,18 +88,21 @@ import axios from 'axios';
     }
 
     const handleSubmit = function (e) {
-        e.preventDefault()
+       // e.preventDefault()
         const cohort = {
           name: input.name,
-          startDate: input.startDate,
-          about: input.about
+          startDate: input.startDate
         }
-       id ? updateCohort(id, cohort) : addCohort(cohort)
+       id ? updateCohort(id, cohort) : addCohort(cohort, emails)
+       swal("Cohorte creado correctamente")
+        history.push('/admin')
     }
 
     //se agrega función para que al hacer click en crear, se envien al back los correos que fueron cargados
     const sendMail = function(e){
       e.preventDefault();
+      handleSubmit();
+      /*
       if(emails){
         axios.post('http://localhost:3001/email/send-email/:email', emails)
         .then(() => {
@@ -95,7 +111,7 @@ import axios from 'axios';
         .catch(err =>{
           alert(err)
         })
-      }
+      }*/
     }
   
 
@@ -135,17 +151,7 @@ import axios from 'axios';
             onChange={handleInputChange}
             required
             />
-             <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              name="about"
-              label="Acerca del Cohorte"
-              type="about"
-              id="about"
-              value={input.about}
-              onChange={handleInputChange}
-            />
+             
             {/*Se llama a la función para cargar las direcciones de email de los alumnos */}
             <ExcelLoader/>
 
@@ -213,9 +219,10 @@ import axios from 'axios';
  
   const mapDispatchToProps = dispatch => { 
     return {
-      addCohort: (cohort) => dispatch(addCohort(cohort)),
+      addCohort: (cohort,emails) => dispatch(addCohort(cohort,emails)),
       updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort)),
-      removeCohort: (id) => dispatch(removeCohort(id))
+      removeCohort: (id) => dispatch(removeCohort(id)),
+      getCohortDetail: (id) => dispatch(getCohortDetail(id))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormCohort)

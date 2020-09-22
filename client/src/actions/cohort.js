@@ -1,4 +1,5 @@
-import swal from 'sweetalert'
+import swal from 'sweetalert';
+import Axios from 'axios';
 export const ADD_COHORT = 'ADD_COHORT'
 export const UPDATE_COHORT = 'UPDATE_COHORT'
 export const GET_COHORT_DETAIL = 'GET_COHORT_DETAIL'
@@ -7,25 +8,27 @@ export const REMOVE_COHORT = 'REMOVE_COHORT'
 export const SET_USERS_EMAILS = 'SET_USERS_EMAILS'
 
 
-export function addCohort(cohort) {
+export function addCohort(cohort,emails) {
   return function (dispatch) {
-    return fetch(`http://localhost:3001/cohort/create`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(cohort),
-    })
-      .then(res => res.json())
+    let data = {...cohort,emails}
+    // return fetch(`http://localhost:3001/cohort/create`, {
+    //   method: 'POST',
+    //   credentials: 'include',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(cohort,emails),
+    // })
+    //   .then(res => res.json())
+    Axios.post('http://localhost:3001/cohort/create',data)
       .then(data => {
            dispatch({
           type: 'ADD_COHORT',
           payload: data.cohort,
 
         })
-       swal(data.message)                
+        swal("Cohorte creado correctamente")                
       })
       .catch(err => swal(err, '', 'error'))
   }

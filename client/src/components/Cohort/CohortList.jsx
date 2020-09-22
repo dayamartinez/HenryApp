@@ -48,7 +48,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                 {/* Si se selecciono un cohorte en particular, solo mostrara informacion de los alumnos del mismo,
                  */}
                 {cohortDetail.length ? cohortDetail.map((c) => (
-                    c.usuarios.filter(u => u.profile === "student").map(u => (
+                    c.usuarios.map(u => (
                         <tr class="bg-light"> 
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
@@ -59,7 +59,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                     /* si no, se mostrara todos los alumnos de todos los cohortes,
                     el filter sirver para sacar a todos los pm e instructores de la lista de alumnos*/   
                     )): cohorts.length ? cohorts.map((c) => (
-                    c.usuarios.filter(u => u.profile === "student").map(u => (
+                    c.usuarios.map(u => (
                             <tr class="bg-light"> 
                     <td>{u.name}</td>
                     <td>{u.lastName}</td>
