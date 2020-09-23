@@ -204,7 +204,8 @@ export function Register(props) {
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
-              <Grid item xs={12}>
+             
+             {/*} <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
@@ -228,6 +229,7 @@ export function Register(props) {
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
+                */}
               <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Deseo recibir notificaciones e información via email."

@@ -24,16 +24,18 @@ export function ListPM({getPm,style}){
         .then(data => setPm(data.payload))     
     }, [])
     var data
-  if(pm){
+  
+    if(pm){
     data = pm.map(p => 
       ({
-        name: p.name,
-        mail: p.email,
-        cohorte:p.cohortId,
+        name: p.usuario.name,
+        lastName: p.usuario.lastName,
+        mail: p.usuario.email,
+        group:p.group.name,
         id: p.id
       })
     )
-    console.log(data)
+    
   }
     return (
         <div style={style}> 
@@ -47,11 +49,12 @@ export function ListPM({getPm,style}){
       ) : (
         <TableContainer>
           <Table>
-            <TableHead style={{backgroundColor:grey[900]}}>
+            <TableHead style={{backgroundColor: '#343a40'}}>
               <TableRow>
                 <TableCell style={yellowText}>Nombre</TableCell>
+                <TableCell style={yellowText}>Apellido</TableCell>
                 <TableCell style={yellowText}>Mail</TableCell>
-                <TableCell style={yellowText}>Cohorte</TableCell>
+                <TableCell style={yellowText}>Grupo</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -67,9 +70,11 @@ export function ListPM({getPm,style}){
                     </Link>
                   </TableCell>
 
+                  <TableCell>{celda.lastName}</TableCell>
+
                   <TableCell>{celda.mail}</TableCell>
 
-                  <TableCell>{celda.cohorte}</TableCell>
+                  <TableCell>{celda.group}</TableCell>
 
                 </TableRow>
               ))}

@@ -45,6 +45,7 @@ Usuario.belongsTo(PP); //user * ---- 1 pp
 PP.hasMany(Usuario);
 
 Usuario.hasOne(PM); //user 1 --- 1 PM
+PM.belongsTo(Usuario);
 
 Cohort.hasMany(Group); //cohort 1 --- * group
 Group.belongsTo(Cohort);
