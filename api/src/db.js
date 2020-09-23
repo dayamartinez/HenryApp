@@ -6,7 +6,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize('postgres://tfsxbtas:uaXZmlvgHKSf86pwTbBwBeDmUqEjlDUl@tuffi.db.elephantsql.com:5432/tfsxbtas', {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/HenryAppdevelopment`, {
 
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
@@ -31,17 +31,32 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Cohort, Usuario, Group, Account } = sequelize.models;
+// En sequelize.models están todos los modelos importados como propiedades
+// Para relacionarlos hacemos un destructuring
+const { Cohort, Usuario, Group, PP, Staff, PM } = sequelize.models;
 
 // Aca vendrian las relaciones
 
+
 Usuario.belongsTo(Group); //user * ---- 1 group
 Group.hasMany(Usuario);
+
 Usuario.belongsTo(Cohort); //user * ---- 1 cohort
 Cohort.hasMany(Usuario);
-Usuario.hasOne(Account); //user 1 --- 1 account
+
+// Usuario.belongsTo(PP); //user * ---- 1 pp
+// PP.hasMany(Usuario);
+
+// Usuario.hasOne(PM); //user 1 --- 1 PM
+
 Cohort.hasMany(Group); //cohort 1 --- * group
 Group.belongsTo(Cohort);
+
+// Group.hasMany(PM); //Group 1 --- * PM
+// PM.belongsTo(Group);
+
+Staff.belongsToMany(Cohort, { through: "staff_cohort" });
+Cohort.belongsToMany(Staff, { through: "staff_cohort" });
 
 
 module.exports = {

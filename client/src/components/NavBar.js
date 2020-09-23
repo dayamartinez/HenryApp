@@ -6,6 +6,7 @@ import { userLogout } from '../actions/user';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import Menu from './MenuNavBar.js'
 
 const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,
@@ -52,13 +53,13 @@ const logout = function(e) {
       <AppBar position='fixed' className={s.fija} color='secondary'>
         <Toolbar>
           <IconButton color='primary' className={s.menuButton}>
-            <MenuIcon />
+            <Menu/>
           </IconButton>
          <Typography variant='h6' className={s.title}>
           HenryApp
          </Typography>
          <SearchBar />
-          <Button variant='text' color = 'primary'>
+          <Button variant='text' color = 'primary' onClick={(e) => history.push('/profile')}>
             Perfil
           </Button>
           <Button variant='text' color = 'primary' onClick={(e)=>logout(e)}>

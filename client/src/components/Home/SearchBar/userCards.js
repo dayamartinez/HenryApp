@@ -26,7 +26,7 @@ export function UserCard(props){
       <div>
          
        
-            {props.user.usuario && props.user.usuario.map((item) =>
+            {props.user.usuario[0] && props.user.usuario.map((item) =>
             <List >
             <ListItem >
             <Avatar key={item.id} alt="Remy Sharp" src={HenryIcon} />

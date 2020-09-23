@@ -95,6 +95,7 @@ import axios from 'axios';
           alert(err)
         })
       }
+      alert('hola')
     }
   
 
