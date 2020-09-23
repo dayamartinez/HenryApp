@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+import { CardMedia } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 
 //ESTILOS DE MATERIAL UI
 const useStyles = makeStyles((theme) => ({
@@ -22,17 +24,18 @@ const useStyles = makeStyles((theme) => ({
     background: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
       background: 'black',
+      alignItems: 'center',
       height: '250px'
     },
     profile: {
-      display: 'flex',
+      position: 'absolute',
       width: '150px',
       height: '150px',
-      marginTop: '200px',
+      marginTop: '150px',
       marginLeft: '-700px',
       borderRadius: '5px',
+      borderColor: 'white',
       zIndex: '10px'
     },
     nameLastName: {
@@ -74,6 +77,13 @@ const useStyles = makeStyles((theme) => ({
         color: 'darkgray',
         marginTop: '100px'
       },
+      portada: {
+        display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      height: '250px',
+      width: '100%'
+      }
   }));
   
   export function Profile(props){
@@ -87,10 +97,13 @@ const useStyles = makeStyles((theme) => ({
 
     }
     return(
-        <div className={classes.totalBackground}>
-
-        <div className={classes.background}> 
-          <Avatar  className={classes.profile} alt="Remy Sharp" src={HenryIcon} />
+        <Card className={classes.totalBackground} >
+        <div  className={classes.background}> 
+          <img   className={classes.portada}  src= {props.user.user.portadaImage}/>
+          <Avatar  className={classes.profile} alt="Remy Sharp" src={props.user.user.urlImage} />
+        </div>
+        
+        <div>
         </div>
         <div className={classes.container}>
            <h2 className={classes.nameLastName}>{`${props.user.user.name } ${props.user.user.lastName}`} </h2>
@@ -103,7 +116,6 @@ const useStyles = makeStyles((theme) => ({
          </Typography> */}
         
          <Typography variant="body1" gutterBottom className={classes.textBirthday}> 
-         <p><CalendarTodayIcon />Fecha de nacimiento</p>
          </Typography>
         </div>
         
@@ -125,7 +137,7 @@ const useStyles = makeStyles((theme) => ({
         <Tab label="Información" />
       </Tabs>
     </Paper>
-        </div>
+        </Card>
     )
   }
   const mapStateToProps = state => {		

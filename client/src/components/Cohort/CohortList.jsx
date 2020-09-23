@@ -11,7 +11,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
 
     //Busca el grupo al cual pertenece el alumno
     const buscarGrupo= (cohorte,grupoId)=>{
-        var grupoName = "el aulumno no tiene un grupo asignado"
+        var grupoName = "El alumno no tiene un grupo asignado"
         cohorte.groups.forEach(grupo => {
             if(grupoId=grupo.id){
                 grupoName = grupo.name

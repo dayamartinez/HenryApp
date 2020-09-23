@@ -21,6 +21,7 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { useHistory } from 'react-router-dom';
+import HenryIcon from '../../images/henryUserIcon.jpg';
 
 //ESTILOS DE MATERIAL UI
 const useStyles = makeStyles((theme) => ({
@@ -67,17 +68,17 @@ export function Register(props) {
         lastName:'',
         birthday: '',
         country:'',
-        address:'',
-        provincia: '',
+        city:'',
         github: '',
         gmail: '',
+        urlImage: HenryIcon,
     });
     
 
     const onSend = function(e){
       e.preventDefault();
       //SE VALIDAN TODOS LOS CAMPOS PARA MANDAR AL BACK!
-      if (!input.name || !input.lastName || !input.birthday || !input.country || !input.address || !input.provincia){
+      if (!input.name || !input.lastName || !input.birthday || !input.country || !input.city){
         alert("Se deben completar todos los campos!")
         return;
       } else {
@@ -189,29 +190,16 @@ export function Register(props) {
                </FormControl>
                 
               </Grid>
+            
+
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
-                  name="address"
-                  label="Direccion"
-                  id="address"
-                  autoComplete="off"
-                  onChange={(e) => handleInputChange(e)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="provincia"
-                  label="Provincia"
-                  id="provincia"
+                  name="city"
+                  label="Ciudad/Provincia/Departamento"
+                  id="city"
                   autoComplete="off"
                   onChange={(e) => handleInputChange(e)}
                 />

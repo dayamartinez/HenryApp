@@ -7,7 +7,7 @@ const { Usuario, Group, Cohort, PM } = require('../db.js');
 
 //se elimino todo lo relacionado con el pairprograming
 server.post('/create',  (req, res) => {
-    const { name, pairProgramming} = req.body
+    const { name } = req.body
     const emails = req.body;
     
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
@@ -27,7 +27,7 @@ server.post('/create',  (req, res) => {
             where: {
               email:email
             }
-          }).then(user =>{
+          }).then(user => {
               user.groupId = group.id
               user.save()
           })
