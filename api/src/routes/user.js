@@ -107,16 +107,19 @@ server.put('/settings/:id', (req, res, next) => {
     name: req.body.name,
     lastName: req.body.lastName,
     birthday: req.body.birthday,
-    address: req.body.address,
+    city: req.body.city,
     country: req.body.country,
-    about: req.body.about,
     email: req.body.email,
+    gmail: req.body.gmail,
+    github: req.body.github,
     password: req.body.password,
-    profile: req.body.profile,
     rol: req.body.rol,
+    status: req.body.status,
+    urlImage: req.body.urlImage,
+    portadaImage: req.body.portadaImage
   }
 
-  Usuario.findOne({
+  db.Usuario.findOne({
     where: {
       id: req.params.id
     }
@@ -169,13 +172,16 @@ server.put('/completeprofile/:id', (req, res, next) => {
     name: req.body.name,
     lastName: req.body.lastName,
     birthday: req.body.birthday,
-    address: req.body.address,
+    city: req.body.city,
     country: req.body.country,
-    about: req.body.about,
     email: req.body.email,
+    gmail: req.body.gmail,
+    github: req.body.github,
     password: req.body.password,
-    profile: req.body.profile,
     rol: req.body.rol,
+    status: req.body.status,
+    urlImage: req.body.urlImage,
+    portadaImage: req.body.portadaImage
   }
 
   db.Usuario.findOne({

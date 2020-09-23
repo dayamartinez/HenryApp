@@ -1,9 +1,11 @@
 const server = require('express').Router();
-const { Usuario, Cohort, Group } = require('../db.js');
+const nodemailer = require('nodemailer');
+const { Usuario, Cohort, Group, Staff } = require('../db.js');
+
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Crear cohorte
-server.post('/create',  (req, res) => {
+/*server.post('/create',  (req, res) => {
     const { name, startDate, about} = req.body
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
       if (!name || !startDate || !about ) {
@@ -30,7 +32,73 @@ server.post('/create',  (req, res) => {
           res.status(500).json(err)
       })
   })
+*/
+  //Crear cohorte
+server.post('/create',  (req, res) => {
+  const { name, startDate, emails} = req.body
+  console.log(req.body)
+  const capName = name.charAt(0).toUpperCase() + name.slice(1)
+    if (!name || !startDate ) {
+        res.status(400).json({
+            error: true,
+            message: 'Debe enviar los campos requeridos'
+        })
+    }
+    Cohort.create({
+        name: capName,
+        startDate,
+       
+    // include: [Usuario]
+  }) 
+    .then(cohort => {
+          // const emails = req.body;
+  // console.log(req.body);
+  //se hace un map con el array de emails que se importan desde excel y se transforman a un json
+  emails.map((email) => {
+    console.log(email)
+      Usuario.create({
+          email: email.email,
+          cohortId: cohort.id
+          
+      })
+      const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      port: 587,
+      secure: false,
+      auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD
+      },
+      tls: {
+          rejectUnauthorized: false
+      }
+      })
+
+      const mailOptions = {
+          from: process.env.EMAIL,
+          to: email.email,
+          subject: "Enviado desde HenryApp",
+          text: "Bienvenido a HenryApp!! Para registrarse haga click en el siguiente link http://localhost:3000/inviteuser"
+      }
+
+      transporter.sendMail(mailOptions, (err, info) => {
+          if(err){
+              res.status(500).send(err)
+          } 
+          else {
+              console.log("Email enviado")
+              res.status(200).json(req.body)
+          }
+      })
+      })
+      res.status(201).send("OK")
+    })
+    .catch( err => {
+        res.status(500).json(err)
+    })
   
+})
+
   //Mofificar cohorte 
   server.put('/update/:id',  (req, res) => {
     const { name, about, startDate } = req.body
@@ -38,9 +106,7 @@ server.post('/create',  (req, res) => {
       Cohort.findByPk(req.params.id)
           .then(cohort => {
               cohort.name = capName || cohort.name
-              cohort.startDate = startDate || cohort.startDate
-              cohort.about = about || cohort.about
-  
+              cohort.startDate = startDate || cohort.startDate  
               cohort.save().then(cohort => {
                   res.status(201).send(cohort)
               })
@@ -95,12 +161,11 @@ server.post('/create',  (req, res) => {
   
   //Trae TODOS los cohortes con sus usuarios y grupos correspondientes
   server.get('/', (req, res) => {
-    Cohort.findAll({include: [Usuario, Group]})
+    Cohort.findAll({
+      include: [{model: Usuario}, {model: Group}, {model: Staff}]
+    })
       .then(cohorts => res.send(cohorts))
-      .catch(() => res.status(400).json({
-        error: true,
-        message: 'error al buscar los cohortes'
-       })
+      .catch(() => res.status(400).send([])
       )
   })
 

@@ -1,13 +1,13 @@
 const server = require('express').Router();
 //const { CohortList } = require('../../../client/src/components/Cohort/CohortList.jsx');
-const { Usuario, Group, Cohort } = require('../db.js');
+const { Usuario, Group, Cohort, PM } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Creamos un grupo
 
 //se elimino todo lo relacionado con el pairprograming
 server.post('/create',  (req, res) => {
-    const { name, pairProgramming} = req.body
+    const { name } = req.body
     const emails = req.body;
     
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
@@ -27,7 +27,7 @@ server.post('/create',  (req, res) => {
             where: {
               email:email
             }
-          }).then(user =>{
+          }).then(user => {
               user.groupId = group.id
               user.save()
           })
@@ -108,7 +108,7 @@ server.post('/create',  (req, res) => {
   //Trae TODOS los grupos, con sus usuarios y cohortes correspondientes
   server.get('/', (req, res) => {
     Group.findAll({
-      include:[{model: Usuario}, {model: Cohort}]
+      include:[{model: Usuario}, {model: Cohort}, {model: PM}]
     }
     ).then(groups => res.send(groups))
       .catch(() => res.status(400).json({
