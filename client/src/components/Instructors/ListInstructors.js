@@ -79,14 +79,14 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
           </thead>
 
           <tbody>
-            {cohortDetail.length ? cohortDetail.map((u) => (
+            {cohortDetail ? cohortDetail.map((u) => (
                 <tr class="bg-light"> 
                   <td>{u.staffs.name}</td>
                   <td>{u.staffs.lastName}</td>
                   <td>{u.staffs.email}</td>
                   <td>{u.cohortId}</td>
                 </tr>       
-            )): cohorts.length ? cohorts.map(u => (
+            )): cohorts ? cohorts.map(u => (
                     <tr class="bg-light"> 
                       <td>{u.name}</td>
                       <td>{u.lastName}</td>
