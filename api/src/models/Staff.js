@@ -96,7 +96,12 @@ module.exports = (sequelize) => {
     urlImage: {
       type: DataTypes.STRING,
       defaultValue: true
+    },
+    
+    portadaImage: {
+      type: DataTypes.STRING
     }
+
 
     //hashea password antes de crearla
     /*usuario.addHook('beforeCreate', (s) => {

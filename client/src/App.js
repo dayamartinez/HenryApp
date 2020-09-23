@@ -6,7 +6,6 @@ import Register from './components/Landing/Register.js'
 import Cohort from './components/Cohort/FormCohort.jsx'
 import Students from './components/Cohort/CohortList.jsx'
 import Profile from './components/Landing/User/profile.js';
-import Settings from './components/Landing/User/profileSettings.js';
 import AllCohorts from './components/Cohort/AllCohorts'
 import Pms from './components/Pms/ListPm'
 import CohortDetail from './components/CohortDetail/CohortDetail'
@@ -22,7 +21,7 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
-
+import Settings from './components/Landing/User/profileSettings.js';
 import FormGroup from './components/Groups/FormGroup';
 
 import UserCard from './components/Home/SearchBar/userCards'
@@ -51,6 +50,7 @@ function App(props) {
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
+      <Route exact path='/profile/EditProfile'component={Settings} />
 
       
       {/*---------------------------------------------------------------------------------

@@ -1,4 +1,6 @@
-import {ADD_COHORT, UPDATE_COHORT, GET_COHORT_DETAIL, GET_COHORTS, REMOVE_COHORT, SET_COHORT, GET_GROUP_DETAIL} from '../actions/cohort.js'
+
+import {ADD_COHORT, UPDATE_COHORT, GET_COHORT_DETAIL, GET_COHORTS, REMOVE_COHORT, SET_COHORT,SET_USERS_EMAILS, GET_GROUP_DETAIL} from '../actions/cohort.js'
+
 
 const initialState = {
     cohorts: [],
@@ -43,7 +45,12 @@ export default function cohort(state = initialState, action) {
                 groups: action.payload
             }
         
-            default:
-                return state
+        case SET_USERS_EMAILS:
+            return {
+                ...state,
+                emails: action.payload
+            }
+        default:
+            return state
     }
 }

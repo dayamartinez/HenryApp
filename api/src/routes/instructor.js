@@ -1,12 +1,12 @@
 const server = require('express').Router();
-const { Usuario, Cohort } = require('../db.js');
+const { Staff, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
 
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a instructor 
 server.put('/set', (req,res)=> {
-    Usuario.findByPk(req.body.id)
+    Staff.findByPk(req.body.id)
       .then(user => {
        user,
        user.profile = 'instructor'
@@ -19,7 +19,7 @@ server.put('/set', (req,res)=> {
 
   //Busca UN instructor
   server.get('/:id', (req, res) => {
-    Usuario.findOne({
+    Staff.findOne({
         where: {
             id: req.params.id,
             profile: 'instructor'
@@ -41,7 +41,7 @@ server.put('/set', (req,res)=> {
   
   //Trae TODOS los instructores 
   server.get('/', (req, res) => {
-    Usuario.findAll({
+    Staff.findAll({
         where:{
             profile: 'instructor'
         },

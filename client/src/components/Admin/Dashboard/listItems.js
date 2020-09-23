@@ -57,14 +57,14 @@ export const mainListItems = (
       </ListItem>
     </Link>
 
-    <Link href='/admin/groups' color="secondary" underline="none"> 
+    {/*<Link href='/admin/groups' color="secondary" underline="none"> 
       <ListItem button>
         <ListItemIcon>
           <GroupWorkIcon/>
         </ListItemIcon>
         <ListItemText primary="Grupos" />
       </ListItem>
-    </Link>
+</Link>*/}
 
     <ListItem button>
       <ListItemIcon>
@@ -74,6 +74,7 @@ export const mainListItems = (
       <ListItemText primary="Crear Cohorte" />
       </Link>
     </ListItem>
+    {/*
     <Link href='/admin/formGroup' color="secondary" underline="none">
     <ListItem button>
       <ListItemIcon>
@@ -81,6 +82,6 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Crear Grupos" />
     </ListItem>
-    </Link>
+    </Link>*/}
   </div>
 );

@@ -128,7 +128,6 @@ export function Settings(props){
           )
       }  
 
-
       const handleUploadPortada = () => {
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
         uploadTask.on(

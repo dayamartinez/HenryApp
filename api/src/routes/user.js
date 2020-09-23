@@ -118,7 +118,6 @@ server.put('/settings/:id', (req, res, next) => {
     urlImage: req.body.urlImage,
     portadaImage: req.body.portadaImage
   }
-console.log(req.body)
   db.Usuario.findOne({
     where: {
       id: req.params.id

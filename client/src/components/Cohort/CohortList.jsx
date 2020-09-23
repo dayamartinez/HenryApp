@@ -11,7 +11,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
 
     //Busca el grupo al cual pertenece el alumno
     const buscarGrupo= (cohorte,grupoId)=>{
-        var grupoName = "el aulumno no tiene un grupo asignado"
+        var grupoName = "El alumno no tiene un grupo asignado"
         cohorte.groups.forEach(grupo => {
             if(grupoId=grupo.id){
                 grupoName = grupo.name
@@ -58,9 +58,9 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                     ))                         
                     /* si no, se mostrara todos los alumnos de todos los cohortes,
                     el filter sirver para sacar a todos los pm e instructores de la lista de alumnos*/   
-                    )): cohorts.map((c) => (
-                    c.usuarios.filter(u => u.profile === "student").map(u => (
-                    
+                    )): cohorts.length ? cohorts.map((c) => (
+                    c.usuarios.map(u => (
+
                     <tr class="bg-light"> 
                     <td>{u.name}</td>
                     <td>{u.lastName}</td>
@@ -68,7 +68,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                     <td>{buscarGrupo(c,u.grupoId)}</td>
                     </tr> 
                     ))   
-                ))
+                )) : null
                 }                
                 </tbody>
             </table>

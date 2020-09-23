@@ -18,12 +18,12 @@ export function addGroup(group) {
     })
       .then(res => res.json())
       .then(data => {
-           dispatch({
+        dispatch({
           type: 'ADD_GROUP',
           payload: data.group,
 
         })
-       swal(data.message)                
+       swal("Grupo creado correctamente")                
       })
       .catch(err => swal(err, '', 'error'))
   }

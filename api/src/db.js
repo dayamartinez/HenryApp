@@ -31,8 +31,6 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-// En sequelize.models están todos los modelos importados como propiedades
-// Para relacionarlos hacemos un destructuring
 const { Cohort, Usuario, Group, PP, Staff, PM } = sequelize.models;
 
 // Aca vendrian las relaciones
@@ -44,16 +42,16 @@ Group.hasMany(Usuario);
 Usuario.belongsTo(Cohort); //user * ---- 1 cohort
 Cohort.hasMany(Usuario);
 
-// Usuario.belongsTo(PP); //user * ---- 1 pp
-// PP.hasMany(Usuario);
+Usuario.belongsTo(PP); //user * ---- 1 pp
+PP.hasMany(Usuario);
 
-// Usuario.hasOne(PM); //user 1 --- 1 PM
+Usuario.hasOne(PM); //user 1 --- 1 PM
 
 Cohort.hasMany(Group); //cohort 1 --- * group
 Group.belongsTo(Cohort);
 
-// Group.hasMany(PM); //Group 1 --- * PM
-// PM.belongsTo(Group);
+Group.hasMany(PM); //Group 1 --- * PM
+PM.belongsTo(Group);
 
 Staff.belongsToMany(Cohort, { through: "staff_cohort" });
 Cohort.belongsToMany(Staff, { through: "staff_cohort" });
