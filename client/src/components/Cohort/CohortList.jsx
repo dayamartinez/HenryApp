@@ -29,8 +29,8 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
             <div class="bg-dark" style={{display:"flex", justifyContent:"center", marginTop: '3px'}}>
                 <h6 class="text-light mt-2">Filtrar por cohorte: </h6>
                 <div>
-                    {cohorts && cohorts.map((c) => (
-                        <button type="button" onClick={() => getCohortDetail(c.id)} class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
+                    {cohorts && cohorts.map((c) => (         
+                        <button type="button" onClick={() => getCohortDetail(c.id)}class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
                         ))
                     } 
                 </div>
@@ -60,7 +60,8 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                     el filter sirver para sacar a todos los pm e instructores de la lista de alumnos*/   
                     )): cohorts.length ? cohorts.map((c) => (
                     c.usuarios.map(u => (
-                            <tr class="bg-light"> 
+
+                    <tr class="bg-light"> 
                     <td>{u.name}</td>
                     <td>{u.lastName}</td>
                     <td>{c.name}</td>

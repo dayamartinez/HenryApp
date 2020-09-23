@@ -6,6 +6,7 @@ export const GET_COHORT_DETAIL = 'GET_COHORT_DETAIL'
 export const GET_COHORTS = 'GET_COHORTS'
 export const REMOVE_COHORT = 'REMOVE_COHORT'
 export const SET_USERS_EMAILS = 'SET_USERS_EMAILS'
+export const GET_GROUP_DETAIL = 'GET_GROUP_DETAIL'
 
 
 export function addCohort(cohort,emails) {
@@ -89,6 +90,22 @@ export function getCohortDetail(id) {
       )
   }
 }
+
+export function getGroupDetail(id) {
+  return function (dispatch) {
+    return fetch(`http://localhost:3001/group/${id}`, {
+      credentials: 'include',
+    })
+      .then(res => res.json())
+      .then(cohort =>
+        dispatch({
+          type: 'GET_GROUP_DETAIL',
+          payload: cohort,
+        })
+      )
+  }
+}
+
 
 export function removeCohort(id) {
   return function (dispatch) {
