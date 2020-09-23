@@ -54,6 +54,7 @@ server.post('/create',  (req, res) => {
   // console.log(req.body);
   //se hace un map con el array de emails que se importan desde excel y se transforman a un json
   emails.map((email) => {
+    console.log(email)
       Usuario.create({
           email: email.email,
           cohortId: cohort.id
