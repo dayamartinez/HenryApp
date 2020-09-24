@@ -1,6 +1,6 @@
 
 import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER, CLEAN_USER, GET_ALL_USERS, USER_LOGOUT, COMPLETE_USER} from '../actions/user.js'
-import { PROMOTE_PM, GET_PM, GET_PM_DETAIL} from '../actions/pm'
+import { PROMOTE_PM } from '../actions/pm'
 import { PROMOTE_INSTRUCTOR} from '../actions/instructor'
 import { PROMOTE_STUDENT, GET_STUDENT, GET_STUDENT_DETAIL, SET_COHORT } from '../actions/student'
 
@@ -62,14 +62,6 @@ export default function user (state = initialState, action){
         }
     }
 
-    if (action.type === GET_PM){
-        return {
-            ...state,
-            pm: action.payload
-        }
-    }
-
-   
     if (action.type === GET_STUDENT){
         return {
             ...state,
