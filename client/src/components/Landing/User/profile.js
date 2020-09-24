@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       background: 'black',
       alignItems: 'center',
-      height: '250px'
+      height: '220px'
     },
     profile: {
       position: 'absolute',
@@ -81,8 +81,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      height: '250px',
-      width: '100%'
+      maxHeight: '220px',
+      width: '100%',
+      objectFit: 'cover',
+      objectPosition:'center center'
       }
   }));
   

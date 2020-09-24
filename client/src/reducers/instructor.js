@@ -1,8 +1,8 @@
 import { GET_INSTRUCTOR, GET_INSTRUCTOR_DETAIL } from '../actions/instructor'
 
 const initialState ={
-    instructor:[{
-    }]
+    instructor:[],
+    instructorDetail:{}
 }
 
 export default function instructor (state = initialState, action){

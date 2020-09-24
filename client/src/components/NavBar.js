@@ -6,19 +6,20 @@ import { userLogout } from '../actions/user';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import Menu from './MenuNavBar.js'
+import Menu from './MenuNavBar'
+import HomeIcon from '@material-ui/icons/Home';
 
 const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: "5px",
   },
   title:{
     flexGrow: 1
   },
   fija:{
     zIndex: 1201
-  }
+  },
 }))
 
 
@@ -52,6 +53,9 @@ const logout = function(e) {
     <div>
       <AppBar position='fixed' className={s.fija} color='secondary'>
         <Toolbar>
+          <IconButton color = 'primary'  onClick={(e) => history.push('/Home')}>
+            <HomeIcon/>
+          </IconButton>
           <IconButton color='primary' className={s.menuButton}>
             <Menu/>
           </IconButton>

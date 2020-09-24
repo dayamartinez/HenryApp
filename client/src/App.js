@@ -6,6 +6,9 @@ import Register from './components/Landing/Register.js'
 import Cohort from './components/Cohort/FormCohort.jsx'
 import Students from './components/Cohort/CohortList.jsx'
 import Profile from './components/Landing/User/profile.js';
+import Settings from './components/Landing/User/settings.js';
+import PasswordSettings from './components/Landing/User/passwordSetting.js';
+import ImgSettings from './components/Landing/User/imgChange.js';
 import AllCohorts from './components/Cohort/AllCohorts'
 import Pms from './components/Pms/ListPm'
 import CohortDetail from './components/CohortDetail/CohortDetail'
@@ -21,7 +24,7 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
-import Settings from './components/Landing/User/profileSettings.js';
+import ConfiguracionGeneral from './components/Landing/User/profileSettings.js';
 import FormGroup from './components/Groups/FormGroup';
 
 import UserCard from './components/Home/SearchBar/userCards'
@@ -38,7 +41,7 @@ function App(props) {
       {props.user.user.name && <Route path='/' component={NavBar} />}
       {props.user.user.name ? <Route  exact path='/Home'component={Home} />:null}
       {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
-      <Route  exact path='/profile/EditProfile'component={Settings} />
+
       {/* <Route  exact path='/forgotPassword'component={forgotPassword} /> */}
       {/* <Route  exact path='/profile/Settings'component={Settings} /> */}
       <Route  exact path='/forgotpassword'component={forgotPassword} />
@@ -46,12 +49,15 @@ function App(props) {
         {!props.user.user.name ? <Landing/> :<Redirect to='/'/>}
       </Route>
       {/* {!props.user.user.id ? <Route exact path='/' component={Landing}/>:null} */}
-      {props.user.user.name ? <Route exact path='/profile/search' component={UserCard}/>:null}
+      {props.user.user.name ? <Route exact path='/search' component={UserCard}/>:null}
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
       <Route exact path='/admin'component={Contenedor} />
       <Route path='/admin' component={BarraLateral} />
-      <Route exact path='/profile/EditProfile'component={Settings} />
-
+      {/* Seccion settings user */}
+      <Route exact path='/profile/Settings/UserSettings'component={ConfiguracionGeneral} />
+      <Route exact path='/profile/Settings/ImgChange' component={ImgSettings} />
+      <Route exact path='/profile/Settings/PasswordSettings' component={PasswordSettings} />
+      <Route exact path='/profile/Settings'component={Settings} />
       
       {/*---------------------------------------------------------------------------------
       rutas del admin */}

@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
-import { getPm }  from '../../actions/pm'
-import { getInstructor }  from '../../actions/instructor'
+import { getPm, deletePM }  from '../../actions/pm'
 import {getCohortDetail} from '../../actions/cohort'
 import { promoteStudent, setCohort }  from '../../actions/student'
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,11 +41,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function Pms({getPm, getInstructor, promoteStudent, getCohortDetail , match}) {
+export function Pms({getPm, getCohortDetail, deletePM , match}) {
 
+const [cohort, setCohort] = useState()
 const [pms, setPms] = useState()
-const [instructores, setInstructores] = useState()
-
 
 const history = useHistory()
 let id = match.params.id
@@ -54,13 +52,13 @@ let id = match.params.id
   useEffect(() => {
       getPm()
       .then((data) => setPms(data.payload))
-      getInstructor()
-      .then((data) => setInstructores(data.payload))
+      getCohortDetail(id)
+      .then((data) => setCohort(data.payload))
   }, []) 
  
   const classes = useStyles();
-  const instructor = instructores === [] ? [] : instructores && instructores.filter(i => i.cohortId == id)
-  const pmfilter = pms === [] ? [] : pms && pms.filter(pm => pm.cohortId == id)
+  const instructor = cohort && cohort[0].staffs[0] 
+
   
 
   return (
@@ -74,7 +72,7 @@ let id = match.params.id
     	    <div>
             <img width={"310px"} height={"250px"} src={HenryIcon}></img>
             <div className={classes.button}>
-            <h5 class="text-light">{instructor && instructor[0].name + ' ' + instructor[0].lastName}</h5>   
+            <h5 class="text-light">{instructor && instructor.name + ' ' + instructor.lastName}</h5>   
            </div> </div>}
         </div>
         <List className={classes.root}>
@@ -82,15 +80,14 @@ let id = match.params.id
                 <h5 class="text-light">Project Managers</h5>
                 
             </div>
-            {pmfilter === [] ? <div><p> No hay PM asignados</p></div>:  
-            pmfilter && pmfilter.map((pm) => (
+            {pms && pms.map((pm) => (
                 <div >
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
                         <Avatar alt="Remy Sharp" src={HenryIcon} />
                         </ListItemAvatar>
                         <ListItemText
-                        primary={pm.name + ' ' + pm.lastName}
+                        primary={pm.usuario.name + ' ' + pm.usuario.lastName}
                         secondary={
                             <React.Fragment>
                             <Typography
@@ -99,7 +96,7 @@ let id = match.params.id
                                 className={classes.inline}
                                 color="textPrimary"
                             >
-                                {'Grupo ' + pm.groupId}
+                                {pm.group.name}
                             </Typography>
                             </React.Fragment>
                         }
@@ -107,10 +104,10 @@ let id = match.params.id
                         <div style={{display:'flex', alignItems: 'center'}}>
                             <button value={pm.id} 
                                 onClick={() => {
-                                 promoteStudent(pm)
+                                 deletePM(pm.id)
                                  swal('Este usuario ya no es PM','')
                                  .then(res =>{if(res){
-                                    history.replace('/admin/cohorts')
+                                    history.go(0)
                                  }else{
                                     return null
                                  }}) 
@@ -131,8 +128,8 @@ let id = match.params.id
  
 const mapDispatchToProps = (dispatch) => ({
    getPm: () => dispatch(getPm()),
-   getInstructor: () => dispatch(getInstructor()),
-   promoteStudent: (id) => dispatch(promoteStudent(id))
+   getCohortDetail: (id) => dispatch(getCohortDetail(id)),
+   deletePM: (id) => dispatch(deletePM(id))
 })
  
 export default connect(null, mapDispatchToProps)(Pms)
