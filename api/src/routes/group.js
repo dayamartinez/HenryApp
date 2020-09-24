@@ -7,8 +7,7 @@ const { Usuario, Group, Cohort, PM } = require('../db.js');
 
 //se elimino todo lo relacionado con el pairprograming
 server.post('/create',  (req, res) => {
-    const { name } = req.body
-    const emails = req.body;
+    const { name, emails } = req.body
     
     const capName = name.charAt(0).toUpperCase() + name.slice(1)
       if (!name) {
@@ -61,12 +60,11 @@ server.post('/create',  (req, res) => {
 
   //Mofificamos el grupo
   server.put('/update/:id',  (req, res) => {
-    const { name, pairProgramming } = req.body
+    const { name } = req.body
       const capName = name.charAt(0).toUpperCase() + name.slice(1)
       Group.findByPk(req.params.id)
           .then(group => {
             group.name = capName || group.name
-            group.pairProgramming = pairProgramming || group.pairProgramming
   
             group.save().then(group => {
                   res.status(201).json({
@@ -116,6 +114,18 @@ server.post('/create',  (req, res) => {
         message: 'error al buscar los grupos'
        })
       )
+  })
+
+  //Asignar grupo a cohorte
+  server.put('/setCohort/:id', (req,res) => {
+    Group.findByPk(req.body.id)
+    .then(group => {
+      group.cohortId = req.params.id
+
+      group.save().then(group => {
+        res.status(201).send(group)
+      })
+    }).catch(err => res.status(404).send(err))
   })
   
   module.exports = server;

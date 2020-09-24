@@ -1,6 +1,6 @@
 const server = require('express').Router();
 const nodemailer = require('nodemailer');
-const { Usuario, Cohort, Group, Staff } = require('../db.js');
+const { Usuario, Cohort, Group, Staff, PM} = require('../db.js');
 
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
@@ -124,7 +124,7 @@ server.post('/create',  (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [Usuario, Group]
+      include: [Usuario, Group, Staff, PM]
     })
       .then(cohort =>{
         !cohort

@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Usuario, PM } = require('../db.js');
+const { Usuario, PM, Group } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a PM 
@@ -8,6 +8,9 @@ server.put('/set', (req,res)=> {
       .then(user => {
        user  
        PM.create({usuarioId: user.id})
+       user.save().then(user => {
+       res.status(201).send(user)
+    })
     })
     .catch(err => res.status(404).send(err))
   })  
@@ -30,10 +33,49 @@ server.put('/set', (req,res)=> {
       )
   })
   
+  //Asignar cohorte a PM
+  server.put('/setCohort/:id', (req,res) => {
+    PM.findByPk(req.body.id)
+    .then(pm => {
+      pm,
+      pm.cohortId = req.params.id
+
+      pm.save().then(pm => {
+        res.status(201).send(pm)
+      })
+    })    
+    .catch(err => res.status(404).send(err))
+  })
+
+
+  //Asignar grupo a PM
+  server.put('/setGroup/:id', (req,res) => {
+    PM.findByPk(req.body.id)
+    .then(pm => {
+      pm,
+      pm.groupId = req.params.id
+
+      pm.save().then(pm => {
+        res.status(201).send(pm)
+      })
+    })    
+    .catch(err => res.status(404).send(err))
+  })
+
+  //Eliminar PM
+  server.delete('/:id', (req, res) => {
+    PM.findByPk(req.params.id)
+    .then((pm) => {
+      pm.destroy()
+      res.status(200).json(pm)
+    })
+  })
+
+
   //Trae TODOS los PM 
   server.get('/', (req, res) => {
     PM.findAll({
-        include:[{model: Usuario}]
+        include:[Usuario, Group]
     })
       .then(pms => res.send(pms))
       .catch(() => res.status(400).send([]))

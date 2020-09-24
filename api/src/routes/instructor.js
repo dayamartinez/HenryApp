@@ -16,6 +16,41 @@ server.put('/set', (req,res)=> {
     .catch(err => res.status(404).send(err))
   })  
 
+  //Crear un instructor
+  server.post('/create',  (req, res) => {
+    Staff.findOne({
+      where:{
+        email: req.body.email
+      }
+    })
+    .then(resp=>{
+      if(resp){
+        res.status(400).send("Usuario existente!")
+      }
+    })
+    var {email, name, lastName} = req.body;
+      Staff.create({
+        email,
+        name,
+        lastName
+      })
+      .then((user) =>{
+        return res.status(201).send(user);
+      })
+      .catch(err => res.status(404).send(err));
+  })
+
+  //Asignar cohorte a instructor
+  server.put('/setCohort/:id', (req,res) => {
+    Staff.findByPk(req.body.id)
+    .then(instructor => {
+      instructor
+        .setCohorts(req.params.id)
+      
+      instructor.save().then(instructor => res.status(201).send(instructor))
+    })
+    .catch(err => res.status(404).send(err))
+    })
 
   //Busca UN instructor
   server.get('/:id', (req, res) => {

@@ -2,6 +2,7 @@ import swal from 'sweetalert'
 export const PROMOTE_PM = 'PROMOTE_PM'
 export const GET_PM = 'GET_PM'
 export const GET_PM_DETAIL = 'GET_PM_DETAIL'
+export const DELETE_PM = 'DELETE_PM'
 
 export function promotePm(pm) {
   return function (dispatch) {
@@ -35,6 +36,28 @@ export function getPm() {
           payload: pm
         })
       )
+  }
+}
+
+//Eliminar PM
+export function deletePM(id){
+  return function (dispatch) {
+    return fetch(`http://localhost:3001/pm/${id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(pm => {
+        dispatch({
+          type: DELETE_PM,
+          payload: pm.id,
+        })
+      })
+      .catch(err => swal(err))
   }
 }
 
