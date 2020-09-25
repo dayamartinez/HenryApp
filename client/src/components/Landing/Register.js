@@ -202,6 +202,7 @@ export function Register(props) {
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
+
             </Grid>
             <Button
               type="submit"
