@@ -69,8 +69,6 @@ export function Register(props) {
         birthday: '',
         country:'',
         city:'',
-        github: '',
-        gmail: '',
         urlImage: HenryIcon,
     });
     
@@ -204,34 +202,6 @@ export function Register(props) {
                   onChange={(e) => handleInputChange(e)}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="github"
-                  label="cuenta de Github"
-                  id="github"
-                  autoComplete="off"
-                  onChange={(e) => handleInputChange(e)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="gmail"
-                  label="cuenta de google"
-                  id="gmail"
-                  autoComplete="off"
-                  onChange={(e) => handleInputChange(e)}
-                />
-              </Grid>
-              <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="Deseo recibir notificaciones e información via email."
-                />
             </Grid>
             <Button
               type="submit"
