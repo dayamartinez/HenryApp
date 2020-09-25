@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export const NavBar = (props) => {
+export const NavBar = (props, user) => {
   const history = useHistory();
   const s = useStyles()
   const{location}=props
@@ -57,7 +57,7 @@ const logout = function(e) {
             <HomeIcon/>
           </IconButton>
           <IconButton color='primary' className={s.menuButton}>
-            <Menu/>
+            <Menu user={user}/>
           </IconButton>
          <Typography variant='h6' className={s.title}>
           HenryApp
