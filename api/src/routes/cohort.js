@@ -162,7 +162,8 @@ server.post('/create',  (req, res) => {
   //Trae TODOS los cohortes con sus usuarios y grupos correspondientes
   server.get('/', (req, res) => {
     Cohort.findAll({
-      include: [{model: Usuario}, {model: Group}, {model: Staff}]
+      order:[ ["id","ASC"] ],
+      include: [{model: Usuario}, {model: Group}, {model: Staff}],
     })
       .then(cohorts => res.send(cohorts))
       .catch(() => res.status(400).send([])
