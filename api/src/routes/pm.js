@@ -48,16 +48,24 @@ server.put('/set', (req,res)=> {
   })
 
 
-  //Asignar grupo a PM
+  //Asignar pms a un cohorte
   server.put('/setGroup/:id', (req,res) => {
-    PM.findByPk(req.body.id)
+    //const groups=req.body.groups
+    var asignarCohorte={cohortId:req.params.id}
+    PM.findAll({
+      where:{
+        cohortId:null
+      }
+    })
     .then(pm => {
-      pm,
-      pm.groupId = req.params.id
-
-      pm.save().then(pm => {
-        res.status(201).send(pm)
+      pm.map(p=>{
+        p.update(asignarCohorte)
       })
+      pm.save()
+      res.status(201).send(pm)
+      // .then(pm => {
+      //   res.status(201).send(pm)
+      // })
     })    
     .catch(err => res.status(404).send(err))
   })

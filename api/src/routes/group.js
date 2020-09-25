@@ -4,43 +4,56 @@ const { Usuario, Group, Cohort, PM } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
 //Creamos un grupo
+// const repartirAlumnos = function(alumnos,grupos){
+//   var res =[]
+//   var i = 0,k = alumnos.length/grupos
+//   while(i<alumnos.length){
+//     res.push(alumnos.slice(i,i+k))
+//     i+=k
+//   }
+//   if (res.length != grupos){
+//     console.log("holi")
+//     let j = 0
+//     while(res[grupos].length){
+//       res[j].push(res[grupos].shift())
+//       j++
+//     }
+//     res.pop()
+//   }
 
+// }
 //se elimino todo lo relacionado con el pairprograming
 server.post('/create',  (req, res) => {
-    const { name, emails } = req.body
-    
-    const capName = name.charAt(0).toUpperCase() + name.slice(1)
-      if (!name) {
+
+  //grupos = a la cantidad de grupos deseados
+    const { cohortId, grupos} = req.body
+      if (!cohortId || !grupos) {
           res.status(400).json({
               error: true,
               message: 'Debe enviar los campos requeridos'
           })
       }
-      Group.create({
-          name: capName
-          
-    }) //recorremos la lista de alumnos y les asignamos el grupo que se acaba de crear
-      .then(group => {
-        emails.map((email) => {
-          Usuario.findOne({
-            where: {
-              email:email
-            }
-          }).then(user => {
-              user.groupId = group.id
-              user.save()
-          })
+      let i = 0,groupsId=[]
+      while(i<grupos){
+        Group.create({
+          name: "WebFt_"+cohortId+"_"+(i+1),
+          cohortId:cohortId
         })
+        .then(g=>{
+          groupsId.push(g.id)
+        })
+        i++
+      }
+      Usuarios.findAll({
+        where:{
+          groupId:null
+        }
+      })
+      .then(user=>{
 
-        res.status(201).json({
-              success: true,
-              message: 'Nuevo grupo creado correctamente',
-              group
-          })
       })
-      .catch( err => {
-          res.status(500).json(err)
-      })
+      res.status(200).send("holi")
+      
   })
 
   server.put('/setCohort/:id', (req,res) => {
@@ -105,10 +118,11 @@ server.post('/create',  (req, res) => {
   
   //Trae TODOS los grupos, con sus usuarios y cohortes correspondientes
   server.get('/', (req, res) => {
+    console.log("holi")
     Group.findAll({
       include:[{model: Usuario}, {model: Cohort}, {model: PM}]
     }
-    ).then(groups => res.send(groups))
+    ).then(groups => res.status(200).send(groups))
       .catch(() => res.status(400).json({
         error: true,
         message: 'error al buscar los grupos'
