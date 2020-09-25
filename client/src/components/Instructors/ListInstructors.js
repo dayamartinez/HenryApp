@@ -48,7 +48,7 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
                   <td>{u.name}</td>
                   <td>{u.lastName}</td>
                   <td>{u.email}</td>
-                  <td>{u.cohorts[0].name}</td>
+                  {/* <td>{u.cohorts[0].name}</td>*/}
                 </tr>       
             )): cohorts ? cohorts.map(u => (
                     <tr class="bg-light"> 

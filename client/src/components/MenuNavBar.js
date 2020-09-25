@@ -8,6 +8,9 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
+import {connect} from 'react-redux';
+import {useHistory} from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,30 +25,35 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
+export function CustomizedMenus(props) {
+  const history = useHistory();
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const anchorRef = React.useRef(null);
 
-export default function CustomizedMenus() {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const anchorRef = React.useRef(null);
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+    
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+  
+    setOpen(false);
+  };
 
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-      };
+  const redirect = (event, path) => {
+    handleClose(event);
+    history.push(path);
+  }
     
-      const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-          return;
-        }
-    
-        setOpen(false);
-      };
-    
-      function handleListKeyDown(event) {
-        if (event.key === 'Tab') {
-          event.preventDefault();
-          setOpen(false);
-        }
-      }
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
 
        // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
@@ -60,6 +68,7 @@ export default function CustomizedMenus() {
   return (
     <div className={classes.root}>
       <div>
+
         <Button
           ref={anchorRef}
           className={classes.menu}
@@ -77,11 +86,24 @@ export default function CustomizedMenus() {
             >
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
+                  
+                  {/*Se muestran opciones diferentes a los usuarios y al personal del staff de Henry*/}
+                  
+                  {(props.user.user.rol === "user") ? 
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem onClick={(e) => redirect(e, '/profile')}>Inicio</MenuItem>
                     <MenuItem onClick={handleClose}>Mis Grupos</MenuItem>
                     <MenuItem onClick={handleClose}>Mi cohorte</MenuItem>
                     <MenuItem onClick={handleClose}>Mensajes</MenuItem>
-                  </MenuList>
+                    
+                  </MenuList> : 
+                  
+                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem onClick={(e) => redirect(e, '/profile')}>Inicio</MenuItem>
+                    <MenuItem onClick={handleClose}>Mensajes</MenuItem>
+                    <MenuItem onClick={(e) => redirect(e, '/admin')}>Administración</MenuItem>
+                  </MenuList> }
+
                 </ClickAwayListener>
               </Paper>
             </Grow>
@@ -91,3 +113,11 @@ export default function CustomizedMenus() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  };
+}
+
+export default connect(mapStateToProps,null)(CustomizedMenus);
