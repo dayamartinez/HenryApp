@@ -2,12 +2,15 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getCohorts, getCohortDetail } from '../../actions/cohort';
 
-export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, style}){
+export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
+
+    const [cohorts, setCohorts] = useState()
 
     useEffect(()=>{
         getCohorts()     
-
-    },[])
+        .then(data => setCohorts(data.payload))    
+    }, [])
+    
 
     //Busca el grupo al cual pertenece el alumno
     const buscarGrupo= (cohorte,grupoId)=>{
@@ -47,7 +50,7 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                 <tbody>
                 {/* Si se selecciono un cohorte en particular, solo mostrara informacion de los alumnos del mismo,
                  */}
-                {cohortDetail.length ? cohortDetail.map((c) => (
+                {cohortDetail[0] ? cohortDetail.map((c) => (
                     c.usuarios.map(u => (
                         <tr class="bg-light"> 
                         <td>{u.name}</td>
@@ -56,17 +59,15 @@ export function CohortList({getCohorts, getCohortDetail, cohorts, cohortDetail, 
                         <td>{buscarGrupo(c,u.grupoId)}</td>
                         </tr> 
                     ))                         
-                    /* si no, se mostrara todos los alumnos de todos los cohortes,
-                    el filter sirver para sacar a todos los pm e instructores de la lista de alumnos*/   
-                    )): cohorts.length ? cohorts.map((c) => (
+                    //si no, se mostrara todos los alumnos de todos los cohortes  
+                    )): cohorts ? cohorts.map((c) => (
                     c.usuarios.map(u => (
-
-                    <tr class="bg-light"> 
-                    <td>{u.name}</td>
-                    <td>{u.lastName}</td>
-                    <td>{c.name}</td>
-                    <td>{buscarGrupo(c,u.grupoId)}</td>
-                    </tr> 
+                        <tr class="bg-light"> 
+                        <td>{u.name}</td>
+                        <td>{u.lastName}</td>
+                        <td>{c.name}</td>
+                        <td>{buscarGrupo(c,u.grupoId)}</td>
+                        </tr> 
                     ))   
                 )) : null
                 }                
