@@ -14,7 +14,7 @@ const db = require('./db.js');
 
 passport.use(new Strategy(
     function(username, password, done){
-    
+     
       //VERIFICA EL USER EN LA BASE DE DATOS
       db.Usuario.findOne({
         where:{
@@ -23,25 +23,49 @@ passport.use(new Strategy(
         }
       })
       .then((user) => {
-        //SINO ENCUENTRA USUARIO VUELVE FALSE
+        //SI NO LO ENCUENTRA EN ESA BASE, CHEQUEA SI ES PARTE DEL STAFF
         if(!user){
-          return done(null,false);
+          db.Staff.findOne({
+            where:{
+              email: username
+            }
+          })
+          .then((staff) => {
+            //SI NO ES PARTE DEL STAFF ENTONCES DEVUELVE ERROR
+            if(!staff){
+              return done(null,false);
+            }
+            //COMPARA LA PASSWORD CON EL HASH DE BCRYPT
+            bcrypt.compare(password, staff.password, function(err, res) {
+              if (res){
+                return done(null, staff);
+              } 
+              else {
+                return done(null, false)
+              }
+            })
+          })
+          .catch(err => {
+            console.log(err)
+            return done(err);
+          })
         }
-
-        //COMPARA LA PASSWORD CON EL HASH DE BCRYPT
-        bcrypt.compare(password, user.password, function(err, res) {
-          if (res){
-            return done(null, user);
-          } else {
-            return done(null, false)
-          }
-        })
-    })
-    .catch(err => {
-    console.log(err)
-    return done(err);
-    })
-}))
+        //SI INGRESA UN ESTUDIANTE, ENTONCES COMPARA LA PASSWORD CON EL HASH DE BCRYPT
+        if(user){
+          bcrypt.compare(password, user.password, function(err, res) {
+            if (res){
+              return done(null, user);
+            } else {
+              return done(null, false)
+            }
+          })
+        }
+      })
+      .catch(err => {
+      console.log(err)
+      return done(err);
+      })
+  }))
   
     passport.serializeUser(function(user, done){
         done(null, user.id);
