@@ -6,32 +6,6 @@ const { Usuario, Group, Cohort, PM } = require('../db.js');
 //Creamos un grupo
 //------------------------------------------
 
-// const repartirAlumnos = function(alumnos,grupos){    "grupos" es la cantidad de grupos que el admin desea crear
-//   var res =[]      Aca guardamos arreglos que representan grupos
-//   var i = 0,k = alumnos.length/grupos    // "k" es la cantidad de alumnos por grupo
-
-//------------------------------------------
-
-//   while(i<alumnos.length){
-//     res.push(alumnos.slice(i,i+k))         tomamos segmentos del arreglo de "alumnos" y lo guardamos en arrglos que seran pusheados a "res"
-//     i+=k                             salteamos algunos alumnos para no repetir...
-//   }
-
-
-//------------------------------------------
-//    Hay casos donde se genera un grupo extra, este bloque de codigo lo corrige
-//   if (res.length != grupos){
-//     let j = 0
-//     while(res[grupos].length){
-//       res[j].push(res[grupos].shift())         vaciamos el grupo extra y repartimos sus alumnos con los demas
-//       j++
-//     }
-//     res.pop()    y eliminamos el grupo sobrante
-//   }
-//------------------------------------------
-
-// }
-//se elimino todo lo relacionado con el pairprograming
 server.post('/create',  async (req, res) => {
 //grupos = a la cantidad de grupos deseados
   const { cohortId, grupos} = req.body
@@ -41,7 +15,7 @@ server.post('/create',  async (req, res) => {
       message: 'Debe enviar los campos requeridos'
     })
   }
-  let i = 0,groupsId=[]   //donde se guardaran todos los ids de los grupos creados
+  let i = 0,groupsId=[]   //groupsId es donde se guardaran todos los ids de los grupos creados
   //-------------------
 
   // creamos los grupos
@@ -100,9 +74,6 @@ server.post('/create',  async (req, res) => {
     res.status(200).send(users)
   })
 })
-// .then(()=>res.status(200).send("holi"))
-
-// y saludamos
       
 
   server.put('/setCohort/:id', (req,res) => {

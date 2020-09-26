@@ -53,48 +53,19 @@ import ExcelLoader from '../Cohort/ExcelLoader';
           )
       })
 
-    },[])
-
-    const repartirAlumnos = function(alumnos,grupos){
-      var res =[]
-      var i = 0,k = alumnos.length/grupos
-      while(i<alumnos.length){
-        res.push(alumnos.slice(i,i+k))
-        i+=k
-      }
-      if (res.length != grupos){
-        console.log("holi")
-        let j = 0
-        while(res[grupos].length){
-          res[j].push(res[grupos].shift())
-          j++
-        }
-        res.pop()
-      }
-      setGroups(res)
-      console.log(res)
-    }
-
+    },[input])
 
     const handleInputChange = function(e) {
-      console.log(cohort.usuarios)   
       setInput({
         ...input,
         [e.target.name]:e.target.value
       })
-      if (e.target.value){
-        repartirAlumnos(cohort.usuarios,e.target.value)
-      }
     }
 
     const handleSubmit = function (e) {
         e.preventDefault()
-        const group = {
-          name: input.name,
-          cohort: input.cohort,
-          emails: emails
-        }
-        addGroup(group)
+        console.log(cohort)
+        addGroup(cohort.id,input.grupos)
     }
 
     return (
@@ -128,7 +99,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
               </Typography>
             </Box>
             <Box>
-              <TextField type="number" onChange={(e) => handleInputChange(e)}/>
+              <TextField type="number" name="grupos" onChange={(e) => handleInputChange(e)}/>
             </Box>
           </Grid>
           <Grid item>
@@ -138,7 +109,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={(e) => handleInputChange(e)}
+            onClick={(e) => handleSubmit(e)}
           >
               Crear
           </Button>
@@ -167,7 +138,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
  
   const mapDispatchToProps = dispatch => { 
     return {
-      addGroup: (group) => dispatch(addGroup(group))
+      addGroup: (cohortId,grupos) => dispatch(addGroup(cohortId,grupos))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormGroup)

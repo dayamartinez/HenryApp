@@ -6,8 +6,8 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-// const sequelize = new Sequelize('postgres://tfsxbtas:uaXZmlvgHKSf86pwTbBwBeDmUqEjlDUl@tuffi.db.elephantsql.com:5432/tfsxbtas', {
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/henryapp`, {
+
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
@@ -34,6 +34,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Cohort, Usuario, Group, PP, Staff, PM } = sequelize.models;
 
 // Aca vendrian las relaciones
+
 
 Usuario.belongsTo(Group); //user * ---- 1 group
 Group.hasMany(Usuario);
