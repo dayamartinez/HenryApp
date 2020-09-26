@@ -36,67 +36,56 @@ const { Usuario, Cohort, Group, Staff, PM} = require('../db.js');
   //Crear cohorte
 server.post('/create',  (req, res) => {
   const { name, startDate, emails} = req.body
-  console.log(req.body)
   const capName = name.charAt(0).toUpperCase() + name.slice(1)
-    if (!name || !startDate ) {
-        res.status(400).json({
-            error: true,
-            message: 'Debe enviar los campos requeridos'
-        })
-    }
-    Cohort.create({
-        name: capName,
-        startDate,
-       
-    // include: [Usuario]
+  if (!name || !startDate ) {
+    res.status(400).json({
+      error: true,
+      message: 'Debe enviar los campos requeridos'
+    })
+  }
+  Cohort.create({
+    name: capName,
+    startDate,
+  // include: [Usuario]
   }) 
-    .then(cohort => {
-          // const emails = req.body;
+  .then(cohort => {
+  // const emails = req.body;
   // console.log(req.body);
   //se hace un map con el array de emails que se importan desde excel y se transforman a un json
-  emails.map((email) => {
-    console.log(email)
+    emails.map((email) => {
       Usuario.create({
-          email: email.email,
-          cohortId: cohort.id
-          
+        email: email.email,
+        cohortId: cohort.id
       })
       const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      port: 587,
-      secure: false,
-      auth: {
+        service: 'gmail',
+        port: 587,
+        secure: false,
+        auth: {
           user: process.env.EMAIL,
           pass: process.env.PASSWORD
-      },
-      tls: {
+        },
+        tls: {
           rejectUnauthorized: false
-      }
+        }
       })
-
       const mailOptions = {
-          from: process.env.EMAIL,
-          to: email.email,
-          subject: "Enviado desde HenryApp",
-          text: "Bienvenido a HenryApp!! Para registrarse haga click en el siguiente link http://localhost:3000/inviteuser"
+        from: process.env.EMAIL,
+        to: email.email,
+        subject: "Enviado desde HenryApp",
+        text: "Bienvenido a HenryApp!! Para registrarse haga click en el siguiente link http://localhost:3000/inviteuser"
       }
-
       transporter.sendMail(mailOptions, (err, info) => {
-          if(err){
-              res.status(500).send(err)
-          } 
-          else {
-              console.log("Email enviado")
-              res.status(200).json(req.body)
-          }
+        console.log("Email enviado")
       })
-      })
-      res.status(201).send("OK")
     })
-    .catch( err => {
-        res.status(500).json(err)
-    })
-  
+  })
+  .then(()=>{
+    res.status(201).send("OK") 
+  })
+  .catch( err => {
+    res.status(500).json(err)
+  })
 })
 
   //Mofificar cohorte 
@@ -162,7 +151,8 @@ server.post('/create',  (req, res) => {
   //Trae TODOS los cohortes con sus usuarios y grupos correspondientes
   server.get('/', (req, res) => {
     Cohort.findAll({
-      include: [{model: Usuario}, {model: Group}, {model: Staff}]
+      order:[ ["id","ASC"] ],
+      include: [{model: Usuario}, {model: Group}, {model: Staff}],
     })
       .then(cohorts => res.send(cohorts))
       .catch(() => res.status(400).send([])

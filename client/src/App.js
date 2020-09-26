@@ -73,7 +73,7 @@ function App(props) {
       {/* Grupos */}
       <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
       <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
-      <Route exact path='/admin/formGroup' render={() => <FormGroup style={margen}/>} />
+      <Route exact path='/admin/createCohort/groups' render={() => <FormGroup style={margen}/>} />
       
       {/* Estudiantes */}
       <Route exact path='/admin/students' render={() => <Students style={margen}/>} />
