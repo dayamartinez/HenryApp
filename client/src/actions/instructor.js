@@ -1,7 +1,9 @@
 import swal from 'sweetalert'
+import axios from 'axios'
 export const PROMOTE_INSTRUCTOR = 'PROMOTE_INSTRUCTOR'
 export const GET_INSTRUCTOR = 'GET_INSTRUCTOR'
 export const GET_INSTRUCTOR_DETAIL = 'GET_INSTRUCTOR_DETAIL'
+export const CREATE_STAFFMEMBER = 'CREATE_STAFFMEMBER'
 
 export function promoteInstructor(instructor) {
   return function (dispatch) {
@@ -55,3 +57,26 @@ export function getInstructorDetail(id) {
   }
 }
 
+// crear miembros del Staff
+export function createStaffMember(data){
+  var url = 'http://localhost:3001/instructor/create';
+  return function (dispatch){
+    console.log('a')
+    console.log(data)
+    console.log('h')
+    return fetch(url, {
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json'
+    }
+    }).then(response => response.json())
+    .then(json =>{
+        dispatch({type: CREATE_STAFFMEMBER, payload: json})
+        alert("Usuario creado.")
+    })
+    .catch(err=>{
+        alert(err);
+    })
+}
+}
