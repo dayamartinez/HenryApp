@@ -36,7 +36,7 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
     return (
         <div class="bg-dark" style = {style}>
             <h2 class="bg-dark text-warning text-center"> Alumnos </h2>
-            <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+        {/*    <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                 <button class="btn btn-outline-warning mb-2 mt-2 " onClick={() => getCohorts()}> Ver Todos </button>
             </div>
             <div class="bg-dark" style={{display:"flex", justifyContent:"center", marginTop: '3px'}}>
@@ -48,6 +48,34 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
                     } 
                 </div>
             </div> 
+
+*/}
+
+
+    
+
+{/* OPCION CON BOOTSTRAP*/}
+
+        <div style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"20px"}}>
+        
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <button type="button" class="btn btn-outline-warning mb-2 mt-2" onClick={() => getCohorts()}>Ver Todos</button>
+  
+                <div class="btn-group dropright" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filtrar por Cohorte
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" role="menu">
+                        {cohorts && cohorts.map((c) => (         
+                            <a type="button" onClick={() => getCohortDetail(c.id)} class="dropdown-item">{c.name}</a>
+                            ))
+                        }                         
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
             <table class="table">
                 <thead class="thead-dark">
                 <tr>
