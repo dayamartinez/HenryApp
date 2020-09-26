@@ -34,7 +34,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
     }
   }));
   
-  export function FormGroup({ match, addGroup, emails}) {
+  export function FormGroup({ pms, addGroup, emails}) {
 
     const history = useHistory()
     const classes = useStyles();
@@ -64,8 +64,8 @@ import ExcelLoader from '../Cohort/ExcelLoader';
 
     const handleSubmit = function (e) {
         e.preventDefault()
-        console.log(cohort)
         addGroup(cohort.id,input.grupos)
+        axios.put("http://localhost:3001/pm/setGroup/"+cohort.id)
     }
 
     return (
@@ -81,14 +81,14 @@ import ExcelLoader from '../Cohort/ExcelLoader';
           <Grid item>
             <Box>
             <Typography>
-                Alumnos Totales del Cohorte:
+                Alumnos Totales del Cohorte:{emails.length}
               </Typography>
             </Box>
           </Grid>
           <Grid item>
             <Box>
             <Typography>
-                Projects Managers Disponibles:
+                Projects Managers Disponibles:{pms.length}
               </Typography>
             </Box>
           </Grid>
@@ -131,8 +131,9 @@ import ExcelLoader from '../Cohort/ExcelLoader';
   }
 
   const mapStateToProps = (state) => {
-    return {
-      emails: state.cohort.emails
+    return{
+      emails: state.cohort.emails,
+      pms: state.pm.pms
     }
   }
  

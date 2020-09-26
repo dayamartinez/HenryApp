@@ -14,15 +14,25 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
 
     //Busca el grupo al cual pertenece el alumno
     const buscarGrupo= (cohorte,grupoId)=>{
-        var grupoName = "El alumno no tiene un grupo asignado"
+        let grupoName = "El alumno no tiene un grupo asignado"
         cohorte.groups.forEach(grupo => {
-            if(grupoId=grupo.id){
+            if(grupoId==grupo.id){
                 grupoName = grupo.name
             }
         })
         return grupoName
-
     }
+    const orderById= (a,b) =>{
+            if (a.id > b.id) {
+              return 1;
+            }
+            if (a.id < b.id) {
+              return -1;
+            }
+            // a must be equal to b
+            return 0;
+          }
+    
     return (
         <div class="bg-dark" style = {style}>
             <h2 class="bg-dark text-warning text-center"> Alumnos </h2>
@@ -44,29 +54,32 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
                 <th scope="col">Cohorte</th>
+                <th scope="col">Email</th>
                 <th scope="col">Grupo</th>
                 </tr>
                 </thead>
                 <tbody>
                 {/* Si se selecciono un cohorte en particular, solo mostrara informacion de los alumnos del mismo,
                  */}
-                {cohortDetail[0] ? cohortDetail.map((c) => (
-                    c.usuarios.map(u => (
+                {cohortDetail[0] ? cohortDetail.sort((a,b)=>orderById(a,b)).map((c) => (
+                    c.usuarios.sort((a,b)=>orderById(a,b)).map(u => (
                         <tr class="bg-light"> 
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
                         <td>{c.name}</td>
-                        <td>{buscarGrupo(c,u.grupoId)}</td>
+                        <td>{u.email}</td>
+                        <td>{buscarGrupo(c,u.groupId)}</td>
                         </tr> 
                     ))                         
                     //si no, se mostrara todos los alumnos de todos los cohortes  
-                    )): cohorts ? cohorts.map((c) => (
-                    c.usuarios.map(u => (
+                    )): cohorts ? cohorts.sort((a,b)=>orderById(a,b)).map((c) => (
+                    c.usuarios.sort((a,b)=>orderById(a,b)).map(u => (
                         <tr class="bg-light"> 
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
                         <td>{c.name}</td>
-                        <td>{buscarGrupo(c,u.grupoId)}</td>
+                        <td>{u.email}</td>
+                        <td>{buscarGrupo(c,u.groupId)}</td>
                         </tr> 
                     ))   
                 )) : null
