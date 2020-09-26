@@ -5,6 +5,7 @@ import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from 
 import { makeStyles } from '@material-ui/core/styles';
 import { getCohorts } from '../../actions/cohort';
 import {yellow, grey} from "@material-ui/core/colors"
+import {useHistory } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(2),
@@ -23,14 +24,18 @@ export function AllCohorts({getCohorts,style}){
     .then(data => setCohorts(data.payload))    
   }, [])
   var data
+  
+  const history = useHistory()
+
   if(cohorts){
-    data = cohorts.map(cohort => 
+    data = cohorts && cohorts.map(cohort => 
       ({
         cohorte: cohort.name,
         inicio: cohort.startDate,
         sobre: cohort.about,
         alumnos: cohort.usuarios.length,
-        id: cohort.id
+        id: cohort.id,
+        instructor: cohort.staffs
       })
     )
     console.log(data)
@@ -52,14 +57,15 @@ export function AllCohorts({getCohorts,style}){
               <TableRow  >
                 <TableCell style={yellowText} >Cohorte</TableCell>
                 <TableCell style={yellowText} >Fecha de inicio</TableCell>
-                <TableCell style={yellowText} >Intructor</TableCell>
+                <TableCell style={yellowText} >Instructor</TableCell>
                 <TableCell style={yellowText} >Alumnos</TableCell>
+                <TableCell style={yellowText} ></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data && data.map(celda => (
                 <TableRow>
-
+                  {console.log(celda)}
                   <TableCell>
                     <Link 
                       href={"/cohortDetail/"+celda.id} 
@@ -71,10 +77,12 @@ export function AllCohorts({getCohorts,style}){
 
                   <TableCell>{celda.inicio}</TableCell>
 
-                  <TableCell>{celda.sobre}</TableCell>
+                  <TableCell>{celda.instructor[0].name + ' ' + celda.instructor[0].lastName }</TableCell>
 
                   <TableCell>{celda.alumnos}</TableCell>
                   
+                  <TableCell><button type="button" onClick={() => history.push(`/cohortDetail/${celda.id}`)} class="btn btn-outline-dark" >Detalles</button> </TableCell>
+
                 </TableRow>
               ))}
             </TableBody>
