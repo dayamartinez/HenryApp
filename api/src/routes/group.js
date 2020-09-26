@@ -83,9 +83,15 @@ server.post('/create',  async (req, res) => {
     let l=0,k = users.length/grupos // "k" es la cantidad de alumnos por grupo y "l" es la poscion dentro del arreglo de id de grupos
     while(i<users.length){          //  recorro los alumnos
       while(j<i+k){                 //recorro de a uno los alumno "k" veces
-        users[j].update({groupId:groupsId[l]})   //actualizo el alumno con su grupo correspondiente
-        console.log(j)
-        users[j].save()
+        try {
+          users[j].update({groupId:groupsId[l]})   //actualizo el alumno con su grupo correspondiente
+          console.log(j)
+          users[j].save()
+        }
+        catch{
+          console.log(j)
+          console.log(users[j])
+        }
         j++
       }
       i+=k                              //avanzo "k" pasos ya que estos alumnos ya tendran grupo
@@ -93,7 +99,6 @@ server.post('/create',  async (req, res) => {
     }
     res.status(200).send(users)
   })
-  .catch(async err=> await res.status(500).send(err))
 })
 // .then(()=>res.status(200).send("holi"))
 
