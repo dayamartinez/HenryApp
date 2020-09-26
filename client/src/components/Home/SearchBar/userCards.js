@@ -29,7 +29,7 @@ export function UserCard(props){
             {props.user.usuario[0] && props.user.usuario.map((item) =>
             <List >
             <ListItem >
-            <Avatar key={item.id} alt="Remy Sharp" src={HenryIcon} />
+            <Avatar key={item.id} alt="Remy Sharp" src={props.user.user.urlImage} />
             <Typography  
                   component="span"
                   variant="body2"

@@ -80,7 +80,7 @@ export function SearchBar(props) {
       .catch(error => {
         return error;
       })
-      history.push('/profile/search')
+      history.push('/search')
 }
     
   return (

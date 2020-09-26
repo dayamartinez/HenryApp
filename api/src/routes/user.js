@@ -112,7 +112,6 @@ server.put('/settings/:id', (req, res, next) => {
     urlImage: req.body.urlImage,
     portadaImage: req.body.portadaImage
   }
-
   db.Usuario.findOne({
     where: {
       id: req.params.id
@@ -185,7 +184,6 @@ server.put('/completeprofile/:id', (req, res, next) => {
     res.status(404).send("Usuario no encontrado");
   })
 })
-
 
 
 module.exports = server;

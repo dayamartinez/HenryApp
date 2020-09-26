@@ -27,7 +27,7 @@ export default function Home(){
     return (
         <div >
             <div className={classes.totalBackground}>
-          <UserCard/>
+        
            
         </div>
         </div>
