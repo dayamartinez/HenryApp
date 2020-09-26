@@ -8,7 +8,7 @@ const { Usuario, Group, Cohort, PM } = require('../db.js');
 
 // const repartirAlumnos = function(alumnos,grupos){    "grupos" es la cantidad de grupos que el admin desea crear
 //   var res =[]      Aca guardamos arreglos que representan grupos
-//   var i = 0,k = alumnos.length/grupos    "k" es la cantidad de alumnos por grupo
+//   var i = 0,k = alumnos.length/grupos    // "k" es la cantidad de alumnos por grupo
 
 //------------------------------------------
 
@@ -32,45 +32,73 @@ const { Usuario, Group, Cohort, PM } = require('../db.js');
 
 // }
 //se elimino todo lo relacionado con el pairprograming
-server.post('/create',  (req, res) => {
+server.post('/create',  async (req, res) => {
+//grupos = a la cantidad de grupos deseados
+  const { cohortId, grupos} = req.body
+  if (!cohortId || !grupos) {
+    res.status(400).json({
+      error: true,
+      message: 'Debe enviar los campos requeridos'
+    })
+  }
+  let i = 0,groupsId=[]   //donde se guardaran todos los ids de los grupos creados
+  //-------------------
 
-  //grupos = a la cantidad de grupos deseados
-    const { cohortId, grupos} = req.body
-      if (!cohortId || !grupos) {
-          res.status(400).json({
-              error: true,
-              message: 'Debe enviar los campos requeridos'
-          })
-      }
-      let i = 0,groupsId=[]   //donde se guardaran todos los ids de los grupos creados
-      //-------------------
-
-      // creamos los grupos
-      while(i<grupos){
-        Group.create({
-          name: "WebFt_"+cohortId+"_"+(i+1),
-          cohortId:cohortId
-        })
-        .then(g=>{
-          groupsId.push(g.id) //y guardamos sus Ids
-        })
-        i++
-      }
-      //-------------------
-      //traemos todos los usuarios que no tengan grupos
-      Usuarios.findAll({
-        where:{
-          groupId:null
-        }
+  // creamos los grupos
+  while(i<grupos){
+      await Group.create({
+        name: "WebFt_"+cohortId+"_"+(i+1),
+        cohortId:cohortId
       })
-      .then(user=>{
+      i++
+    }
+  //-----------------------------------------------
 
-      })
-
-      // y saludamos
-      res.status(200).send("holi")
-      
+  //guardamos en un array los ids de los grupos creados
+  await Group.findAll({
+    where:{
+      cohortId:cohortId
+    }
   })
+  .then(g=>{
+    let j = 0
+    while (j<g.length){
+      groupsId.push(g[j].id)
+      j++
+    }
+  })
+
+  //-----------------------------------------------
+
+  // reaparto de los alumnos:
+  // me traigo los alumnos sin grupo o los que estan en el mismo cohorte 
+  await Usuario.findAll({
+    where:{
+      groupId:null
+    }
+  })
+  .then(users=>{
+    j=0
+    i=0
+    let l=0,k = users.length/grupos // "k" es la cantidad de alumnos por grupo y "l" es la poscion dentro del arreglo de id de grupos
+    while(i<users.length){          //  recorro los alumnos
+      while(j<i+k){                 //recorro de a uno los alumno "k" veces
+        users[j].update({groupId:groupsId[l]})   //actualizo el alumno con su grupo correspondiente
+        console.log(j)
+        users[j].save()
+        j++
+      }
+      i+=k                              //avanzo "k" pasos ya que estos alumnos ya tendran grupo
+      l++
+    }
+    res.status(200).send(users)
+  })
+  .catch(async err=> await res.status(500).send(err))
+})
+// .then(()=>res.status(200).send("holi"))
+
+// y saludamos
+      
 
   server.put('/setCohort/:id', (req,res) => {
     Group.findByPk(req.body.id)
