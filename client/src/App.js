@@ -8,7 +8,8 @@ import Students from './components/Cohort/CohortList.jsx'
 import Profile from './components/Landing/User/profile.js';
 import Settings from './components/Landing/User/settings.js';
 import PasswordSettings from './components/Landing/User/passwordSetting.js';
-import ImgSettings from './components/Landing/User/imgChange.js';
+import FotoPerfil from './components/Landing/User/imgChange.js';
+import FotoPortada from './components/Landing/User/changeImg.js';
 import AllCohorts from './components/Cohort/AllCohorts'
 import Pms from './components/Pms/ListPm'
 import CohortDetail from './components/CohortDetail/CohortDetail'
@@ -55,7 +56,8 @@ function App(props) {
       <Route path='/admin' component={BarraLateral} />
       {/* Seccion settings user */}
       <Route exact path='/profile/Settings/UserSettings'component={ConfiguracionGeneral} />
-      <Route exact path='/profile/Settings/ImgChange' component={ImgSettings} />
+      <Route exact path='/profile/Settings/Perfil' component={FotoPerfil} />
+      <Route exact path='/profile/Settings/Portada' component={FotoPortada} />
       <Route exact path='/profile/Settings/PasswordSettings' component={PasswordSettings} />
       <Route exact path='/profile/Settings'component={Settings} />
       

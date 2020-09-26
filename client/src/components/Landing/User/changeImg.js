@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(3, 0, 2, 6, 10),
     },
     profileImg: {
-      marginTop: "50px",
-      marginBottom: "50px"
+      marginTop: "50px"
     },
     portadaImg: {
       marginTop: "50px",
@@ -49,78 +48,73 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export function Settings(props){
+const PortadaChange = (props) => {
     const classes = useStyles();
     
+    const [portada, setPortada]= useState('')
+      const [urlP, setUrlP]= useState({
+        id: props.user.user.id,
+        portadaImage: '',
+        urlImage: ''
+      })
+  // estado para firebase storage
+      const [imagen, setImagen] = useState(null);
+  
+  
+        const handleChange = e => {
+          if(e.target.files[0]){
+            setImagen(e.target.files[0]);
+          }
+        } 
+  
+
+
+  const handleUploadPortada = () => {
+    const uploadTask = storage.ref(`images/${imagen.name}`).put(imagen);
+    uploadTask.on(
+        "state_changed",
+        snapshot => { },
+        error => {
+        },
+        () => {
+            storage
+                .ref("images")
+                .child(imagen.name)
+                .getDownloadURL()
+                .then( portada => {
+                   
+                    setPortada(portada)
+                
+                })
+        }
+    )
+   
+}  
+
+const saveImage = function(){
+    if (portada === ''){
+      alert("Se debe completar alguno de los cambios!")
+    } 
+     if(portada){
+       setUrlP({
+         ...urlP,
+         portadaImage: portada,
+         urlImage: props.user.user.urlImage
+       })
+
+        props.updateUser(urlP)
+        console.log(urlP)
+      }
+  }
 
    
- // para guardar el url en la tabla 
-    const [urlImg, setUrlImg]= useState('')
-// estado para firebase storage
-    const [image, setImage] = useState(null);
-
-// guardar en tabla
-    const [img, setImg] = useState({
-      id: props.user.user.id,
-      urlImage: '',
-      portadaImage: ''
-    })
-      const handleChange = e => {
-        if(e.target.files[0]){
-          setImage(e.target.files[0]);
-        }
-      } 
-
-
-// guarda la imagen en el localstorage de firebase
-        const handleUpload = () => {
-          console.log(image)
-          console.log('hhhh')
-          const uploadTask = storage.ref(`images/${image.name}`).put(image);
-          console.log(image.name)
-          uploadTask.on(
-              "state_changed",
-              snapshot => { },
-              error => {
-              },
-              () => {
-                  storage
-                      .ref("images")
-                      .child(image.name)
-                      .getDownloadURL()
-                      .then(urlImg => {
-                         
-                          setUrlImg(urlImg)
-                          
-                      })
-              }
-          )
-      }  
-
-
-
-    const saveImage = function(){
-      if (urlImg === ''){
-        alert("Se debe completar alguno de los cambios!")
-      } 
-       if(urlImg){
-         setImg({
-           ...img,
-           urlImage: urlImg,
-           portadaImage: props.user.user.portadaImage
-         })
-          props.updateUser(img)
-        }
-    }
-
     return (
-      <Container className={classes.background}>
-        <Container component="main" maxWidth="xs" >
-          <Menu/>
-                
-        <Grid className={classes.profileImg}>
-        <Typography component="h1" variant="h5">
-                        Cambiar foto de perfil
+        <Container className={classes.background}>
+      <Container component="main" maxWidth="xs">
+        <Grid className={classes.portadaImg}>
+            <Menu/>
+                    <Typography component="h1" variant="h5">
+                        Cambiar foto de Portada
                 </Typography>
                 <Typography >
                          <input 
@@ -132,33 +126,27 @@ export function Settings(props){
                           onChange={handleChange}
                           />
                 </Typography>
-                <img src={urlImg || "http://via.placeholder.com/150x150"}/>
+                <img src={portada || "http://via.placeholder.com/800x220"}/>
                 <Button
                           className={classes.button}
                           color="primary" 
                           type="submit"
                           fullWidth
                           variant="contained" 
-                          onClick={handleUpload}>
-                            Ver foto
+                          onClick={handleUploadPortada}>
+                            Ver Foto
                  </Button>
-
                     </Grid>
-
-                   <Button
+                    <Button    
                     color="primary" 
                     type="submit"
                     fullWidth
                     variant="contained"
-                    type="submit"
-                     onClick={()=> saveImage()}>
-                       Guardar Cambios
-                       </Button>
-               
+                    type="submit"onClick={()=> saveImage()}>Guardar Cambios</Button>
             </Container>
             </Container>
     )
-}
+};
 
 const mapStateToProps = state => {		
     return {		
@@ -172,4 +160,4 @@ const mapStateToProps = state => {
     }
   }
       
-  export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+  export default connect(mapStateToProps, mapDispatchToProps)(PortadaChange);

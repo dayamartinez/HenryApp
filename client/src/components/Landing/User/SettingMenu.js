@@ -76,7 +76,11 @@ function ResponsiveDrawer(props) {
           </ListItem>
           <Divider />
           <ListItem >
-             <Button  onClick={(e) => history.push('/profile/Settings/ImgChange')}>Cambiar Foto de Perfil/Portada</Button> 
+             <Button  onClick={(e) => history.push('/profile/Settings/Perfil')}>Cambiar Foto de Perfil</Button> 
+          </ListItem>
+          <Divider />
+          <ListItem >
+             <Button  onClick={(e) => history.push('/profile/Settings/Portada')}>Cambiar Foto de Portada</Button> 
           </ListItem>
           <Divider />
       </List>
