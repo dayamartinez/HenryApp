@@ -1,29 +1,21 @@
 import swal from 'sweetalert'
+import axios from "axios"
 export const ADD_GROUP = 'ADD_GROUP'
 export const UPDATE_GROUP = 'UPDATE_GROUP'
 export const GET_GROUP_DETAIL = 'GET_GROUP_DETAIL'
 export const GET_GROUPS = 'GET_GROUPS'
 export const REMOVE_GROUP = 'REMOVE_GROUP'
 
-export function addGroup(group) {
+export function addGroup(cohortId, grupos) {
   return function (dispatch) {
-    return fetch(`http://localhost:3001/group/create`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(group),
-    })
-      .then(res => res.json())
+    let data = {cohortId,grupos}
+    axios.post('http://localhost:3001/group/create',data)
       .then(data => {
-        dispatch({
-          type: 'ADD_GROUP',
-          payload: data.group,
-
+           dispatch({
+          type: 'ADD_COHORT',
+          payload: data.cohort,
         })
-       swal("Grupo creado correctamente")                
+        swal("Grupos creados correctamente")                
       })
       .catch(err => swal(err, '', 'error'))
   }
