@@ -31,7 +31,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Cohort, Usuario, Group, PP, Staff, PM } = sequelize.models;
+const { Cohort, Usuario, Group, PP, Staff, PM, Post, Links} = sequelize.models;
 
 // Aca vendrian las relaciones
 
@@ -60,6 +60,11 @@ PM.belongsTo(Cohort)
 Staff.belongsToMany(Cohort, { through: "staff_cohort" });
 Cohort.belongsToMany(Staff, { through: "staff_cohort" });
 
+Post.belongsTo(Staff)
+Cohort.hasMany(Post)
+
+Links.belongsTo(Staff)
+Cohort.hasMany(Links)
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

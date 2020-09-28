@@ -40,7 +40,9 @@ function App(props) {
       </Route>
       {/* {!props.user.user.id ? <Route exact path='/' component={NewUser}/> : } */}
       {props.user.user.name && <Route path='/' component={NavBar} />}
-      {props.user.user.name ? <Route  exact path='/Home'component={Home} />:null}
+      {/* {props.user.user.name ? <Route  exact path='/Home'component={Home} />:null} */}
+      <Route  exact path='/Home'component={Home} />
+
       {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
 
       {/* <Route  exact path='/forgotPassword'component={forgotPassword} /> */}

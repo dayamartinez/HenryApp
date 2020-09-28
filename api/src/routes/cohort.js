@@ -1,6 +1,6 @@
 const server = require('express').Router();
 const nodemailer = require('nodemailer');
-const { Usuario, Cohort, Group, Staff, PM} = require('../db.js');
+const { Usuario, Cohort, Group, Staff, PM, Links, Post} = require('../db.js');
 
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
@@ -113,7 +113,7 @@ server.post('/create',  (req, res) => {
       where: {
         id: req.params.id,
       },
-      include: [Usuario, Group, Staff, PM]
+      include: [Usuario, Group, Staff, PM, Links, Post]
     })
       .then(cohort =>{
         !cohort
@@ -152,7 +152,7 @@ server.post('/create',  (req, res) => {
   server.get('/', (req, res) => {
     Cohort.findAll({
       order:[ ["id","ASC"] ],
-      include: [{model: Usuario}, {model: Group}, {model: Staff}],
+      include: [Usuario, Group, Staff, PM, Links, Post],
     })
       .then(cohorts => res.send(cohorts))
       .catch(() => res.status(400).send([])

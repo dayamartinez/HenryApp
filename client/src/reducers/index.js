@@ -5,7 +5,9 @@ import global from './global'
 import instructor from './instructor'
 import group from './group'
 import pm from './pm'
+import posts from './posts'
+import link from './link'
 
 export default combineReducers({
-    user, cohort, global, instructor, group, pm
+    user, cohort, global, instructor, group, pm, posts, link
 }) 

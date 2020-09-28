@@ -68,7 +68,7 @@ let id = match.params.id
                 <h5 class="text-light">Instructor</h5>
             </div>
            
-             { instructor === [] ? <img width={"310px"} height={"250px"} src={HenryIcon}></img> :
+             { instructor && instructor.length === 0 ? <img width={"310px"} height={"250px"} src={HenryIcon}></img> :
     	    <div>
             <img width={"310px"} height={"250px"} src={HenryIcon}></img>
             <div className={classes.button}>
@@ -80,7 +80,7 @@ let id = match.params.id
                 <h5 class="text-light">Project Managers</h5>
                 
             </div>
-            {pms && pms.map((pm) => (
+            {pms && pms.filter(pm => pm.cohortId === id).map((pm) => (
                 <div >
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
