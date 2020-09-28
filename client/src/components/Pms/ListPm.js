@@ -23,68 +23,47 @@ export function ListPM({getPm,style}){
         getPm()
         .then(data => setPm(data.payload))     
     }, [])
-    var data
-  
-    if(pm){
-    data = pm.map(p => 
-      ({
-        name: p.usuario.name,
-        lastName: p.usuario.lastName,
-        mail: p.usuario.email,
-        group:p.group.name,
-        id: p.id
-      })
-    )
     
-  }
+   
     return (
-        <div style={style}> 
-          {pm && pm.length === 0 ? (
+      <div class="bg-dark" style = {style}>
+        {pm && pm.length === 0 ? (
         <div>
-          <h4>
+          <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}>
             {' '}
-            No hay Project Managers para mostrar
-          </h4>
+            No hay PMs para mostrar
+          </h2>
         </div>
-      ) : (
-        <TableContainer>
-          <Table>
-            <TableHead style={{backgroundColor: '#343a40'}}>
-              <TableRow>
-                <TableCell style={yellowText}>Nombre</TableCell>
-                <TableCell style={yellowText}>Apellido</TableCell>
-                <TableCell style={yellowText}>Mail</TableCell>
-                <TableCell style={yellowText}>Grupo</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data && data.map(celda => (
-                <TableRow>
+        ) : (
+        <div> 
+          <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> PMs </h2>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Email</th>
+              <th scope="col">Grupo</th>
+              </tr>
+            </thead>
 
-                  <TableCell>
-                    <Link 
-                      href={"/admin/pms/"+celda.id} 
-                      color="inherit" 
-                      underline="none">
-                        {celda.name}
-                    </Link>
-                  </TableCell>
-
-                  <TableCell>{celda.lastName}</TableCell>
-
-                  <TableCell>{celda.mail}</TableCell>
-
-                  <TableCell>{celda.group}</TableCell>
-
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            <tbody>
+              {pm ? pm.map((u) => (
+                  <tr class="bg-light"> 
+                    <td>{u.usuario.name}</td>
+                    <td>{u.usuario.lastName}</td>
+                    <td>{u.usuario.email}</td>
+                    <td>{u.group ? u.group.name : null}</td>
+                  </tr>       
+              )): null}                
+            </tbody>
+          </table>
+        </div>
         )}
       </div>
     )
 }
+
 
 const mapDispatchToProps = dispatch => {
     return {
