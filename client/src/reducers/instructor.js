@@ -1,8 +1,9 @@
-import { GET_INSTRUCTOR, GET_INSTRUCTOR_DETAIL } from '../actions/instructor'
+import { GET_INSTRUCTOR, GET_INSTRUCTOR_DETAIL, CREATE_STAFFMEMBER } from '../actions/instructor'
 
 const initialState ={
     instructor:[],
-    instructorDetail:{}
+    instructorDetail:{},
+    staff: []
 }
 
 export default function instructor (state = initialState, action){
@@ -16,6 +17,12 @@ export default function instructor (state = initialState, action){
         return {
             ...state,
             instructorDetail: action.payload
+        }
+    }
+    if (action.type === CREATE_STAFFMEMBER){
+        return {
+            ...state,
+            staff: state.staff.concat(action.payload)
         }
     }
     return state
