@@ -1,5 +1,7 @@
 const server = require('express').Router();
 const { Staff, Cohort } = require('../db.js');
+const jwt = require("jsonwebtoken");
+const  { hash } = require( 'bcrypt');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
 
 //const {isAuthenticated,isAdmin} =require('./helpers')  
@@ -17,7 +19,8 @@ server.put('/set', (req,res)=> {
   })  
 
   //Crear un instructor
-  server.post('/create',  (req, res) => {
+  server.post('/create', async (req, res) => {
+    console.log(req.body)
     Staff.findOne({
       where:{
         email: req.body.email
@@ -28,16 +31,27 @@ server.put('/set', (req,res)=> {
         res.status(400).send("Usuario existente!")
       }
     })
-    var {email, name, lastName} = req.body;
+    var {email, name, lastName, password, birthday, country, profile, city, urlImage} = req.body;
+    if (email && password && name && lastName){
+      password = await hash(req.body.password,10);
       Staff.create({
         email,
         name,
-        lastName
+        lastName,
+        password,
+        birthday,
+        country,
+        profile,
+        city,
+        urlImage
       })
       .then((user) =>{
         return res.status(201).send(user);
       })
       .catch(err => res.status(404).send(err));
+    }else {
+           res.status(500).send('error')
+         }
   })
 
   //Asignar cohorte a instructor
