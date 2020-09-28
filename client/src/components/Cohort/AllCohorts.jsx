@@ -28,15 +28,47 @@ export function AllCohorts({getCohorts,style}){
       ({
         cohorte: cohort.name,
         inicio: cohort.startDate,
-        sobre: cohort.about,
+        instructor: cohort.staffs.length,
         alumnos: cohort.usuarios.length,
         id: cohort.id
       })
     )
-    console.log(data)
   }
-  console.log(cohorts)
+  
   return (
+  
+    <div class="bg-dark" style = {style}>
+        <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> Cohortes </h2>
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+            <th scope="col">Cohorte</th>
+            <th scope="col">Fecha de Inicio</th>
+            <th scope="col">Instructor</th>
+            <th scope="col">Alumnos</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+          {cohorts ? data.map((celda) => (
+                <tr class="bg-light"> 
+                  <td><Link 
+                      href={"/cohortDetail/"+celda.id} 
+                      color="inherit" 
+                      underline="none">
+                        {celda.cohorte}
+                    </Link></td>
+                  <td>{celda.inicio}</td>
+                  <td>{celda.staffs ? celda.staffs[0].name : null}</td>
+                  <td>{celda.alumnos}</td>
+                </tr>       
+            )): null
+            }                
+          </tbody>
+        </table>
+      </div>
+  /*
     <div style={style}>  
       {cohorts && cohorts.length === 0 ? (
         <div>
@@ -56,6 +88,7 @@ export function AllCohorts({getCohorts,style}){
                 <TableCell style={yellowText} >Alumnos</TableCell>
               </TableRow>
             </TableHead>
+      
             <TableBody>
               {data && data.map(celda => (
                 <TableRow>
@@ -83,6 +116,8 @@ export function AllCohorts({getCohorts,style}){
         )
       }
     </div>
+*/
+
     )
 }
 
