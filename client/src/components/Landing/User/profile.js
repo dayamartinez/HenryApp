@@ -87,31 +87,31 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         marginTop: '-5px',
         left: '250px',
-        color: 'darkgray',
+        color: 'black',
         marginTop: '25px'
       },
       text2: {
         marginTop: '40px',
         marginLeft: '140px',
-        color: 'darkgray',
+        color: 'black',
         
       },
       text3: {
         marginTop: '40px',
         marginLeft: '190px',
-        color: 'darkgray',
+        color: 'black',
         
       },
       text4: {
         marginTop: '40px',
         marginLeft: '230px',
-        color: 'darkgray',
+        color: 'black',
         
       },
       text5: {
         marginTop: '40px',
         marginLeft: '270px',
-        color: 'darkgray',
+        color: 'black',
         
       },
       textAbout: {
@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
       textBirthday: {
         position: 'absolute',
         left: '250px',
-        color: 'darkgray',
+        color: 'black',
         marginTop: '100px'
       },
       portada: {
@@ -172,7 +172,7 @@ const useStyles = makeStyles((theme) => ({
   export function Profile(props){
     const classes = useStyles();
     // const [value, setValue] = React.useState(0);
-    const [value,setValue] = useState(1)
+    const [value,setValue] = useState(0)
     // const handleChange = (event, newValue) => {
     //   setValue(newValue);
     // };
@@ -224,9 +224,9 @@ const useStyles = makeStyles((theme) => ({
       </Button>
       </div>
       <div>
-         <Button variant='outline' color='primary' className={classes.boton} onClick={mostrarCohorte}>
-           Ver mi cohorte
-         </Button>
+        <Button variant='outline' color='primary'  href={"/cohortDetail/"+props.user.user.cohortId} className={classes.boton}>
+            Ver mi cohorte
+        </Button>
       </div>
     </div>
     <div>
