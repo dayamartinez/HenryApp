@@ -22,19 +22,7 @@ export function AllCohorts({getCohorts,style}){
     getCohorts()
     .then(data => setCohorts(data.payload))    
   }, [])
-  var data
-  if(cohorts){
-    data = cohorts.map(cohort => 
-      ({
-        cohorte: cohort.name,
-        inicio: cohort.startDate,
-        instructor: cohort.staffs.length,
-        alumnos: cohort.usuarios.length,
-        id: cohort.id
-      })
-    )
-  }
-  
+ 
   return (
   
     <div class="bg-dark" style = {style}>
@@ -51,73 +39,23 @@ export function AllCohorts({getCohorts,style}){
 
           <tbody>
 
-          {cohorts ? data.map((celda) => (
+          {cohorts ? cohorts.map((celda) => (
                 <tr class="bg-light"> 
                   <td><Link 
                       href={"/cohortDetail/"+celda.id} 
                       color="inherit" 
                       underline="none">
-                        {celda.cohorte}
+                        {celda.name}
                     </Link></td>
-                  <td>{celda.inicio}</td>
-                  <td>{celda.staffs ? celda.staffs[0].name : null}</td>
-                  <td>{celda.alumnos}</td>
+                  <td>{celda.startDate}</td>
+                  <td>{celda.staffs.length ? (celda.staffs[0].name +" "+ celda.staffs[0].lastName) : null}</td>
+                  <td>{celda.usuarios ? celda.usuarios.length : null}</td>
                 </tr>       
             )): null
             }                
           </tbody>
         </table>
       </div>
-  /*
-    <div style={style}>  
-      {cohorts && cohorts.length === 0 ? (
-        <div>
-          <h4>
-            {' '}
-            No hay cohortes para mostrar
-          </h4>
-        </div>
-      ) : (
-        <TableContainer>
-          <Table>
-            <TableHead style={{backgroundColor:grey[900]}}>
-              <TableRow  >
-                <TableCell style={yellowText} >Cohorte</TableCell>
-                <TableCell style={yellowText} >Fecha de inicio</TableCell>
-                <TableCell style={yellowText} >Intructor</TableCell>
-                <TableCell style={yellowText} >Alumnos</TableCell>
-              </TableRow>
-            </TableHead>
-      
-            <TableBody>
-              {data && data.map(celda => (
-                <TableRow>
-
-                  <TableCell>
-                    <Link 
-                      href={"/cohortDetail/"+celda.id} 
-                      color="inherit" 
-                      underline="none">
-                        {celda.cohorte}
-                    </Link>
-                  </TableCell>
-
-                  <TableCell>{celda.inicio}</TableCell>
-
-                  <TableCell>{celda.sobre}</TableCell>
-
-                  <TableCell>{celda.alumnos}</TableCell>
-                  
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        )
-      }
-    </div>
-*/
-
     )
 }
 
