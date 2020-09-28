@@ -9,6 +9,8 @@ const Pm = require('./pm')
 const Student = require('./student')
 const Group = require('./group.js')
 const Instructor = require('./instructor')
+const Posts = require('./posts')
+const Links = require('./links')
 
 const router = Router();
 
@@ -23,5 +25,7 @@ router.use('/pm', Pm)
 router.use('/student', Student)
 router.use('/group', Group)
 router.use('/instructor', Instructor)
+router.use('/posts', Posts)
+router.use('/links', Links)
 
 module.exports = router;

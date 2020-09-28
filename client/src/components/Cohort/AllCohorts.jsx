@@ -5,6 +5,7 @@ import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from 
 import { makeStyles } from '@material-ui/core/styles';
 import { getCohorts } from '../../actions/cohort';
 import {yellow, grey} from "@material-ui/core/colors"
+import {useHistory } from 'react-router-dom'
 const useStyles = makeStyles(theme => ({
   paper: {
     marginTop: theme.spacing(2),
@@ -22,7 +23,7 @@ export function AllCohorts({getCohorts,style}){
     getCohorts()
     .then(data => setCohorts(data.payload))    
   }, [])
- 
+
   return (
   
     <div class="bg-dark" style = {style}>
