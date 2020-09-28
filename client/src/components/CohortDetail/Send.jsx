@@ -31,8 +31,6 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
     .then(data => setCohort(data.payload))
   }, [posts, links])
 
-  console.log(cohort)
-  
   const instructor = cohort && cohort[0].staffs[0] 
   const comments = cohort && cohort[0].posts.sort((a,b) => (
   b.id - a.id))

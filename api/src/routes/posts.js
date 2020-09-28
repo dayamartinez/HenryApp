@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const {Post, Cohort} = require('../db.js');
+const {Post } = require('../db.js');
 
 //crear posts 
 server.post('/:id', (req, res) => {

@@ -25,6 +25,7 @@ import NavBar from './components/NavBar.js';
 import Home from './components/Home/home.js';
 import BarraLateral from './components/Admin/Dashboard/BarraLateral';
 import Instructor from './components/Instructors/ListInstructors';
+import StaffRegister from './components/Instructors/CreateInstructor';
 import ConfiguracionGeneral from './components/Landing/User/profileSettings.js';
 import FormGroup from './components/Groups/FormGroup';
 
@@ -70,6 +71,7 @@ function App(props) {
       <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
       <Route exact path='/cohortDetail/:id' render={({match}) => <CohortDetail match={match}/>} />
       <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
+      <Route exact path='/admin/createStaff' render={() => <StaffRegister style={margen}/>} />
       <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match} style={margen}/>} /> 
       
       {/* Grupos */}

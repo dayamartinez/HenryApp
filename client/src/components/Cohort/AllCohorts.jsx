@@ -23,6 +23,7 @@ export function AllCohorts({getCohorts,style}){
     getCohorts()
     .then(data => setCohorts(data.payload))    
   }, [])
+<<<<<<< HEAD
   var data
   
   const history = useHistory()
@@ -91,6 +92,42 @@ export function AllCohorts({getCohorts,style}){
         )
       }
     </div>
+=======
+
+  return (
+  
+    <div class="bg-dark" style = {style}>
+        <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> Cohortes </h2>
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+            <th scope="col">Cohorte</th>
+            <th scope="col">Fecha de Inicio</th>
+            <th scope="col">Instructor</th>
+            <th scope="col">Alumnos</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+          {cohorts ? cohorts.map((celda) => (
+                <tr class="bg-light"> 
+                  <td><Link 
+                      href={"/cohortDetail/"+celda.id} 
+                      color="inherit" 
+                      underline="none">
+                        {celda.name}
+                    </Link></td>
+                  <td>{celda.startDate}</td>
+                  <td>{celda.staffs.length ? (celda.staffs[0].name +" "+ celda.staffs[0].lastName) : null}</td>
+                  <td>{celda.usuarios ? celda.usuarios.length : null}</td>
+                </tr>       
+            )): null
+            }                
+          </tbody>
+        </table>
+      </div>
+>>>>>>> master
     )
 }
 
