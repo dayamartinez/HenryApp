@@ -36,26 +36,7 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
     return (
         <div class="bg-dark" style = {style}>
             <h2 class="bg-dark text-warning text-center"> Alumnos </h2>
-        {/*    <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                <button class="btn btn-outline-warning mb-2 mt-2 " onClick={() => getCohorts()}> Ver Todos </button>
-            </div>
-            <div class="bg-dark" style={{display:"flex", justifyContent:"center", marginTop: '3px'}}>
-                <h6 class="text-light mt-2">Filtrar por cohorte: </h6>
-                <div>
-                    {cohorts && cohorts.map((c) => (         
-                        <button type="button" onClick={() => getCohortDetail(c.id)}class="btn btn-outline-warning ml-1 border-0" >{c.id}</button>
-                        ))
-                    } 
-                </div>
-            </div> 
-
-*/}
-
-
-    
-
-{/* OPCION CON BOOTSTRAP*/}
-
+        
         <div style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"20px"}}>
         
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
