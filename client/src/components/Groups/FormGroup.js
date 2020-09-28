@@ -4,6 +4,7 @@ import { makeStyles} from '@material-ui/core';
 import { connect } from 'react-redux'
 import axios from "axios"
 import {addGroup} from '../../actions/group'
+import {getPm} from '../../actions/pm'
 import {useHistory } from 'react-router-dom'
 
 import ExcelLoader from '../Cohort/ExcelLoader';
@@ -34,10 +35,11 @@ import ExcelLoader from '../Cohort/ExcelLoader';
     }
   }));
   
-  export function FormGroup({ pms, addGroup, emails}) {
+  export function FormGroup({ getPm,pms, addGroup, emails}) {
 
     const history = useHistory()
     const classes = useStyles();
+    const [pm,setPm] = useState(pms)
     const [groups,setGroups] = useState([])
     const [cohort, setCohort] = useState({})
     const [input, setInput]= useState({
@@ -45,21 +47,41 @@ import ExcelLoader from '../Cohort/ExcelLoader';
       startDate: ''
     });
     
+    var aux
     useEffect(()=>{
-      axios.get("http://localhost:3001/cohort")
-      .then(res=>{
-        setCohort(
-          res.data[res.data.length-1]
-          )
-      })
-
-    },[input])
-
+      aux = pm.filter(p=> !p.groupId)
+        getPm().then(res=>{
+          console.log(res.data)
+          setPm(
+            aux
+            )
+          })
+        console.log(pms)
+        axios.get("http://localhost:3001/cohort")
+        .then(res=>{
+          console.log(res.data)
+          setCohort(
+            res.data[res.data.length-1]
+            )
+          })
+          .catch(err =>{console.log(err)})          
+        },[])
+        
     const handleInputChange = function(e) {
-      setInput({
-        ...input,
-        [e.target.name]:e.target.value
-      })
+      console.log(cohort)
+      const g=Number(e.target.value)
+      if (g > pm.length){
+        alert("error")
+        e.target.value = g-1
+      }else if (g <= 0){
+        alert("error")
+        e.target.value = 1
+      } else{
+        setInput({
+          ...input,
+          [e.target.name]:e.target.value
+        })
+      }
     }
 
     const handleSubmit = function (e) {
@@ -88,7 +110,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
           <Grid item>
             <Box>
             <Typography>
-                Projects Managers Disponibles:{pms.length}
+                Projects Managers Disponibles:{pm.length}
               </Typography>
             </Box>
           </Grid>
@@ -139,7 +161,8 @@ import ExcelLoader from '../Cohort/ExcelLoader';
  
   const mapDispatchToProps = dispatch => { 
     return {
-      addGroup: (cohortId,grupos) => dispatch(addGroup(cohortId,grupos))
+      addGroup: (cohortId,grupos) => dispatch(addGroup(cohortId,grupos)),
+      getPm: ()=> dispatch(getPm())
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormGroup)

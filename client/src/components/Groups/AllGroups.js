@@ -50,9 +50,7 @@ export function AllGroups({getGroups,style}){
         id: group.id
       })
     )
-    console.log(data)
   }
-  console.log(groups)
   return (
     <div style={style}> 
       {groups && groups.length === 0 ? (

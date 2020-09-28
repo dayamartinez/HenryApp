@@ -46,11 +46,8 @@ server.post('/create',  (req, res) => {
   Cohort.create({
     name: capName,
     startDate,
-  // include: [Usuario]
   }) 
   .then(cohort => {
-  // const emails = req.body;
-  // console.log(req.body);
   //se hace un map con el array de emails que se importan desde excel y se transforman a un json
     emails.map((email) => {
       Usuario.create({
@@ -154,8 +151,12 @@ server.post('/create',  (req, res) => {
       order:[ ["id","ASC"] ],
       include: [{model: Usuario}, {model: Group}, {model: Staff}],
     })
-      .then(cohorts => res.send(cohorts))
-      .catch(() => res.status(400).send([])
+      .then(cohorts =>{
+        res.send(cohorts)
+      })
+      .catch(err =>{ 
+        res.status(400).send(err)
+      }
       )
   })
 
