@@ -94,7 +94,7 @@ import ExcelLoader from './ExcelLoader';
         }
        id ? updateCohort(id, cohort) : addCohort(cohort, emails)
        swal("Cohorte creado correctamente")
-        history.push('/admin')
+       history.push('/admin/createCohort/groups')
     }
 
     //se agrega función para que al hacer click en crear, se envien al back los correos que fueron cargados

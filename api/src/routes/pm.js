@@ -34,32 +34,66 @@ server.put('/set', (req,res)=> {
   })
   
   //Asignar cohorte a PM
-  server.put('/setCohort/:id', (req,res) => {
-    PM.findByPk(req.body.id)
-    .then(pm => {
-      pm,
-      pm.cohortId = req.params.id
+  // server.put('/setCohort/:id', (req,res) => {
+  //   PM.findByPk(req.body.id)
+  //   .then(pm => {
+  //     pm,
+  //     pm.cohortId = req.params.id
 
-      pm.save().then(pm => {
-        res.status(201).send(pm)
+  //     pm.save().then(pm => {
+  //       res.status(201).send(pm)
+  //     })
+  //   })    
+  //   .catch(err => res.status(404).send(err))
+  // })
+
+
+  //Asignar pms a un cohorte
+  server.put('/setCohort/:id', (req,res) => {
+    var asignarCohorte={cohortId:req.params.id}
+    PM.findAll({
+      where:{
+        cohortId:null
+      }
+    })
+    .then(pm => {
+      pm.map(p=>{
+        p.update(asignarCohorte)
       })
+      pm.save()
+      res.status(201).send(pm)
     })    
     .catch(err => res.status(404).send(err))
   })
 
-
-  //Asignar grupo a PM
-  server.put('/setGroup/:id', (req,res) => {
-    PM.findByPk(req.body.id)
-    .then(pm => {
-      pm,
-      pm.groupId = req.params.id
-
-      pm.save().then(pm => {
-        res.status(201).send(pm)
+  server.put("/setGroup/:id", (req,res)=>{
+    PM.findAll({
+      where:{
+        cohortId:req.params.id
+      }
+    })
+    .then(pms=>{
+      Group.findAll({
+        where:{
+          cohortId:req.params.id
+        }
       })
-    })    
-    .catch(err => res.status(404).send(err))
+      .then(groups=>{
+        let i = 0,j=0;
+        while(i<groups.length){
+          let aux = {groupId:groups[i].id}
+          pms[j].update(aux)
+          pms[j].save()
+          i++
+          j++
+          if(pms[j] && i>=groups.length){
+            i=0
+          }
+        }
+      })
+    })
+    .then(()=>res.status(201).send("holi"))
+    .catch(()=>res.status(400).send("caca"))
   })
 
   //Eliminar PM

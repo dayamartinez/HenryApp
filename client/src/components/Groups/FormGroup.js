@@ -1,12 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { CssBaseline,Button,TextField,Typography,Container,Grid,Box } from '@material-ui/core';
+import { makeStyles} from '@material-ui/core';
 import { connect } from 'react-redux'
-
+import axios from "axios"
 import {addGroup} from '../../actions/group'
 import {useHistory } from 'react-router-dom'
 
@@ -32,20 +28,33 @@ import ExcelLoader from '../Cohort/ExcelLoader';
       backgroundColor: 'darkgray',
       color: 'white',
       marginBorder: '0px'     
+    },
+    fondo1:{
+      backgroundColor:theme.palette.primary
     }
   }));
   
-  export function FormGroup({ match, addGroup, emails}) {
+  export function FormGroup({ pms, addGroup, emails}) {
 
     const history = useHistory()
     const classes = useStyles();
-    
+    const [groups,setGroups] = useState([])
+    const [cohort, setCohort] = useState({})
     const [input, setInput]= useState({
       name:'',
       startDate: ''
     });
-
     
+    useEffect(()=>{
+      axios.get("http://localhost:3001/cohort")
+      .then(res=>{
+        setCohort(
+          res.data[res.data.length-1]
+          )
+      })
+
+    },[input])
+
     const handleInputChange = function(e) {
       setInput({
         ...input,
@@ -55,83 +64,82 @@ import ExcelLoader from '../Cohort/ExcelLoader';
 
     const handleSubmit = function (e) {
         e.preventDefault()
-        const group = {
-          name: input.name,
-          cohort: input.cohort,
-          emails: emails
-        }
-        addGroup(group)
+        addGroup(cohort.id,input.grupos)
+        axios.put("http://localhost:3001/pm/setGroup/"+cohort.id)
     }
 
     return (
       <Container component="main" maxWidth="xs">
-       <CssBaseline />
-        <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-            Nuevo Grupo
-          </Typography>  
-        
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Nombre"
-              name="name"
-              autoFocus
-              value={input.name}
-              onChange={handleInputChange}
-            />
-            <TextField
-            type="date"
-            variant="outlined"
-            margin="normal"
+        <Grid container>
+          <Grid item >
+            <Box className={classes.fondo1}>
+              <Typography>
+                Cohorte
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box>
+            <Typography>
+                Alumnos Totales del Cohorte:{emails.length}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box>
+            <Typography>
+                Projects Managers Disponibles:{pms.length}
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box>
+              <Typography>
+                Ingresar Cantidad de Grupos a Crear
+              </Typography>
+            </Box>
+            <Box>
+              <TextField type="number" name="grupos" onChange={(e) => handleInputChange(e)}/>
+            </Box>
+          </Grid>
+          <Grid item>
+          <Button
+            type="submit"
             fullWidth
-            name="startDate"
-            id="startDate"
-            value={input.startDate}
-            onChange={handleInputChange}
-            required
-            />
-             
-            {/*Se llama a la función para cargar las direcciones de email de los alumnos */}
-            <ExcelLoader/>
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={(e) => handleSubmit(e)}
+          >
               Crear
-            </Button>
+          </Button>
+          </Grid>
+          <Grid item>
             <Button
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-              onClick={() => history.replace('/admin') }
-            >
+            fullWidth
+            variant="contained"
+            className={classes.submit}
+            onClick={() => history.replace('/admin') }
+          >
               Cancelar
-            </Button>
-          </form>
-           
-        </div>
+          </Button>
+          </Grid>
+          
+        </Grid>
       </Container>
     )
   }
 
   const mapStateToProps = (state) => {
-    return {
-      emails: state.cohort.emails
+    return{
+      emails: state.cohort.emails,
+      pms: state.pm.pms
     }
   }
  
   const mapDispatchToProps = dispatch => { 
     return {
-      addGroup: (group) => dispatch(addGroup(group))
+      addGroup: (cohortId,grupos) => dispatch(addGroup(cohortId,grupos))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormGroup)
