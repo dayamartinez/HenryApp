@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import Pms from './Pms.jsx'
 import StudentList from './StudentList'
 import Send from './Send.jsx'
-import Links from './Links.jsx'
 
 export function CohortDetail({match}){
 
@@ -11,8 +10,7 @@ export function CohortDetail({match}){
         <div style={{display:'flex', direction:'row', justifyContent:'space-between', padding:'20px'}} >
             <div><Pms match={match}/></div>
             <div >
-                <Send/> 
-                <Links/> 
+                <Send match={match}/> 
             </div> 
             <div><StudentList match={match}/></div>
         </div>
