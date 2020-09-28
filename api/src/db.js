@@ -7,7 +7,7 @@ const {
 } = process.env;
 
 //const sequelize = new Sequelize('postgres://tfsxbtas:uaXZmlvgHKSf86pwTbBwBeDmUqEjlDUl@tuffi.db.elephantsql.com:5432/tfsxbtas', {
- const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/henryapp`, {
+const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/henryapp`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
