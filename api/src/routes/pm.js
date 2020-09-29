@@ -93,7 +93,7 @@ server.put('/set', (req,res)=> {
       })
     })
     .then(()=>res.status(201).send("holi"))
-    .catch(()=>res.status(400).send("caca"))
+    .catch(()=>res.status(400).send("adiu"))
   })
 
   //Eliminar PM

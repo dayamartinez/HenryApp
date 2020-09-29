@@ -50,7 +50,6 @@ app.post('/send-email/:email', (req, res) => {
 
 app.put('/send-email/forgotpassword', (req, res) => {
   const {email,birthday} = req.body;
- // console.log(req.body);
   db.Usuario.findOne({
       where:{
           email,
@@ -60,7 +59,6 @@ app.put('/send-email/forgotpassword', (req, res) => {
   .then(user=>{
     user.password = null;
     user.save();
-    console.log(user)
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         port: 587,
@@ -82,9 +80,7 @@ app.put('/send-email/forgotpassword', (req, res) => {
     }
     
         transporter.sendMail(mailOptions, (err, info) => {
-            console.log(email)
             if(err){
-                console.log(err)
                 res.status(500).send(err)
             } else {
                 console.log("Email enviado")

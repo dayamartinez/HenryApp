@@ -31,7 +31,6 @@ server.get('/user/:id',(req,res)=>{
 //Busca usuario por email
 server.get('/:email',(req,res,next)=>{
   let email = req.params.email
-  console.log(email)
   db.Usuario.findAll({
     where:{email:email}
   })
@@ -59,7 +58,6 @@ server.put('/inviteuser', (req,res,next)=>{
      return res.status(201).send(user);
     } else {
       res.status(400).json({err:"El usuario tiene un perfil asociado!"})
-      console.log(res.send);
     }
   })
   //MANEJO DE ERROR POR SI EL MAIL NOSE ENCUENTRA EN LA BASE DE DATOS!
@@ -155,7 +153,6 @@ server.get('/users/:id', (req,res,next) => {
 		}
 	})
   .then( usuario => {
-    console.log(usuario)
       res.status(200).json(usuario);
   }).catch(err => res.status(404).send(err))
   
@@ -163,8 +160,6 @@ server.get('/users/:id', (req,res,next) => {
 
 server.put('/completeprofile/:id', (req, res, next) => {
  var {id} = req.body
- //console.log(id)
- //console.log(req.body)
   var userUp = {
     name: req.body.name,
     lastName: req.body.lastName,
