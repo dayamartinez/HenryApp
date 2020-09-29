@@ -29,16 +29,17 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 const defaultProps = {
-  color: 'secondary',
-  children: <MailIcon />,
+  color: "secondary",
+  children: <MailIcon style={{ color: "#000"}} />,
+ 
 }
 export function Home({user, getPostActive, postInactive}){
     const history = useHistory()
     const classes = useStyles();
     const [post, setPost] = useState()
     useEffect(()=> {
-        if(1){
-          getPostActive(1)
+        if(user.cohortId){
+          getPostActive(user.cohortId)
         .then(posts => setPost(posts.payload))   
         }   
     }, [])
@@ -48,14 +49,17 @@ export function Home({user, getPostActive, postInactive}){
         <div > 
             <div className={classes.root}>
                { post && post.length === 0 ?
-               <button onClick={()=> {
-                history.push('/cohortDetail/1')
-            }}
-               > <MailIcon /></button> :  
-              <button onClick={()=> {
-                  history.push('/cohortDetail/1')
-                  post && post.map(p => postInactive(p, 1))         
-              }}> <Badge badgeContent={post && post.length} {...defaultProps} /></button>}
+               <button className="btn btn-outline-light border-0 rounded ml-1"
+                onClick={()=> {
+                history.push(`/cohortDetail/${user.cohortId}`)
+            }}> <MailIcon  style={{ color: "#000"}} /> </button> :  
+              <button className="btn btn-outline-light border-0 rounded ml-1" 
+                  onClick={()=> {
+                  history.push(`/cohortDetail/${user.cohortId}`)
+                  post && post.map(p => postInactive(p, user.cohortId))         
+              }}>
+                 <Badge style={{ color: "#000"}} badgeContent={post && post.length} {...defaultProps} />
+              </button>}
             </div>
                 <div className={classes.totalBackground}>  
                 </div>
