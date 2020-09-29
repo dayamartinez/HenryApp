@@ -6,7 +6,7 @@ import { getCohorts,getCohortDetail} from '../../actions/cohort';
 import SettingsIcon from '@material-ui/icons/Settings'
 import Button from '@material-ui/core/Button'
 
-export function StudentList({getCohortDetail, match}) {
+export function StudentList({getCohortDetail, match, user}) {
     let id = match.params.id
     const history = useHistory()
     const [cohortD, setCohortD] = useState()
@@ -48,23 +48,27 @@ export function StudentList({getCohortDetail, match}) {
             </tbody>
         </table>
     </div>
+    {user.user.rol !== "user" ?
     <div  style={{marginTop:'10px', display:'flex', alignItems: 'center', justifyContent:'center'}}>
             <Button fullWidth  variant="contained" 
                 onClick={() =>  history.push(`/cohort/${id}`) } >
                 Modificar cohorte <SettingsIcon style={{marginLeft:'5px'}}/>
             </Button>
        
-    </div>
+    </div>:null
+    }
 </div>
     )}
 
-
+const mapStateToProps = (state) => ({
+    user: state.user
+})
        
 const mapDispatchToProps = dispatch => ({
     getCohortDetail: (id) => dispatch(getCohortDetail(id))
 })
 
  
-export default connect(null, mapDispatchToProps)(StudentList)
+export default connect(mapStateToProps, mapDispatchToProps)(StudentList)
 
 

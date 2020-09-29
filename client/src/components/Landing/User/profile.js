@@ -1,7 +1,7 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import fondo from '../../../images/FondoInfo.jpeg';
-import henrylogo from '../../../images/soyhenry.jpg';
+import henrylogo from '../../../images/soyhenry.jpeg';
 import {AppBar, Toolbar, Typography, IconButton, Button, makeStyles} from '@material-ui/core';
 import {connect} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
@@ -15,49 +15,111 @@ import EmailIcon from '@material-ui/icons/Email';
 import CreateIcon from '@material-ui/icons/Create';
 import { CohortDetail } from '../../CohortDetail/CohortDetail';
 import {useHistory} from 'react-router-dom';
+import Axios from 'axios';
 
 //ESTILOS DE MATERIAL UI
 const useStyles = makeStyles((theme) => ({
-    totalBackground: {
-      marginRight: '40px',
-      marginLeft: '40px',
-      background: '#f5f5f6',
-      minHeight: '800px',
-      maxHeight: '1000px'
-    },
-    background: {
-      display: 'flex',
-      flexDirection: 'column',
-      background: 'black',
-      alignItems: 'center',
-      height: '200px'
-    },
-    profile: {
-      position: 'absolute',
-      width: '150px',
-      height: '150px',
-      marginTop: '120px',
-      marginLeft: '-700px',
-      borderRadius: '5px',
-      borderColor: 'white',
-      zIndex: '10px'
-    },
-    nameLastName: {
+  totalBackground: {
+    marginRight: '40px',
+    marginLeft: '40px',
+    background: '#f5f5f6',
+    minHeight: '800px',
+    maxHeight: '1000px'
+  },
+  background: {
+    display: 'flex',
+    flexDirection: 'column',
+    background: 'black',
+    alignItems: 'center',
+    height: '200px'
+  },
+  profile: {
+    position: 'absolute',
+    width: '150px',
+    height: '150px',
+    marginTop: '120px',
+    marginLeft: '-700px',
+    borderRadius: '5px',
+    borderColor: 'white',
+    zIndex: '10px'
+  },
+  nameLastName: {
       display: 'flex',
       //position: 'absolute',
       justifyContent: 'center',
       marginTop: '25px',
       color: 'white'
       //marginLeft: '350 px',
+  },
+  barra: {
+    background: '#212121',
+    display: 'flex',
+    height: '50px',
+    justifyContent: 'space-around',
+  },
+  boton:{
+    color: '#fdd835'
+  },
+  tarjeta:{
+    backgroundImage:`url(${fondo})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    //alignItems: 'center',
+     backgroundSize: "cover",
+     marginTop: '35px',
+     marginLeft: '130px',
+     height: '400px',
+     maxWidth: '1000px',
+     display: "table-cell",
+     width: "1000px",
+     maxHeight: '600px'
+  },
+  container: {
+    borderBottom: 'groove',
+    background: 'rgba(0, 0, 0, 0.87)',
+    marginTop: '-5px',
+    height: '75px',
     },
-    barra: {
-      background: '#212121',
+    settingContainer: {
+    display:'flex',
+    position: 'absolute',
+    left: '900px',
+    marginTop: '-100px'
+    },
+    text: {
       display: 'flex',
-      height: '50px',
-      justifyContent: 'space-around',
+      //position: 'absolute',
+      justifyContent: 'center',
+      marginTop: '25px',
+      color: 'white',
+      //marginLeft: '350 px',
+      marginTop: '-5px',
+      left: '250px',
+      color: 'black',
+      marginTop: '25px'
     },
-    boton:{
-      color: '#fdd835'
+    text2: {
+      display: 'flex',
+      color: 'black',
+      marginLeft: '230px',
+      marginTop: '-200px',
+      color: "gray",
+      fontSize: "18px",
+    },
+    text3: {
+      display: 'flex',
+      color: 'black',
+      marginLeft: '230px',
+      marginTop: '-200px',
+      color: "gray",
+      fontSize: "18px",
+    },
+    text4: {
+      display: 'flex',
+      color: 'black',
+      marginLeft: '230px',
+      color: "gray",
+      fontSize: "18px",
     },
     tarjeta:{
       backgroundImage:`url(${fondo})`,
@@ -172,9 +234,56 @@ const useStyles = makeStyles((theme) => ({
       }
   }));
   
-  export function Profile(props){
-    const classes = useStyles();
+
+
+
+  // function TabPanel(porps) {
+  //   const { children, value, index, ...other } = porps;
+  
+  //   return (
+  //     <div
+  //       role="tabpanel"
+  //       hidden={value !== index}
+  //       id={`simple-tabpanel-${index}`}
+  //       aria-labelledby={`simple-tab-${index}`}
+  //       {...other}
+  //     >
+  //       {value === index && (
+  //         <Box p={3}>
+  //           <Typography>{children}</Typography>
+  //         </Box>
+  //       )}
+  //     </div>
+  //   );
+  // }
+  
+  // TabPanel.propTypes = {
+  //   children: PropTypes.node,
+  //   index: PropTypes.any.isRequired,
+  //   value: PropTypes.any.isRequired,
+  // };
+  
+  // function a11yProps(index) {
+  //   return {
+  //     id: `simple-tab-${index}`,
+  //     'aria-controls': `simple-tabpanel-${index}`,
+  //   };
+  // }
+
+  export function Profile({user, match}){
+    useEffect(() => {
+      if (match.params.id){
+        Axios.get(`http://localhost:3001/user/user/${match.params.id}`)
+        .then(user=>{
+          console.log(user)
+          setUserDetail(user.data);
+        })
+      }
+      console.log(userDetail)
+    },[]);
     const history = useHistory();
+    const classes = useStyles();
+    const [userDetail, setUserDetail] = useState()
     // const [value, setValue] = React.useState(0);
     const [value,setValue] = useState(0)
     // const handleChange = (event, newValue) => {
@@ -194,14 +303,15 @@ const useStyles = makeStyles((theme) => ({
         <Card className={classes.totalBackground} >
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <div  className={classes.background}> 
-          <img   className={classes.portada}  src= {props.user.user.portadaImage}/>
-          <Avatar  className={classes.profile} alt="Remy Sharp" src={props.user.user.urlImage} />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+          {userDetail ? <img   className={classes.portada}  src= {userDetail.portadaImage}/>:<img   className={classes.portada}  src= {user.user.portadaImage}/>}
+          {userDetail ? <Avatar  className={classes.profile} alt="Remy Sharp" src={userDetail.urlImage} />:<Avatar  className={classes.profile} alt="Remy Sharp" src={user.user.urlImage} />}
         </div>
         
         <div>
         </div>
         <div className={classes.container}>
-           <h2 className={classes.nameLastName}>{`${props.user.user.name } ${props.user.user.lastName}`} </h2>
+           {userDetail ? <h2 className={classes.nameLastName}>{`${userDetail.name } ${userDetail.lastName}`} </h2>:<h2 className={classes.nameLastName}>{`${user.user.name } ${user.user.lastName}`} </h2>}
         {/* <Typography variant="subtitle1" gutterBottom> 
           <p className={classes.text}>{`${props.user.user.email}`}</p>
          </Typography> 
@@ -214,8 +324,11 @@ const useStyles = makeStyles((theme) => ({
          </Typography>
         </div>
         
+    {/* <div className={classes.settingContainer}>
+      {userDetail ? null : <SettingButton />}
+    </div> */}
     <div className={classes.settingContainer}>
-      <IconButton color="primary" onClick={(e) => history.push('/profile/Settings')}><CreateIcon/></IconButton>
+      {userDetail ? null : <IconButton color="primary" onClick={(e) => history.push('/profile/Settings')}><CreateIcon/></IconButton>}
     </div>
     <div className={classes.barra}>
       <div>
@@ -224,29 +337,42 @@ const useStyles = makeStyles((theme) => ({
       </Button>
       </div>
       <div>
-      <Button variant='outline' color='primary' className={classes.boton} onClick={mostrarPost}>
+      {userDetail ? null : <Button variant='outline' color='primary' className={classes.boton} onClick={mostrarPost}>
          Posts
-      </Button>
+      </Button>}
       </div>
       <div>
-        <Button variant='outline' color='primary'  href={"/cohortDetail/"+props.user.user.cohortId} className={classes.boton}>
+        {userDetail ? null : <Button variant='outline' color='primary'  href={"/cohortDetail/"+user.user.cohortId} className={classes.boton}>
             Ver mi cohorte
-        </Button>
+        </Button>}
       </div>
     </div>
     <div>
          {value === 1 ?
-         <Paper className={classes.tarjeta}>
-         <Card className={classes.informacion}>
-        <CardMedia ><img src={henrylogo} /></CardMedia>
-         <CardContent > 
-          <p className={classes.text3}> <PublicIcon/> {`${props.user.user.country + "," + " "+ props.user.user.city }`}</p>
-          <p className={classes.text4}> <CakeIcon />{`${props.user.user.birthday.slice(0,10)}`}</p>
-          <p className={classes.text5}> <i class="fa fa-rocket"></i> {`${props.user.user.cohortId}`}</p>
-          <p className={classes.text6}> <EmailIcon/> {`${props.user.user.email}`}</p>
-         </CardContent> 
-         </Card>
-         </Paper>
+           <Paper className={classes.tarjeta}>
+           <Card className={classes.informacion}>
+          <CardMedia ><img src={henrylogo} /></CardMedia>
+           <CardContent > 
+            {userDetail ? <p className={classes.text3}> <PublicIcon/> {`${userDetail.country + "," + " "+ userDetail.city }`}</p>:<p className={classes.text3}> <PublicIcon/> {`${user.user.country + "," + " "+ user.user.city }`}</p>}
+            {userDetail ? <p className={classes.text4}> <CakeIcon />{`${userDetail.birthday.slice(0,10)}`}</p>:<p className={classes.text4}> <CakeIcon />{`${user.user.birthday.slice(0,10)}`}</p>}
+            {userDetail ? <p className={classes.text5}> <i class="fa fa-rocket"></i> {`${userDetail.cohortId}`}</p>:<p className={classes.text5}> <i class="fa fa-rocket"></i> {`${user.user.cohortId}`}</p>}
+            {userDetail ? <p className={classes.text6}> <EmailIcon/> {`${userDetail.email}`}</p>:<p className={classes.text6}> <EmailIcon/> {`${user.user.email}`}</p>}
+           </CardContent> 
+           </Card>
+           </Paper>
+        //  <Paper className={classes.tarjeta}>
+        //  <div>
+        //  <Typography variant="h5" gutterBottom> 
+        //   <br></br>
+        //   {userDetail ? <p className={classes.text2}>{`Pais de residencia: ${userDetail.country}`}</p>:<p className={classes.text2}>{`Pais de residencia: ${user.user.country}`}</p>}
+        //   {userDetail ? <p className={classes.text3}>{`Estado/Provincia: ${userDetail.city}`}</p>:<p className={classes.text3}>{`Estado/Provincia: ${user.user.city}`}</p>}
+        //   {userDetail ? <p className={classes.text4}>{`Fecha de nacimiento: ${userDetail.birthday.slice(0,10)}`}</p>:<p className={classes.text4}>{`Fecha de nacimiento: ${user.user.birthday.slice(0,10)}`}</p>}
+        //   {userDetail ? <p className={classes.text5}>{`El cohorte al cual pertenece: ${userDetail.cohortId}`}</p>:<p className={classes.text5}>{`El cohorte al cual pertenece: ${user.user.cohortId}`}</p>}
+        //   <br></br>
+        //   {userDetail ? <p className={classes.text}>Email: {`${userDetail.email}`}</p>:<p className={classes.text}>Email: {`${user.user.email}`}</p>}
+        //  </Typography> 
+        //  </div>
+        //  </Paper>
         :null}
         {value === 2?
         <Typography variant="subtitle1" gutterBottom> 

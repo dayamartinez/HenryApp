@@ -5,6 +5,11 @@ module.exports = (sequelize) => {
     comments: {
        type: DataTypes.TEXT,
        allowNull: false
+    }, 
+    active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: true
     }
   });
 }

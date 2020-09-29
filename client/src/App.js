@@ -42,8 +42,10 @@ function App(props) {
       {/* {!props.user.user.id ? <Route exact path='/' component={NewUser}/> : } */}
       {props.user.user.name && <Route path='/' component={NavBar} />}
       {props.user.user.name ? <Route  exact path='/Home'component={Home} />:null}
-      {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
+     
 
+      {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
+      <Route exact path ='/profile/:id' render={({match})=> <Profile match={match}/>}/>
       {/* <Route  exact path='/forgotPassword'component={forgotPassword} /> */}
       {/* <Route  exact path='/profile/Settings'component={Settings} /> */}
       <Route  exact path='/forgotpassword'component={forgotPassword} />
