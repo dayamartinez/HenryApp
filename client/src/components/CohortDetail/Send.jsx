@@ -31,7 +31,7 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
     .then(data => setCohort(data.payload))
   }, [posts, links])
 
-  
+  console.log(cohort)
   
   const instructor = cohort && cohort[0].staffs[0] 
   const comments = cohort && cohort[0].posts.sort((a,b) => (
@@ -93,7 +93,9 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
               value={input.comments}
               onChange={handleInputChange}
             />
-            <input type='submit' />
+            <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
+              <SendIcon style={{ color: "#000"}}/> 
+            </button>
           </form> : null          
         }
   
@@ -164,7 +166,10 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
                      name="links"
               value={inputLink.links}
               onChange={handleInputChangeL}/>
-                    <input  style={{marginLeft: '5px'}} type='submit' />
+                    <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
+                      <SendIcon style={{ color: "#000"}}/> 
+                    </button>
+
                </div>
                <hr/>
            </form>:null
