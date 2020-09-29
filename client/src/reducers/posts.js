@@ -1,4 +1,4 @@
-import { GET_POSTS, ADD_POST, DELETE_POST} from '../actions/posts'
+import { GET_POSTS, ADD_POST, DELETE_POST, GET_POST_ACTIVE, POST_INACTIVE} from '../actions/posts'
 
 
 const initialState ={
@@ -26,6 +26,18 @@ export default function posts(state = initialState, action){
         return {
             ...state,
             posts: state.posts.filter(p => p.id !== action.payload) 
+        }
+    }
+    if(action.type === GET_POST_ACTIVE){
+        return {
+            ...state,
+            posts: action.payload
+        }
+    }
+    if(action.type === POST_INACTIVE){
+        return {
+            ...state,
+            posts: action.payload
         }
     }
 

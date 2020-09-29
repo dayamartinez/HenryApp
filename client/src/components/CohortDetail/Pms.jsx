@@ -51,16 +51,14 @@ let id = match.params.id
 
   useEffect(() => {
       getPm()
-      .then((data) => setPms(data.payload))
+     .then((data) => setPms(data.payload))
       getCohortDetail(id)
       .then((data) => setCohort(data.payload))
   }, []) 
- 
+  console.log(pms)
   const classes = useStyles();
   const instructor = cohort && cohort[0].staffs[0] 
 
-  /* console.log(cohort) */
-  console.log(user)
 
   return (
     <div >
@@ -79,16 +77,16 @@ let id = match.params.id
         <List className={classes.root}>
             <div className={classes.button}>
                 <h5 class="text-light">Project Managers</h5>
-                
             </div>
-            {pms && pms.map((pm) => (
+
+            {pms && pms.filter(pm => pm.cohortId == id ).map((pm) => (
                 <div >
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
                         <Avatar alt="Remy Sharp" src={HenryIcon} />
                         </ListItemAvatar>
                         <ListItemText
-                        primary={pm.usuario.name + ' ' + pm.usuario.lastName}
+                        primary={pm.usuario && pm.usuario.name + ' ' + pm.usuario.lastName}
                         secondary={
                             <React.Fragment>
                             <Typography
@@ -108,13 +106,14 @@ let id = match.params.id
                                 onClick={() => {
                                  deletePM(pm.id)
                                  swal('Este usuario ya no es PM','')
-                                 .then(res =>{if(res){
+                                 .then(res =>{
+                                     if(res){
                                     history.go(0)
                                  }else{
                                     return null
                                  }}) 
-                                }}
-                                class="btn btn-outline-light border-0 rounded" ><DeleteIcon style={{ color: "#000"}}/>
+                                }} className="btn btn-outline-light border-0 rounded" >
+                                    <DeleteIcon style={{ color: "#000"}}/>
                             </button>
                             : null}
                         </div>
