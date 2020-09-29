@@ -19,6 +19,14 @@ server.get('/', (req, res) => {
     )
 })
 
+server.get('/user/:id',(req,res)=>{
+  db.Usuario.findOne({
+    where:{id: req.params.id}
+  })
+  .then(user=>{
+    res.status(200).send(user)
+  })
+})
 
 //Busca usuario por email
 server.get('/:email',(req,res,next)=>{

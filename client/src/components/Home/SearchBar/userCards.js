@@ -26,10 +26,10 @@ export function UserCard(props){
       <div>
          
        
-            {props.user.usuario[0] && props.user.usuario.map((item) =>
+            {props.user.usuario[0] && props.user.usuario.map((item,i) =>
             <List >
             <ListItem >
-            <Avatar key={item.id} alt="Remy Sharp" src={props.user.user.urlImage} />
+            <Avatar key={item.id} alt="Remy Sharp" src={props.user.usuario[i].urlImage} />
             <Typography  
                   component="span"
                   variant="body2"
@@ -89,5 +89,5 @@ export function UserCard(props){
       usuario: state.usuario,
     }		
   }
-      
+   
   export default connect(mapStateToProps)(UserCard);  
