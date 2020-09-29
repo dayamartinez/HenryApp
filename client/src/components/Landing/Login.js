@@ -75,7 +75,7 @@ export function Copyright() {
         Axios.post('http://localhost:3001/login',input,{withCredentials:true})
         .then( async resp=> {
           await props.setUser(resp.data)
-          history.push("/profile");
+          history.push("/Home");
         })
         .catch(err=>{
           alert(err);

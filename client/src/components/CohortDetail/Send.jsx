@@ -14,7 +14,7 @@ import {getCohortDetail} from './../../actions/cohort'
 import { connect } from 'react-redux';
 import {useHistory } from 'react-router-dom'
 
-export function Send({addPost, getCohortDetail, deletePost, addLink, posts, links, deleteLink, match }){
+export function Send({addPost, getCohortDetail, deletePost, addLink, posts, links, deleteLink, match, user }){
  
   const id = match.params.id
   const [cohort, setCohort] = useState()
@@ -92,8 +92,11 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
               value={input.comments}
               onChange={handleInputChange}
             />
-            <input type='submit' />
-          </form>
+            <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
+              <SendIcon style={{ color: "#000"}}/> 
+            </button>
+          </form> : null          
+        
   
           <div  style={{flexGrow: 1, overflowX:'hidden', overflowY:'scroll' , height: "270px"  }}> 
             {comments && comments.map(c => ( 
@@ -116,10 +119,12 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
                     </Grid>
                   </Grid>
                   <Grid item>
-                    <button onClick={() => {deletePost(c.id) 
+                    { user.user.rol !== 'user' ? 
+                    <button class="btn btn-outline-light border-0 rounded" onClick={() => {deletePost(c.id) 
                       history.go(0)} } 
-                      variant="subtitle1">X
-                    </button>
+                      variant="subtitle1"><DeleteIcon style={{ color: "#000"}}/>
+                    </button>:null  
+                    }
                   </Grid>
                 </Grid>
               </Grid>
@@ -159,7 +164,10 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
                      name="links"
               value={inputLink.links}
               onChange={handleInputChangeL}/>
-                    <input  style={{marginLeft: '5px'}} type='submit' />
+                    <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
+                      <SendIcon style={{ color: "#000"}}/> 
+                    </button>
+
                </div>
                <hr/>
            </form>
@@ -192,7 +200,8 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
 
 const mapStateToProps = (state) => ({
   posts : state.posts.posts,
-  links: state.link.links
+  links: state.link.links,
+  user: state.user
 })
 
 const mapDispatchToProps = (dispatch) => ({

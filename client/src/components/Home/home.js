@@ -7,14 +7,29 @@ import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 import { getPostActive, postInactive} from '../../actions/posts.js';
 import {useHistory } from 'react-router-dom'
-
+import { getPosts} from '../../actions/posts.js';
+import axios from 'axios'
+import SendIcon from '@material-ui/icons/Send'
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
+import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Avatar from '@material-ui/core/Avatar'
+import HenryIcon from './../../images/henryUserIcon.jpg'
+import TextField from '@material-ui/core/TextField'
+import DeleteIcon from '@material-ui/icons/Delete'
+import {addPost, deletePost} from './../../actions/posts'
+import {addLink, deleteLink} from './../../actions/link'
+import {getCohortDetail} from './../../actions/cohort'
+import { useRef } from 'react';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
     totalBackground: {
-      marginRight: '40px',
-      marginLeft: '40px',
+      marginRight: '90px',
+      marginLeft: '90px',
       background: '#f5f5f6',
-      height: '1000px',
+      maxHeight: '3000px',
+      minHeight: '100px',
       border: 'solid',
       borderColor: 'darkgray'
     },
@@ -27,53 +42,161 @@ const useStyles = makeStyles((theme) => ({
           margin: theme.spacing(2),
         },
       },
+      Post: {
+        maxHeight: '100px',
+        minHeight: '80px',
+        marginLeft: '20px',
+        maxWidth: '800px'
+      },
+      userPic: {
+        display: 'flex',
+        marginLeft: '5px',
+        marginTop: '5px',
+        border: '5px'
+      },
+      totalPost : {
+        marginRight: '10px',
+        marginLeft: '10px',
+        border: 'black 5px'
+      },
+      dividers: {
+        color: 'gray'
+      },
+      delete: {
+        marginRight: '10px'
+      }
   }));
 const defaultProps = {
   color: "secondary",
   children: <MailIcon style={{ color: "#000"}} />,
  
 }
-export function Home({user, getPostActive, postInactive}){
+export function Home({addPost,instructor, deletePost, posts, match, user, staff}){
+  const id = match.params.id
+
     const history = useHistory()
     const classes = useStyles();
-    const [post, setPost] = useState()
-    useEffect(()=> {
-        if(user.cohortId){
-          getPostActive(user.cohortId)
-        .then(posts => setPost(posts.payload))   
-        }   
-    }, [])
+    const [post, setPost] = useState([])
+    const [input, setInput] = useState({comments: ''})  
+  
     
-  console.log(post)
-    return (
-        <div > 
-            <div className={classes.root}>
-               { post && post.length === 0 ?
-               <button className="btn btn-outline-light border-0 rounded ml-1"
-                onClick={()=> {
-                history.push(`/cohortDetail/${user.cohortId}`)
-            }}> <MailIcon  style={{ color: "#000"}} /> </button> :  
-              <button className="btn btn-outline-light border-0 rounded ml-1" 
-                  onClick={()=> {
-                  history.push(`/cohortDetail/${user.cohortId}`)
-                  post && post.map(p => postInactive(p, user.cohortId))         
-              }}>
-                 <Badge style={{ color: "#000"}} badgeContent={post && post.length} {...defaultProps} />
-              </button>}
+    const handleInputChange = (e) => {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    }
+
+  
+    const resetForm = () => {
+      setInput({
+        comments: ''
+      })
+    }
+  
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      resetForm()
+      addPost(input.comments, user.user.id, user.user.id)
+    }
+
+    
+var posteos;
+      useEffect(() => {
+        fetch('http://localhost:3001/posts')
+        .then(response => response.json())
+          .then( post => {
+            setPost(post)
+    })
+    .catch(error => {
+        return error;
+    })
+}, [input])
+  
+console.log(post)
+console.log(staff)
+      return (
+
+        <div className={classes. totalBackground}>
+          <div >
+            <form onSubmit={handleSubmit} style={{display: 'flex', alignItems: 'center', justifyContent:'center'}}>     
+              <TextField 
+                style={{width: '800px', margin: '5px',}}
+                variant="outlined" placeholder='Envía un mensaje' 
+                name="comments"
+                value={input.comments}
+                onChange={handleInputChange}
+              />
+            </form>         
+          
+    
+            <div className={classes.totalPost}>
+              {console.log(posteos)}
+              <Divider orientation="vertical" flexItem />
+              {post && post.map(c => ( 
+              <Paper key={c.id}>
+                <Grid className={classes.Post} container spacing={12}>
+                  <Grid item xs={12} sm container>
+                    <Grid item>
+                      <ListItemAvatar>
+                        <Avatar alt="Remy Sharp" src={user.user.urlImage} className={classes.userPic}/>
+                      </ListItemAvatar>
+                    </Grid>
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Typography variant="title" gutterBottom>
+                          {console.log('h')}
+                          {console.log(c.staff)}
+                          {c.staff && c.staff.name + ' ' + c.staff.lastName}
+                        </Typography>
+                        <Typography variant="body2">
+                          {c.comments}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    { user.user.rol !== 'admin' ? 
+                    <Grid item className={classes.delete}>
+                      { user.user.rol !== 'user' ? 
+                      <iconButton 
+                      onClick={() => {deletePost(c.id) 
+                        history.go(0)} } 
+                        ><DeleteIcon style={{ color: "#000"}}/>
+                      </iconButton>:null  
+                      }
+                    </Grid> : null 
+                        }
+                  </Grid>
+                </Grid>
+                <Divider/>
+              </Paper>
+              ))
+              }
+              
             </div>
-                <div className={classes.totalBackground}>  
-                </div>
-           
-        </div>
-    )
-}
-const mapStateToProps = state => ({
-    user: state.user.user
+            <Divider orientation="vertical" flexItem />
+          </div>
+          </div>
+       
+      )
+  }
+
+
+
+  const mapStateToProps = (state) => ({
+    posts : state.posts.posts,
+    links: state.link.links,
+    user: state.user,
+    instructor: state.instructor,
+    staff: state.staff
   })
   
-  const mapDispatchToProps = dispatch => ({
-    getPostActive: (id) => dispatch(getPostActive(id)),
-    postInactive: (post, id) => dispatch(postInactive(post, id))
+  const mapDispatchToProps = (dispatch) => ({
+    getPosts: (id) => dispatch(getPosts(id)),
+    addPost: (post, userId, id) => dispatch(addPost(post, userId, id)),
+    getCohortDetail: (id) => dispatch(getCohortDetail(id)),
+    deletePost: (id) => dispatch(deletePost(id)),
+    addLink: (links, name, module, staffId, id) => dispatch(addLink(links, name, module, staffId, id)),
+    deleteLink: (id) => dispatch(deleteLink(id))
   })
   
   

@@ -6,6 +6,9 @@ export const POST_INACTIVE = 'POST_INACTIVE'
 
 export function addPost(comments, staffId, id) {
     return function (dispatch) {
+      console.log(staffId)
+      console.log(id)
+      console.log(comments)
       return fetch(`http://localhost:3001/posts/${id}`, {
         method: 'POST',
         credentials: 'include',

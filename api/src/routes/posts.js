@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const {Post } = require('../db.js');
+const {Post, Staff } = require('../db.js');
 
 //crear posts 
 server.post('/:id', (req, res) => {
@@ -24,10 +24,15 @@ server.delete('/:id', (req, res) => {
 
 //trae todos los posts
 server.get('/', (req, res) => {
-    Post.findAll()
+    Post.findAll({
+      order:[ ["id","DESC"] ],
+      include: [Staff]
+    })
     .then(posts => res.status(200).send(posts))
     .catch(err => res.status(404).send(err))
 })
+
+
 
 //cambia a inactivo los post
 server.put('/inactive/:id', (req, res) => {

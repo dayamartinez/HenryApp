@@ -59,12 +59,10 @@ server.post('/create',  async (req, res) => {
       while(j<i+k){                 //recorro de a uno los alumno "k" veces
         try {
           users[j].update({groupId:groupsId[l]})   //actualizo el alumno con su grupo correspondiente
-          console.log(j)
           users[j].save()
         }
         catch{
-          console.log(j)
-          console.log(users[j])
+          continue
         }
         j++
       }

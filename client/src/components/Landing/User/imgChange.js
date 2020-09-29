@@ -62,6 +62,7 @@ export function Settings(props){
 // guardar en tabla
     const [img, setImg] = useState({
       id: props.user.user.id,
+      rol: props.user.user.rol,
       urlImage: '',
       portadaImage: ''
     })

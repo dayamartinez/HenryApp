@@ -54,6 +54,7 @@ const PortadaChange = (props) => {
     const [portada, setPortada]= useState('')
       const [urlP, setUrlP]= useState({
         id: props.user.user.id,
+        rol: props.user.user.rol,
         portadaImage: '',
         urlImage: ''
       })

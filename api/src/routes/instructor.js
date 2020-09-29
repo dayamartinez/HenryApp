@@ -20,7 +20,6 @@ server.put('/set', (req,res)=> {
 
   //Crear un instructor
   server.post('/create', async (req, res) => {
-    console.log(req.body)
     Staff.findOne({
       where:{
         email: req.body.email
