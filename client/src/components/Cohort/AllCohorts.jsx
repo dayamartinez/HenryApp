@@ -18,33 +18,15 @@ const useStyles = makeStyles(theme => ({
 export function AllCohorts({getCohorts,style}){
   const [cohorts, setCohorts] = useState()
   const classes = useStyles()
+  const history = useHistory()
   const yellowText = {color:yellow[500]}
   useEffect(()=>{
     getCohorts()
     .then(data => setCohorts(data.payload))    
   }, [])
 
-<<<<<<< HEAD
-  if(cohorts){
-    data = cohorts && cohorts.map(cohort => 
-      ({
-        cohorte: cohort.name,
-        inicio: cohort.startDate,
-        instructor: cohort.staffs.length,
-        alumnos: cohort.usuarios.length,
-        id: cohort.id,
-        instructor: cohort.staffs
-      })
-    )
-  }
-  
-
-
-=======
->>>>>>> master
   return (
   
-    
     <div class="bg-dark" style = {style}>
         <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> Cohortes </h2>
         <table class="table">
@@ -68,16 +50,10 @@ export function AllCohorts({getCohorts,style}){
                       underline="none">
                         {celda.name}
                     </Link></td>
-<<<<<<< HEAD
-                  <td>{celda.inicio}</td>
-                  <td>{`${celda.instructor[0].name} ${celda.instructor[0].lastName}`}</td>
-                  <td>{celda.alumnos}</td>
-                  <td><button type="button" onClick={() => history.push(`/cohortDetail/${celda.id}`)} class="btn btn-outline-dark" >Detalles</button></td>
-=======
                   <td>{celda.startDate}</td>
                   <td>{celda.staffs.length ? (celda.staffs[0].name +" "+ celda.staffs[0].lastName) : null}</td>
                   <td>{celda.usuarios ? celda.usuarios.length : null}</td>
->>>>>>> master
+                  <td><button type="button" onClick={() => history.push(`/cohortDetail/${celda.id}`)} class="btn btn-outline-dark" >Detalles</button></td>
                 </tr>       
             )): null
             }                

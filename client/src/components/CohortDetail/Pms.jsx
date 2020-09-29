@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function Pms({getPm, getCohortDetail, deletePM , match}) {
+export function Pms({getPm, getCohortDetail, deletePM, user , match}) {
 
 const [cohort, setCohort] = useState()
 const [pms, setPms] = useState()
@@ -59,7 +59,8 @@ let id = match.params.id
   const classes = useStyles();
   const instructor = cohort && cohort[0].staffs[0] 
 
-  
+  /* console.log(cohort) */
+  console.log(user)
 
   return (
     <div >
@@ -68,9 +69,9 @@ let id = match.params.id
                 <h5 class="text-light">Instructor</h5>
             </div>
            
-             { instructor === [] ? <img width={"310px"} height={"250px"} src={HenryIcon}></img> :
+             { instructor && instructor.length === 0 ? <img width={"310px"} height={"250px"} src={HenryIcon}></img> :
     	    <div>
-            <img width={"310px"} height={"250px"} src={HenryIcon}></img>
+            <img width={"310px"} height={"250px"} src={instructor ? instructor.urlImage : HenryIcon}></img>
             <div className={classes.button}>
             <h5 class="text-light">{instructor && instructor.name + ' ' + instructor.lastName}</h5>   
            </div> </div>}
@@ -96,12 +97,13 @@ let id = match.params.id
                                 className={classes.inline}
                                 color="textPrimary"
                             >
-                                {pm.group.name}
+                                {pm.group && pm.group.name}
                             </Typography>
                             </React.Fragment>
                         }
                         />
                         <div style={{display:'flex', alignItems: 'center'}}>
+                        {user.user.rol !== 'user' ?
                             <button value={pm.id} 
                                 onClick={() => {
                                  deletePM(pm.id)
@@ -114,6 +116,7 @@ let id = match.params.id
                                 }}
                                 class="btn btn-outline-light border-0 rounded" ><DeleteIcon style={{ color: "#000"}}/>
                             </button>
+                            : null}
                         </div>
                     </ListItem>
                     <Divider variant="inset" component="li" />
@@ -124,7 +127,9 @@ let id = match.params.id
 
     )}
 
-
+const mapStateToProps = (state) => ({
+    user: state.user
+})
  
 const mapDispatchToProps = (dispatch) => ({
    getPm: () => dispatch(getPm()),
@@ -132,6 +137,6 @@ const mapDispatchToProps = (dispatch) => ({
    deletePM: (id) => dispatch(deletePM(id))
 })
  
-export default connect(null, mapDispatchToProps)(Pms)
+export default connect(mapStateToProps, mapDispatchToProps)(Pms)
 
 
