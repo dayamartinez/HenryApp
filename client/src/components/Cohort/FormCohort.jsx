@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import { connect } from 'react-redux'
 
 import {addCohort, updateCohort, removeCohort, getCohortDetail} from '../../actions/cohort'
+import {getInstructor, getInstructorDetail} from '../../actions/instructor'
 import {useHistory } from 'react-router-dom'
 import swal from 'sweetalert'
 import ExcelLoader from './ExcelLoader';
@@ -35,10 +36,10 @@ import ExcelLoader from './ExcelLoader';
     }
   }));
   
-  export function FormCohort({ match, addCohort, getCohortDetail, updateCohort, removeCohort, emails}) {
+  export function FormCohort({ match, addCohort, getCohortDetail, updateCohort, removeCohort, emails, getInstructor, getInstructorDetail}) {
 
-     let id = match.params.id
-     const history = useHistory()
+    let id = match.params.id
+    const history = useHistory()
 
     const classes = useStyles();
     
@@ -47,23 +48,17 @@ import ExcelLoader from './ExcelLoader';
       startDate: ''
     });
 
-    /*useEffect(() =>{
-      if(id){
-          getCohortDetail(id)
-          .then(data => {
-            setInput({
-              ...input,
-              name: data.payload[0].name,
-              startDate: data.payload[0].startDate,
-              about: data.payload[0].about
-            })
-            
-      }).catch()  
-      }  
-
-  }, [])*/
+    const [instructor, setInstructor] = useState()
+    const [selector, setSelector] = useState({
+      name: 'Seleccione Instructor',
+      id:''
+    })
 
   useEffect(() => {
+    getInstructor()
+      .then(data => setInstructor(data.payload))
+      .catch()
+    
     if(id){
       getCohortDetail(id)
       .then(data => {
@@ -74,22 +69,22 @@ import ExcelLoader from './ExcelLoader';
         })
       })
       .catch()  
-    }  
-  }, [])
-
-  console.log(input)
+    } 
+  },[])  
 
     const handleInputChange = function(e) {
       setInput({
         ...input,
         [e.target.name]:e.target.value
       })
+      console.log(input)
     }
 
     const handleSubmit = function (e) {
        // e.preventDefault()
         const cohort = {
           name: input.name,
+          instructorId: selector.id,
           startDate: input.startDate
         }
        id ? updateCohort(id, cohort) : addCohort(cohort, emails)
@@ -101,16 +96,7 @@ import ExcelLoader from './ExcelLoader';
     const sendMail = function(e){
       e.preventDefault();
       handleSubmit();
-      /*
-      if(emails){
-        axios.post('http://localhost:3001/email/send-email/:email', emails)
-        .then(() => {
-          console.log("Todo bien")
-        })
-        .catch(err =>{
-          alert(err)
-        })
-      }*/
+     
     }
   
 
@@ -139,6 +125,18 @@ import ExcelLoader from './ExcelLoader';
               value={input.name}
               onChange={handleInputChange}
             />
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {selector.name}
+              </button >
+              <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" role="menu">
+                {instructor && instructor.map((i) => (    
+                       
+                  <a type="button" onClick={() => {getInstructorDetail(i.id); setSelector({name: i.name + " "+ i.lastName, id: i.id})}} class="dropdown-item">{i.name + " "+ i.lastName}</a>
+                ))}       
+                                   
+              </div>
+            </div>
             <TextField
             type="date"
             variant="outlined"
@@ -221,7 +219,9 @@ import ExcelLoader from './ExcelLoader';
       addCohort: (cohort,emails) => dispatch(addCohort(cohort,emails)),
       updateCohort: (id, cohort) => dispatch(updateCohort(id, cohort)),
       removeCohort: (id) => dispatch(removeCohort(id)),
-      getCohortDetail: (id) => dispatch(getCohortDetail(id))
+      getCohortDetail: (id) => dispatch(getCohortDetail(id)),
+      getInstructor: (id) => dispatch(getInstructor()),
+      getInstructorDetail: (id) => dispatch(getInstructorDetail(id))
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormCohort)

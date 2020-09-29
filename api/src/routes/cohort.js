@@ -1,6 +1,6 @@
 const server = require('express').Router();
 const nodemailer = require('nodemailer');
-const { Usuario, Cohort, Group, Staff, PM, Links, Post} = require('../db.js');
+const { Usuario, Cohort, Group, Staff, PM, Links, Post, staff_cohort} = require('../db.js');
 
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
@@ -35,7 +35,7 @@ const { Usuario, Cohort, Group, Staff, PM, Links, Post} = require('../db.js');
 */
   //Crear cohorte
 server.post('/create',  (req, res) => {
-  const { name, startDate, emails} = req.body
+  const { name, startDate, emails, instructorId} = req.body
   const capName = name.charAt(0).toUpperCase() + name.slice(1)
   if (!name || !startDate ) {
     res.status(400).json({
@@ -49,9 +49,13 @@ server.post('/create',  (req, res) => {
   // include: [Usuario]
   }) 
   .then(cohort => {
-  // const emails = req.body;
-  // console.log(req.body);
-  //se hace un map con el array de emails que se importan desde excel y se transforman a un json
+
+    console.log(instructorId)
+    staff_cohort.create({
+      staffId: instructorId,
+      cohortId: cohort.id
+    })
+    //se hace un map con el array de emails que se importan desde excel y se transforman a un json
     emails.map((email) => {
       Usuario.create({
         email: email.email,
@@ -76,7 +80,7 @@ server.post('/create',  (req, res) => {
         text: "Bienvenido a HenryApp!! Para registrarse haga click en el siguiente link http://localhost:3000/inviteuser"
       }
       transporter.sendMail(mailOptions, (err, info) => {
-        console.log("Email enviado")
+        
       })
     })
   })
