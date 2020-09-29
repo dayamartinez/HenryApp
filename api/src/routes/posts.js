@@ -29,4 +29,31 @@ server.get('/', (req, res) => {
     .catch(err => res.status(404).send(err))
 })
 
+//cambia a inactivo los post
+server.put('/inactive/:id', (req, res) => {
+  Post.findOne({
+    where: {
+      cohortId: req.params.id,
+      id: req.body.id
+     }
+  })
+  .then(post => {
+    post.active = false
+    post.save().then(post => res.status(201).send(post))
+  })
+  .catch(err => res.status(404).send(err))
+})
+
+//trae todos los posts activos de un cohorte especifico
+server.get('/active/:id', (req, res) => {
+  Post.findAll({
+    where: {
+      active: true,
+      cohortId: req.params.id
+    }
+  })
+  .then(posts => res.status(200).send(posts))
+  .catch(err => res.status(404).send(err))
+})
+
 module.exports = server 

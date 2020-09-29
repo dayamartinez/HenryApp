@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function Pms({getPm, getCohortDetail, deletePM , match}) {
+export function Pms({getPm, getCohortDetail, deletePM, match}) {
 
 const [cohort, setCohort] = useState()
 const [pms, setPms] = useState()
@@ -51,15 +51,14 @@ let id = match.params.id
 
   useEffect(() => {
       getPm()
-      .then((data) => setPms(data.payload))
+     .then((data) => setPms(data.payload))
       getCohortDetail(id)
       .then((data) => setCohort(data.payload))
   }, []) 
- 
+  console.log(pms)
   const classes = useStyles();
   const instructor = cohort && cohort[0].staffs[0] 
 
-  
 
   return (
     <div >
@@ -67,27 +66,29 @@ let id = match.params.id
             <div className={classes.button}>
                 <h5 class="text-light">Instructor</h5>
             </div>
-           
-             { instructor === [] ? <img width={"310px"} height={"250px"} src={HenryIcon}></img> :
-    	    <div>
-            <img width={"310px"} height={"250px"} src={HenryIcon}></img>
-            <div className={classes.button}>
-            <h5 class="text-light">{instructor && instructor.name + ' ' + instructor.lastName}</h5>   
-           </div> </div>}
+
+             { instructor && instructor.length === 0 ?
+              <img width={"310px"} height={"250px"} src={HenryIcon}></img> :
+            <div>
+                <img width={"310px"} height={"250px"} src={HenryIcon}></img>
+                <div className={classes.button}>
+                    <h5 class="text-light">{instructor && instructor.name + ' ' + instructor.lastName}</h5>   
+                </div> 
+            </div>}
         </div>
         <List className={classes.root}>
             <div className={classes.button}>
                 <h5 class="text-light">Project Managers</h5>
-                
             </div>
-            {pms && pms.map((pm) => (
+
+            {pms && pms.filter(pm => pm.cohortId == id ).map((pm) => (
                 <div >
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
                         <Avatar alt="Remy Sharp" src={HenryIcon} />
                         </ListItemAvatar>
                         <ListItemText
-                        primary={pm.usuario.name + ' ' + pm.usuario.lastName}
+                        primary={pm.usuario && pm.usuario.name + ' ' + pm.usuario.lastName}
                         secondary={
                             <React.Fragment>
                             <Typography
@@ -96,7 +97,7 @@ let id = match.params.id
                                 className={classes.inline}
                                 color="textPrimary"
                             >
-                                {pm.group.name}
+                                {pm.group && pm.group.name}
                             </Typography>
                             </React.Fragment>
                         }
@@ -106,13 +107,14 @@ let id = match.params.id
                                 onClick={() => {
                                  deletePM(pm.id)
                                  swal('Este usuario ya no es PM','')
-                                 .then(res =>{if(res){
+                                 .then(res =>{
+                                     if(res){
                                     history.go(0)
                                  }else{
                                     return null
                                  }}) 
-                                }}
-                                class="btn btn-outline-light border-0 rounded" ><DeleteIcon style={{ color: "#000"}}/>
+                                }} className="btn btn-outline-light border-0 rounded" >
+                                    <DeleteIcon style={{ color: "#000"}}/>
                             </button>
                         </div>
                     </ListItem>
@@ -124,8 +126,7 @@ let id = match.params.id
 
     )}
 
-
- 
+    
 const mapDispatchToProps = (dispatch) => ({
    getPm: () => dispatch(getPm()),
    getCohortDetail: (id) => dispatch(getCohortDetail(id)),

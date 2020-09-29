@@ -31,8 +31,6 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
     .then(data => setCohort(data.payload))
   }, [posts, links])
 
-  console.log(cohort)
-  
   const instructor = cohort && cohort[0].staffs[0] 
   const comments = cohort && cohort[0].posts.sort((a,b) => (
   b.id - a.id))
@@ -93,9 +91,11 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
               value={input.comments}
               onChange={handleInputChange}
             />
-            <input type='submit' />
-          </form> : null          
-        }
+
+            <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
+                      <SendIcon style={{ color: "#000"}}/> </button>
+          </form>
+
   
           <div  style={{flexGrow: 1, overflowX:'hidden', overflowY:'scroll' , height: "270px"  }}> 
             {comments && comments.map(c => ( 
@@ -118,12 +118,13 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
                     </Grid>
                   </Grid>
                   <Grid item>
-                    { user.user.rol !== 'user' ? 
-                    <button class="btn btn-outline-light border-0 rounded" onClick={() => {deletePost(c.id) 
-                      history.go(0)} } 
-                      variant="subtitle1"><DeleteIcon style={{ color: "#000"}}/>
-                    </button>:null  
-                    }
+                  <button className="btn btn-outline-light border-0 rounded" 
+                    onClick={() => {
+                      deletePost(c.id) 
+                      history.go(0)} } >
+                      <DeleteIcon style={{ color: "#000"}}/>
+                    </button>
+
                   </Grid>
                 </Grid>
               </Grid>
@@ -164,7 +165,8 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
                      name="links"
               value={inputLink.links}
               onChange={handleInputChangeL}/>
-                    <input  style={{marginLeft: '5px'}} type='submit' />
+                    <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
+                      <SendIcon style={{ color: "#000"}}/> </button>
                </div>
                <hr/>
            </form>:null
@@ -182,7 +184,7 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
                   </Grid>
                    {user.user.rol !== 'user' ?
                    <Grid item>
-                    <button class="btn btn-outline-light border-0 rounded" onClick={() => {
+                    <button className="btn btn-outline-light border-0 rounded" onClick={() => {
                       deleteLink(l.id)
                       history.go(0)}}><DeleteIcon style={{ color: "#000"}}/></button>
                   </Grid>:null
