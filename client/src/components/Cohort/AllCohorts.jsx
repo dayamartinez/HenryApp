@@ -40,8 +40,11 @@ export function AllCohorts({getCohorts,style}){
     )
   }
   
+
+
   return (
   
+    
     <div class="bg-dark" style = {style}>
         <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> Cohortes </h2>
         <table class="table">
@@ -51,6 +54,7 @@ export function AllCohorts({getCohorts,style}){
             <th scope="col">Fecha de Inicio</th>
             <th scope="col">Instructor</th>
             <th scope="col">Alumnos</th>
+            <th scope="col"></th>
             </tr>
           </thead>
 
@@ -65,8 +69,9 @@ export function AllCohorts({getCohorts,style}){
                         {celda.cohorte}
                     </Link></td>
                   <td>{celda.inicio}</td>
-                  <td>{celda.staffs ? celda.staffs[0].name : null}</td>
+                  <td>{`${celda.instructor[0].name} ${celda.instructor[0].lastName}`}</td>
                   <td>{celda.alumnos}</td>
+                  <td><button type="button" onClick={() => history.push(`/cohortDetail/${celda.id}`)} class="btn btn-outline-dark" >Detalles</button></td>
                 </tr>       
             )): null
             }                
