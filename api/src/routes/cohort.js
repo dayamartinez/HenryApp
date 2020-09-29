@@ -4,35 +4,7 @@ const { Usuario, Cohort, Group, Staff, PM, Links, Post, staff_cohort} = require(
 
 //const {isAuthenticated,isAdmin} =require('./helpers')
 
-//Crear cohorte
-/*server.post('/create',  (req, res) => {
-    const { name, startDate, about} = req.body
-    const capName = name.charAt(0).toUpperCase() + name.slice(1)
-      if (!name || !startDate || !about ) {
-          res.status(400).json({
-              error: true,
-              message: 'Debe enviar los campos requeridos'
-          })
-      }
-      Cohort.create({
-          name: capName,
-          startDate,
-          about,
-         
-      include: [Usuario]
-    }) 
-      .then(cohort => {
-          res.status(201).json({
-              success: true,
-              message: 'Nuevo Cohorte creado correctamente',
-              cohort
-          })
-      })
-      .catch( err => {
-          res.status(500).json(err)
-      })
-  })
-*/
+
   //Crear cohorte
 server.post('/create',  (req, res) => {
   const { name, startDate, emails, instructorId} = req.body
@@ -50,7 +22,6 @@ server.post('/create',  (req, res) => {
   }) 
   .then(cohort => {
 
-    console.log(instructorId)
     staff_cohort.create({
       staffId: instructorId,
       cohortId: cohort.id
