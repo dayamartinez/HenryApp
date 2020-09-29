@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       //position: 'absolute',
       justifyContent: 'center',
-      marginTop: '-5px',
+      marginTop: '25px',
       color: 'white'
       //marginLeft: '350 px',
     },
@@ -71,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
        maxWidth: '1000px',
        display: "table-cell",
        width: "1000px",
-       maxHeight: '600px'
+       maxHeight: '600px',
+       justifyContent: 'center'
     },
     container: {
       borderBottom: 'groove',
@@ -158,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         height: '200px',
         marginTop: '80px',
-        marginLeft: '80px',
+        marginLeft: 'auto',
         transition: "0.6s",
         margin: "auto",
         boxShadow: "0 8px 40px -12px rgba(0,0,0,0.8)",
