@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
 export function AllCohorts({getCohorts,style}){
   const [cohorts, setCohorts] = useState()
   const classes = useStyles()
+  const history = useHistory()
   const yellowText = {color:yellow[500]}
   useEffect(()=>{
     getCohorts()
@@ -35,6 +36,7 @@ export function AllCohorts({getCohorts,style}){
             <th scope="col">Fecha de Inicio</th>
             <th scope="col">Instructor</th>
             <th scope="col">Alumnos</th>
+            <th scope="col"></th>
             </tr>
           </thead>
 
@@ -51,6 +53,7 @@ export function AllCohorts({getCohorts,style}){
                   <td>{celda.startDate}</td>
                   <td>{celda.staffs.length ? (celda.staffs[0].name +" "+ celda.staffs[0].lastName) : null}</td>
                   <td>{celda.usuarios ? celda.usuarios.length : null}</td>
+                  <td><button type="button" onClick={() => history.push(`/cohortDetail/${celda.id}`)} class="btn btn-outline-dark" >Detalles</button></td>
                 </tr>       
             )): null
             }                
