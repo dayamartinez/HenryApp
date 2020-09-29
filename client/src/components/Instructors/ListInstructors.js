@@ -16,51 +16,46 @@ export function ListInstructors({getInstructor, cohorts, cohortDetail, style, ge
         
     return (
       <div class="bg-dark" style = {style}>
-        <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> Instructores </h2>
-
-     {/*    <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-          <button class="btn btn-outline-warning mb-2 mt-2 " onClick={() => getInstructor()}> Ver Todos </button>
+        {instructor && instructor.length === 0 ? (
+        <div>
+          <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}>
+            {' '}
+            No hay Instructores para mostrar
+          </h2>
         </div>
-       <div class="bg-dark" style={{display:"flex", justifyContent:"center", marginTop: '3px'}}>
-          <h6 class="text-light mt-2">Filtrar por cohorte: </h6>
-          <div>
-              {cohorts && cohorts.map((c) => (
-                <button type="button" onClick={() => getCohortDetail(c.id)} class="btn btn-outline-warning ml-1 border-0" >{c.name}</button>
-              ))
-              } 
-          </div>
-        </div> 
-            */}
+        ) : (
+        <div> 
+          <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> Instructores </h2>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Email</th>
+              <th scope="col">Cohorte</th>
+              </tr>
+            </thead>
 
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Email</th>
-            <th scope="col">Cohorte</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {instructor ? instructor.map((u) => (
-                <tr class="bg-light"> 
-                  <td>{u.name}</td>
-                  <td>{u.lastName}</td>
-                  <td>{u.email}</td>
-                  <td>{u.cohorts[0] ? u.cohorts[0].name : null}</td>
-                </tr>       
-            )): cohorts ? cohorts.map(u => (
-                    <tr class="bg-light"> 
-                      <td>{u.name}</td>
-                      <td>{u.lastName}</td>
-                      <td>{u.email}</td>
-                      <td>{u.cohortId}</td>
-                    </tr> 
-              )) : null
-            }                
-          </tbody>
-        </table>
+            <tbody>
+              {instructor ? instructor.map((u) => (
+                  <tr class="bg-light"> 
+                    <td>{u.name}</td>
+                    <td>{u.lastName}</td>
+                    <td>{u.email}</td>
+                    <td>{u.cohorts[0] ? u.cohorts[0].name : null}</td>
+                  </tr>       
+              )): cohorts ? cohorts.map(u => (
+                      <tr class="bg-light"> 
+                        <td>{u.name}</td>
+                        <td>{u.lastName}</td>
+                        <td>{u.email}</td>
+                        <td>{u.cohortId}</td>
+                      </tr> 
+                )) : null}                
+            </tbody>
+          </table>
+        </div>
+        )}
       </div>
     )
 }

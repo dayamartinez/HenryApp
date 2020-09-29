@@ -23,10 +23,8 @@ export function AllCohorts({getCohorts,style}){
     getCohorts()
     .then(data => setCohorts(data.payload))    
   }, [])
-  var data
-  
-  const history = useHistory()
 
+<<<<<<< HEAD
   if(cohorts){
     data = cohorts && cohorts.map(cohort => 
       ({
@@ -42,6 +40,8 @@ export function AllCohorts({getCohorts,style}){
   
 
 
+=======
+>>>>>>> master
   return (
   
     
@@ -60,77 +60,30 @@ export function AllCohorts({getCohorts,style}){
 
           <tbody>
 
-          {cohorts ? data.map((celda) => (
+          {cohorts ? cohorts.map((celda) => (
                 <tr class="bg-light"> 
                   <td><Link 
                       href={"/cohortDetail/"+celda.id} 
                       color="inherit" 
                       underline="none">
-                        {celda.cohorte}
+                        {celda.name}
                     </Link></td>
+<<<<<<< HEAD
                   <td>{celda.inicio}</td>
                   <td>{`${celda.instructor[0].name} ${celda.instructor[0].lastName}`}</td>
                   <td>{celda.alumnos}</td>
                   <td><button type="button" onClick={() => history.push(`/cohortDetail/${celda.id}`)} class="btn btn-outline-dark" >Detalles</button></td>
+=======
+                  <td>{celda.startDate}</td>
+                  <td>{celda.staffs.length ? (celda.staffs[0].name +" "+ celda.staffs[0].lastName) : null}</td>
+                  <td>{celda.usuarios ? celda.usuarios.length : null}</td>
+>>>>>>> master
                 </tr>       
             )): null
             }                
           </tbody>
         </table>
       </div>
-  /*
-    <div style={style}>  
-      {cohorts && cohorts.length === 0 ? (
-        <div>
-          <h4>
-            {' '}
-            No hay cohortes para mostrar
-          </h4>
-        </div>
-      ) : (
-        <TableContainer>
-          <Table>
-            <TableHead style={{backgroundColor:grey[900]}}>
-              <TableRow  >
-                <TableCell style={yellowText} >Cohorte</TableCell>
-                <TableCell style={yellowText} >Fecha de inicio</TableCell>
-                <TableCell style={yellowText} >Instructor</TableCell>
-                <TableCell style={yellowText} >Alumnos</TableCell>
-                <TableCell style={yellowText} ></TableCell>
-              </TableRow>
-            </TableHead>
-      
-            <TableBody>
-              {data && data.map(celda => (
-                <TableRow>
-                  {console.log(celda)}
-                  <TableCell>
-                    <Link 
-                      href={"/cohortDetail/"+celda.id} 
-                      color="inherit" 
-                      underline="none">
-                        {celda.cohorte}
-                    </Link>
-                  </TableCell>
-
-                  <TableCell>{celda.inicio}</TableCell>
-
-                  <TableCell>{celda.instructor[0].name + ' ' + celda.instructor[0].lastName }</TableCell>
-
-                  <TableCell>{celda.alumnos}</TableCell>
-                  
-                  <TableCell><button type="button" onClick={() => history.push(`/cohortDetail/${celda.id}`)} class="btn btn-outline-dark" >Detalles</button> </TableCell>
-
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        )
-      }
-    </div>
-*/
-
     )
 }
 
