@@ -145,6 +145,7 @@ console.log(staff)
 
         <div className={classes. totalBackground}>
           <div >
+            {user.user.rol !== 'user' ?
             <form onSubmit={handleSubmit} style={{display: 'flex', alignItems: 'center', justifyContent:'center'}}>     
               <TextField 
                 style={{width: '800px', margin: '5px',}}
@@ -153,7 +154,8 @@ console.log(staff)
                 value={input.comments}
                 onChange={handleInputChange}
               />
-            </form>         
+            </form> : null    
+                }     
           
     
             <div className={classes.totalPost}>
@@ -165,7 +167,7 @@ console.log(staff)
                   <Grid item xs={12} sm container>
                     <Grid item>
                       <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src={user.user.urlImage} className={classes.userPic}/>
+                        <Avatar alt="Remy Sharp" src={c.staff.urlImage} className={classes.userPic}/>
                       </ListItemAvatar>
                     </Grid>
                     <Grid item xs container direction="column" spacing={2}>

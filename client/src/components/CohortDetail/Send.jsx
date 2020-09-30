@@ -95,7 +95,7 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
             <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
               <SendIcon style={{ color: "#000"}}/> 
             </button>
-          </form> : null          
+          </form>           
         
   
           <div  style={{flexGrow: 1, overflowX:'hidden', overflowY:'scroll' , height: "270px"  }}> 
@@ -105,7 +105,7 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
                 <Grid item xs={12} sm container>
                   <Grid item>
                     <ListItemAvatar>
-                      <Avatar alt="Remy Sharp" src={HenryIcon} />
+                      <Avatar alt="Remy Sharp" src={instructor.urlImage} />
                     </ListItemAvatar>
                   </Grid>
                   <Grid item xs container direction="column" spacing={2}>
