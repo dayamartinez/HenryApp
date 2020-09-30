@@ -20,6 +20,9 @@ server.put('/set', (req,res)=> {
     PM.findOne({
         where: {
             id: req.params.id
+        },
+        include: {
+          model: Usuario
         }
     }).then(pm =>{
         !pm
@@ -93,10 +96,10 @@ server.put('/set', (req,res)=> {
           })
             i++
             j++
+            if(pms[j] && i>=groups.length){
+              i=0
+            }
         }
-            // if(pms[j] && i>=groups.length){
-            //   i=0
-            // }
       })
     })
     .then(()=>res.status(201).send("holi"))

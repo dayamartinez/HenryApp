@@ -7,7 +7,6 @@ import {addGroup} from '../../actions/group'
 import {getPm} from '../../actions/pm'
 import {useHistory } from 'react-router-dom'
 
-import ExcelLoader from '../Cohort/ExcelLoader';
 /* componente de creacion de grupos  */
 
   const useStyles = makeStyles((theme) => ({
@@ -21,7 +20,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
     }
   }));
   
-  export function FormGroup({ getPm,pms, addGroup, emails, style}) {
+  export function FormGroup({ getPm,pms, addGroup, style}) {
 
   const history = useHistory()
   const classes = useStyles();
@@ -29,8 +28,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
   const [groups,setGroups] = useState([])
   const [cohort, setCohort] = useState({usuarios:[]})
   const [input, setInput]= useState({
-    name:'',
-    startDate: ''
+    grupos: 1
   });
   
   var aux

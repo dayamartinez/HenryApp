@@ -45,24 +45,51 @@ export function AllGroups({getGroups,style}){
       ({
         /* se sacaron el about y la fecha de inicio para los grupos, en cambio se agregaron las columnas de pm y la de cohorte*/
         group: group.name,
-        pm: group.PMs[0] ? (buscarPM( group.usuarios, group.PMs[0].usuarioId)) : ('sin PMs'),
+        pm: group.PMs[0] ? (buscarPM( group.usuarios, group.PMs[0].usuarioId)) : ('Sin PM asignado'),
         cohorte: group.cohort ? (group.cohort.name):('Sin cohorte asignado'),
         alumnos: group.usuarios?(group.usuarios.length):(undefined),
         id: group.id
       })
     )
   }
+
   return (
-    <div style={style}> 
+    <div class="bg-dark" style = {style}>
       {groups && groups.length === 0 ? (
         <div>
-          <h4>
-            {' '}
+        <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}>
+          {' '}
             No hay grupos para mostrar
-          </h4>
+          </h2>
         </div>
       ) : (
-        <TableContainer>
+        <div> 
+          <h2 class="bg-dark text-warning text-center" style={{padding: '20px'}}> Grupos </h2>
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+              <th scope="col">Grupo</th>
+              <th scope="col">PM</th>
+              <th scope="col">Cohorte</th>
+              <th scope="col">Alumnos del Grupo</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {data ? data.map(celda => (
+                  <tr class="bg-light"> 
+                    <td>{celda.group}</td>
+                    <td>{celda.pm}</td>
+                    <td>{celda.cohorte}</td>
+                    <td>{celda.alumnos}</td>
+                  </tr>       
+              )) : null}                
+            </tbody>
+          </table>
+        </div>
+
+
+        /*<TableContainer>
           <Table>
             <TableHead style={{backgroundColor:grey[900]}}>
               <TableRow  >
@@ -95,9 +122,8 @@ export function AllGroups({getGroups,style}){
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
-        )
-      }
+              </TableContainer>*/
+        )}
     </div>
     )
 }
