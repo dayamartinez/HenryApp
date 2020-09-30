@@ -50,9 +50,11 @@ const useStyles = makeStyles((theme) => ({
       },
       userPic: {
         display: 'flex',
-        marginLeft: '5px',
+        marginLeft: '-8px',
         marginTop: '5px',
-        border: '5px'
+        border: '5px',
+        width: theme.spacing(7),
+        height: theme.spacing(7),
       },
       totalPost : {
         marginRight: '10px',
@@ -64,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
       },
       delete: {
         marginRight: '10px'
+      },
+      username: {
+        font : '18px',
+        fontWeight: '550',
+
       }
   }));
 const defaultProps = {
@@ -88,6 +95,12 @@ export function Home({addPost,instructor, deletePost, posts, match, user, staff}
     }
 
   
+    const handleChange = (e) => {
+      setPost({
+        ...post,
+        [e.target.name]: e.target.value,
+      })
+    }
     const resetForm = () => {
       setInput({
         comments: ''
@@ -113,6 +126,19 @@ var posteos;
     })
 }, [input])
   
+
+// useEffect(() => {
+//   fetch('http://localhost:3001/posts')
+//   .then(response => response.json())
+//     .then( post => {
+//       setPost(post)
+// })
+// .catch(error => {
+//   return error;
+// })
+// }, [deletePost()])
+
+
 console.log(post)
 console.log(staff)
       return (
@@ -144,12 +170,11 @@ console.log(staff)
                     </Grid>
                     <Grid item xs container direction="column" spacing={2}>
                       <Grid item xs>
-                        <Typography variant="title" gutterBottom>
-                          {console.log('h')}
-                          {console.log(c.staff)}
+                        <Typography  gutterBottom className={classes.username}>
+                          
                           {c.staff && c.staff.name + ' ' + c.staff.lastName}
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography >
                           {c.comments}
                         </Typography>
                       </Grid>
@@ -158,6 +183,7 @@ console.log(staff)
                     <Grid item className={classes.delete}>
                       { user.user.rol !== 'user' ? 
                       <iconButton 
+                     
                       onClick={() => {deletePost(c.id) 
                         history.go(0)} } 
                         ><DeleteIcon style={{ color: "#000"}}/>
