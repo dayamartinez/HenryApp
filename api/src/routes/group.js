@@ -69,8 +69,8 @@ server.post('/create',  async (req, res) => {
       i+=k                              //avanzo "k" pasos ya que estos alumnos ya tendran grupo
       l++
     }
-    res.status(200).send(users)
-  })
+    
+  }).then(()=>res.status(200).send())
 })
       
 

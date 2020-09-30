@@ -78,17 +78,20 @@ server.put('/set', (req,res)=> {
           cohortId:req.params.id
         }
       })
-      .then(groups=>{
+      .then(async groups=>{
         let i = 0,j=0;
         while(i<groups.length){
+          console.log(i)
           let aux = {groupId:groups[i].id}
           pms[j].update(aux)
-          pms[j].save()
-          i++
-          j++
-          if(pms[j] && i>=groups.length){
-            i=0
-          }
+          await pms[j].save()
+          .then(()=>{
+            i++
+            j++
+            if(pms[j] && i>groups.length){
+              i=0
+            }
+          })
         }
       })
     })

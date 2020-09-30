@@ -81,7 +81,7 @@ server.post('/create',  (req, res) => {
     res.status(201).send("OK") 
   })
   .catch( err => {
-    res.status(500).json(err)
+    res.status(500).send([])
   })
 })
 
@@ -152,10 +152,12 @@ server.post('/create',  (req, res) => {
       include: [Usuario, Group, Staff, PM, Links, Post],
     })
       .then(cohorts =>{
+        console.log("HOLIS, NO SOY UN ERROR")
         res.send(cohorts)
       })
       .catch(err =>{ 
-        res.status(400).send(err)
+        console.log("SOY UN ERROR")
+        res.status(400).send([])
       }
       )
   })

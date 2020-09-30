@@ -47,14 +47,14 @@ import ExcelLoader from '../Cohort/ExcelLoader';
           res.data[res.data.length-1]
           )
         })
-        .catch(err =>{console.log(err)})          
+        .catch(err =>{console.log("UUUUUhhhhhh soy un Error")})          
       },[input])
       
   const handleInputChange = function(e) {
     console.log(cohort)
     const g=Number(e.target.value)
     if (g > pm.length){
-      e.target.value = g-1
+      e.target.value = pm.length
     }else if (g <= 0){
       e.target.value = 1
     } else{
@@ -77,7 +77,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
       <Typography component="h1" variant="h4" align="center">  Crear Grupos </Typography>
       <Grid container style={{margin:"auto"}}>
         <Grid item xs={6}> <Typography component="h1" variant="h5">  Cohorte: </Typography> </Grid>
-        <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort.name?cohort.name:"..."} </Typography> </Grid>
+        <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort?cohort.name:"..."} </Typography> </Grid>
         <Grid container>
           <Grid item xs={6}> <Typography component="h1" variant="h5"> Alumnos Totales </Typography> </Grid>
           <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {cohort.usuarios?cohort.usuarios.length:"..."} </Typography> </Grid>
