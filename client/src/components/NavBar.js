@@ -3,23 +3,38 @@ import {AppBar, Toolbar, Typography, IconButton, Button, makeStyles} from '@mate
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchBar from './Home/SearchBar/searchBar.js'
 import { userLogout } from '../actions/user';
+
 import axios from 'axios';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import Menu from './MenuNavBar'
 import HomeIcon from '@material-ui/icons/Home';
+import Notificaciones from './Home/Notificaciones';
 
 const useStyles = makeStyles(theme => ({
   offset: theme.mixins.toolbar,
-  menuButton: {
-    marginRight: "5px",
-  },
   title:{
-    flexGrow: 1
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    marginLeft: '10px'
   },
   fija:{
     zIndex: 1201
   },
+  iconB: {
+    marginRight: "-15px",
+  },
+  iconB2: {
+    marginRight: "-10px",
+  },
+  iconB3: {
+    marginLeft: "-38px",
+  },
+  contenedor: {
+    display: "flex",
+    marginLeft: "auto"
+  }
 }))
 
 
@@ -53,22 +68,22 @@ const logout = function(e) {
     <div>
       <AppBar position='fixed' className={s.fija} color='secondary'>
         <Toolbar>
-          <IconButton color = 'primary'  onClick={(e) => history.push('/Home')}>
+            <ButtonGroup size="small" aria-label="small outlined button group">
+            <IconButton className={s.iconB} color = 'primary'  onClick={(e) => history.push('/Home')}>
             <HomeIcon/>
           </IconButton>
-          <IconButton color='primary' className={s.menuButton}>
+            <IconButton className={s.iconB2}><Notificaciones/></IconButton>
+            <IconButton color='primary' className={s.iconB3}>
             <Menu user={user}/>
           </IconButton>
-         <Typography variant='h6' className={s.title}>
+          </ButtonGroup>
+        
+         <div className={s.contenedor}>
+         <SearchBar />     
+          <Typography variant='h6' className={s.title}>
           HenryApp
          </Typography>
-         <SearchBar />
-          <Button variant='text' color = 'primary' onClick={(e) => history.push('/profile')}>
-            Perfil
-          </Button>
-          <Button variant='text' color = 'primary' onClick={(e)=>logout(e)}>
-            Logout
-          </Button>
+         </div>
         </Toolbar>
       </AppBar>
       <div className={s.offset}></div>

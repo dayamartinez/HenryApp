@@ -90,6 +90,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       //position: 'absolute',
       justifyContent: 'center',
+      marginTop: '25px',
+      color: 'white',
+      //marginLeft: '350 px',
       marginTop: '-5px',
       left: '250px',
       color: 'black',
@@ -118,59 +121,122 @@ const useStyles = makeStyles((theme) => ({
       color: "gray",
       fontSize: "18px",
     },
-    text5: {
-      display: 'flex',
-      color: 'black',
-      marginLeft: '230px',
-      color: "gray",
-      fontSize: "18px",
+    tarjeta:{
+      backgroundImage:`url(${fondo})`,
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      //alignItems: 'center',
+       backgroundSize: "cover",
+       marginTop: '35px',
+       marginLeft: '130px',
+       height: '400px',
+       maxWidth: '1000px',
+       display: "table-cell",
+       width: "1000px",
+       maxHeight: '600px',
+       justifyContent: 'center'
     },
-    textAbout: {
+    container: {
+      borderBottom: 'groove',
+      background: 'rgba(0, 0, 0, 0.87)',
+      marginTop: '-5px',
+      height: '100px',
+      },
+      settingContainer: {
+      display:'flex',
       position: 'absolute',
-      left: '250px',
-    },
-    textBirthday: {
-      position: 'absolute',
-      left: '250px',
-      color: 'black',
-      marginTop: '100px'
-    },
-    text6: {
-      display: 'flex',
-      color: "black",
-      marginLeft: '230px',
-      color: "gray",
-      fontSize: "18px",
-    },
-    portada: {
-      display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    maxHeight: '220px',
-    width: '100%',
-    objectFit: 'cover',
-    objectPosition:'center center'
-    },
-    informacion: {
-      marginTop: '-500px',
-      textAling: 'right',
-      width: '600px',
-      paddingTop: '-15px',
-      borderRadius: '10px',
-      height: '200px',
-      marginTop: '80px',
-      marginLeft: 'auto',
-      transition: "0.6s",
-      margin: "auto",
-      boxShadow: "0 8px 40px -12px rgba(0,0,0,0.8)",
+      left: '900px',
+      marginTop: '-100px'
+      },
+      text: {
+        display: 'flex',
+        //position: 'absolute',
+        justifyContent: 'center',
+        marginTop: '-5px',
+        left: '250px',
+        color: 'black',
+        marginTop: '25px'
+      },
+      text2: {
+        display: 'flex',
+        color: 'black',
+        marginLeft: '230px',
+        marginTop: '-200px',
+        color: "gray",
+        fontSize: "18px",
+      },
+      text3: {
+        display: 'flex',
+        color: 'black',
+        marginLeft: '230px',
+        marginTop: '-200px',
+        color: "gray",
+        fontSize: "18px",
+      },
+      text4: {
+        display: 'flex',
+        color: 'black',
+        marginLeft: '230px',
+        color: "gray",
+        fontSize: "18px",
+      },
+      text5: {
+        display: 'flex',
+        color: 'black',
+        marginLeft: '230px',
+        color: "gray",
+        fontSize: "18px",
+      },
+      textAbout: {
+        position: 'absolute',
+        left: '250px',
+      },
+      textBirthday: {
+        position: 'absolute',
+        left: '250px',
+        color: 'black',
+        marginTop: '100px'
+      },
+      text6: {
+        display: 'flex',
+        color: "black",
+        marginLeft: '230px',
+        color: "gray",
+        fontSize: "18px",
+      },
+      portada: {
+        display: 'flex',
       flexDirection: 'column',
-    },
-    info:{
-      display: 'flex',
-      width: '50px',
-      height: '300px'
-    }
-}))  
+      alignItems: 'center',
+      maxHeight: '220px',
+      width: '100%',
+      objectFit: 'cover',
+      objectPosition:'center center'
+      },
+      informacion: {
+        marginTop: '-500px',
+        textAling: 'right',
+        width: '600px',
+        paddingTop: '-15px',
+        borderRadius: '10px',
+        height: '200px',
+        marginTop: '80px',
+        marginLeft: 'auto',
+        transition: "0.6s",
+        margin: "auto",
+        boxShadow: "0 8px 40px -12px rgba(0,0,0,0.8)",
+        flexDirection: 'column',
+      },
+      info:{
+        display: 'flex',
+        width: '50px',
+        height: '300px'
+      }
+  }));
+  
+
+
+
   // function TabPanel(porps) {
   //   const { children, value, index, ...other } = porps;
   
@@ -235,6 +301,7 @@ const useStyles = makeStyles((theme) => ({
     }
     return(
         <Card className={classes.totalBackground} >
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
         <div  className={classes.background}> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
           {userDetail ? <img   className={classes.portada}  src= {userDetail.portadaImage}/>:<img   className={classes.portada}  src= {user.user.portadaImage}/>}
@@ -318,23 +385,6 @@ const useStyles = makeStyles((theme) => ({
         :null}
         {value === 3 ?<CohortDetail/>:null}
     </div>
-    {/* <Paper className={classes.root}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        indicatorColor="primary"
-        textColor="primary"
-        centered
-      >
-        <Tab label="Posts" {...a11yProps(0)}/>
-        <Tab label="Interacciones" {...a11yProps(1)}/>
-        <Tab label="Biblioteca" {...a11yProps(2)} />  
-        <Tab label="Información" {...a11yProps(3)}/>
-      </Tabs>
-      <TabPanel value={value}>
-        <spand>ASDASDASDASDA</spand>
-      </TabPanel>
-    </Paper> */}
         </Card>
     )
   }

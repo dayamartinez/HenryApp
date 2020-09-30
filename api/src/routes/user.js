@@ -118,6 +118,8 @@ server.put('/settings/:id', (req, res, next) => {
     urlImage: req.body.urlImage,
     portadaImage: req.body.portadaImage
   }
+
+  if(req.body.rol === 'user'){
   db.Usuario.findOne({
     where: {
       id: req.params.id
@@ -130,6 +132,22 @@ server.put('/settings/:id', (req, res, next) => {
         return res.json(newUser);
       })
   }).catch(next)
+  }
+
+  if(req.body.rol !== 'user'){
+    db.Staff.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(staff => {
+      staff.update(userUp)
+        .then(newUser => {
+          newUser.save()
+          res.status(200)
+          return res.json(newUser);
+        })
+    }).catch(next)
+    }
 })
 
 
