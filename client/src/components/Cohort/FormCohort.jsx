@@ -172,14 +172,7 @@ import ExcelLoader from './ExcelLoader';
             >
               Crear
             </Button>}
-            <Button
-              fullWidth
-              variant="contained"
-              className={classes.submit}
-              onClick={() => history.replace('/admin') }
-            >
-              Cancelar
-            </Button>
+
           </form>
            { id ?
              <div>
