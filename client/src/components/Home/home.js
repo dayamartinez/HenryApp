@@ -5,7 +5,6 @@ import { makeStyles} from '@material-ui/core/styles';
 import UserCard from './SearchBar/userCards.js';
 import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
-import { getPostActive, postInactive} from '../../actions/posts.js';
 import {useHistory } from 'react-router-dom'
 import { getPosts} from '../../actions/posts.js';
 import axios from 'axios'
@@ -21,6 +20,8 @@ import {addPost, deletePost} from './../../actions/posts'
 import {addLink, deleteLink} from './../../actions/link'
 import {getCohortDetail} from './../../actions/cohort'
 import { useRef } from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(7),
       },
       totalPost : {
+        marginTop: '5px',
         marginRight: '10px',
         marginLeft: '10px',
         border: 'black 5px'
@@ -70,7 +72,13 @@ const useStyles = makeStyles((theme) => ({
       username: {
         font : '18px',
         fontWeight: '550',
-
+      },
+      General: {
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"center",
+        padding:"20px",
+        marginLeft: '330px'
       }
   }));
 const defaultProps = {
@@ -145,19 +153,35 @@ console.log(staff)
 
         <div className={classes. totalBackground}>
           <div >
-            {user.user.rol !== 'user' ?
+           
             <form onSubmit={handleSubmit} style={{display: 'flex', alignItems: 'center', justifyContent:'center'}}>     
+            {user.user.rol !== 'user' ?
               <TextField 
                 style={{width: '800px', margin: '5px',}}
                 variant="outlined" placeholder='Envía un mensaje' 
                 name="comments"
                 value={input.comments}
                 onChange={handleInputChange}
-              />
-            </form> : null    
-                }     
+              /> :
+
+                  <AppBar position="static" className={classes.appbar} >
+                  <Toolbar variant="dense">
+                    <Typography 
+                        className={classes.General}
+                        variant="h6"
+                        color="inherit"
+                    >
+                      Novedades
+                    </Typography>
+                  </Toolbar>
+                </AppBar>
+                    }
+
+            </form>   
+                     
           
-    
+          </div>
+            <Divider/>
             <div className={classes.totalPost}>
               {console.log(posteos)}
               <Divider orientation="vertical" flexItem />
@@ -202,7 +226,7 @@ console.log(staff)
               
             </div>
             <Divider orientation="vertical" flexItem />
-          </div>
+          
           </div>
        
       )
