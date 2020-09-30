@@ -59,7 +59,7 @@ server.post('/create',  (req, res) => {
     res.status(201).send("OK") 
   })
   .catch( err => {
-    res.status(500).json(err)
+    res.status(500).send([])
   })
 })
 

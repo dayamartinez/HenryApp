@@ -27,7 +27,7 @@ import ExcelLoader from '../Cohort/ExcelLoader';
   const classes = useStyles();
   const [pm,setPm] = useState(pms)
   const [groups,setGroups] = useState([])
-  const [cohort, setCohort] = useState({})
+  const [cohort, setCohort] = useState({usuarios:[]})
   const [input, setInput]= useState({
     name:'',
     startDate: ''
@@ -47,14 +47,14 @@ import ExcelLoader from '../Cohort/ExcelLoader';
           res.data[res.data.length-1]
           )
         })
-        .catch(err =>{console.log(err)})          
+        .catch(err =>{console.log("Error")})          
       },[input])
       
+
   const handleInputChange = function(e) {
-    console.log(cohort)
     const g=Number(e.target.value)
     if (g > pm.length){
-      e.target.value = g-1
+      e.target.value = pm.length
     }else if (g <= 0){
       e.target.value = 1
     } else{
@@ -65,10 +65,16 @@ import ExcelLoader from '../Cohort/ExcelLoader';
     }
   }
 
-  const handleSubmit = function (e) {
-      e.preventDefault()
-      addGroup(cohort.id,input.grupos)
-      axios.put("http://localhost:3001/pm/setGroup/"+cohort.id)
+
+const sleep= function(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }  
+
+  const handleSubmit = async function (e) {
+    e.preventDefault()
+    addGroup(cohort.id,input.grupos)
+    await sleep(2000)
+    axios.put("http://localhost:3001/pm/setGroup/"+cohort.id)
   }
 
   return (
@@ -77,10 +83,10 @@ import ExcelLoader from '../Cohort/ExcelLoader';
       <Typography component="h1" variant="h4" align="center">  Crear Grupos </Typography>
       <Grid container style={{margin:"auto"}}>
         <Grid item xs={6}> <Typography component="h1" variant="h5">  Cohorte: </Typography> </Grid>
-        <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort.name?cohort.name:"..."} </Typography> </Grid>
+        <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort?cohort.name:"..."} </Typography> </Grid>
         <Grid container>
           <Grid item xs={6}> <Typography component="h1" variant="h5"> Alumnos Totales </Typography> </Grid>
-          <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {cohort.usuarios?cohort.usuarios.length:"..."} </Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {cohort?cohort.usuarios.length:"..."} </Typography> </Grid>
           <Grid item xs={6}> <Typography component="h1" variant="h5"> PMs Disponibles </Typography> </Grid>
           <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {pm.length} </Typography> </Grid>
         </Grid>
