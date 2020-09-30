@@ -66,37 +66,41 @@ server.put('/set', (req,res)=> {
     .catch(err => res.status(404).send(err))
   })
 
-  server.put("/setGroup/:id", (req,res)=>{
-    PM.findAll({
+
+  server.put("/setGroup/:id", async (req,res)=>{
+    console.log(typeof req.params.id)
+    Group.findAll({
       where:{
-        cohortId:req.params.id
+        cohortId:Number(req.params.id)
       }
     })
-    .then(pms=>{
-      Group.findAll({
+    .then(groups=>{
+      PM.findAll({
         where:{
-          cohortId:req.params.id
+          groupId:null
         }
       })
-      .then(async groups=>{
-        let i = 0,j=0;
+      .then(pms=>{
+        let i = 0,j=0,aux;
+        console.log(pms.length)
+        console.log(groups.length)
         while(i<groups.length){
-          console.log(i)
-          let aux = {groupId:groups[i].id}
+          //console.log(i)
+          aux = {groupId:groups[i].id}
           pms[j].update(aux)
-          await pms[j].save()
-          .then(()=>{
+          .then(a=>{  
+            pms[j].save()
+          })
             i++
             j++
-            if(pms[j] && i>groups.length){
-              i=0
-            }
-          })
         }
+            // if(pms[j] && i>=groups.length){
+            //   i=0
+            // }
       })
     })
     .then(()=>res.status(201).send("holi"))
-    .catch(()=>res.status(400).send("adiu"))
+    .catch((err)=>{console.log(err);res.status(400).send("adiu")})
   })
 
   //Eliminar PM
