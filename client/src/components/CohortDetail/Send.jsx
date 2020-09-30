@@ -14,7 +14,7 @@ import {getCohortDetail} from './../../actions/cohort'
 import { connect } from 'react-redux';
 import {useHistory } from 'react-router-dom'
 
-export function Send({addPost, getCohortDetail, deletePost, addLink, posts, links, deleteLink, match, user }){
+export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts, links, deleteLink, match }){
  
   const id = match.params.id
   const [cohort, setCohort] = useState()
@@ -84,6 +84,7 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
     return (
       <div>
         <div style={{width: "700px", height: "335px"  }} className="bg-light rounded-lg">
+        {user.user.rol !== 'user' ?
           <form onSubmit={handleSubmit} style={{display: 'flex', alignItems: 'center', justifyContent:'center'}}>     
             <TextField 
               style={{width: '550px', margin: '5px'}}
@@ -95,8 +96,8 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
             <button className="btn btn-outline-light border-0 rounded ml-1" type='submit'>
               <SendIcon style={{ color: "#000"}}/> 
             </button>
-          </form>           
-        
+          </form> : null          
+        }
   
           <div  style={{flexGrow: 1, overflowX:'hidden', overflowY:'scroll' , height: "270px"  }}> 
             {comments && comments.map(c => ( 
@@ -146,7 +147,8 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
                  <button className='btn btn-outline-warning btn-sm ml-1 border-0'>M-4</button> */}
             </div>
             <div style={{width: "700px", height: "250px", overflowX:'hidden', overflowY:'scroll' }} >
-           <form onSubmit={handleSubmitL} >
+            {user.user.rol !== 'user' ?
+            <form onSubmit={handleSubmitL} >
 
                <div style={{marginTop:'10px',display:'flex', alignItems: 'center', justifyContent:'center'}}>
                     <TextField variant="outlined"  label="Nombre" size="small"
@@ -170,7 +172,8 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
 
                </div>
                <hr/>
-           </form>
+           </form>:null
+            }
            {linksC && linksC.map(l => (
             <Paper key={l.id} style={{padding: '2px',margin: '20px auto',maxWidth: 300}}>
               <Grid container spacing={2}>
@@ -182,11 +185,13 @@ export function Send({addPost, getCohortDetail, deletePost, addLink, posts, link
                       </Typography>
                     </Grid>
                   </Grid>
+                   {user.user.rol !== 'user' ?
                    <Grid item>
                     <button class="btn btn-outline-light border-0 rounded" onClick={() => {
                       deleteLink(l.id)
                       history.go(0)}}><DeleteIcon style={{ color: "#000"}}/></button>
-                  </Grid>
+                  </Grid>:null
+                   }
                 </Grid>
               </Grid>
             </Paper>
