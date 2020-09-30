@@ -187,7 +187,8 @@ server.put('/completeprofile/:id', (req, res, next) => {
     //email: req.body.email,
     password: req.body.password,
     urlImage: req.body.urlImage,
-    portadaImage: req.body.portadaImage
+    portadaImage: req.body.portadaImage,
+    status: true
   }
 
   db.Usuario.findOne({
