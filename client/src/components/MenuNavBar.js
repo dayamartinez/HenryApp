@@ -124,6 +124,7 @@ export function CustomizedMenus(props) {
                     <MenuItem onClick={(e) => redirect(e, '/profile')}>Inicio</MenuItem>
                     <MenuItem onClick={handleClose}>Mensajes</MenuItem>
                     <MenuItem onClick={(e) => redirect(e, '/admin')}>Administración</MenuItem>
+                    <MenuItem onClick={(e)=>logout(e)}>Cerrar sesion</MenuItem>
                   </MenuList> }
 
                 </ClickAwayListener>

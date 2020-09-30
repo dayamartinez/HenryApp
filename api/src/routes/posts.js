@@ -54,7 +54,7 @@ server.get('/active/:id', (req, res) => {
   Post.findAll({
     where: {
       active: true,
-      cohortId: req.params.id
+      cohortId: req.params.id,
     }
   })
   .then(posts => res.status(200).send(posts))
