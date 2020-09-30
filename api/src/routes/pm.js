@@ -20,7 +20,7 @@ server.put('/set', (req,res)=> {
     PM.findOne({
         where: {
             id: req.params.id
-        }
+        }, include: [Usuario]
     }).then(pm =>{
         !pm
           ? res.status(404).json([])
