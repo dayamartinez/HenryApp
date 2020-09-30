@@ -41,10 +41,11 @@ export function AllGroups({getGroups,style}){
   var data
   if(groups){
     data = groups.map(group => 
+     
       ({
         /* se sacaron el about y la fecha de inicio para los grupos, en cambio se agregaron las columnas de pm y la de cohorte*/
         group: group.name,
-        pm:buscarPM(group.usuarios, group.PMs[0].usuarioId),
+        pm: group.PMs[0] ? (buscarPM( group.usuarios, group.PMs[0].usuarioId)) : ('sin PMs'),
         cohorte: group.cohort ? (group.cohort.name):('Sin cohorte asignado'),
         alumnos: group.usuarios?(group.usuarios.length):(undefined),
         id: group.id

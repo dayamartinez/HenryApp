@@ -83,7 +83,7 @@ let id = match.params.id
                 <div >
                     <ListItem alignItems="flex-start">
                         <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" src={HenryIcon} />
+                        <Avatar alt="Remy Sharp" src={pm.usuario.urlImage} />
                         </ListItemAvatar>
                         <ListItemText
                         primary={pm.usuario && pm.usuario.name + ' ' + pm.usuario.lastName}

@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuList from '@material-ui/core/MenuList';
@@ -10,14 +11,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import { userLogout } from '../actions/user';
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
-    },
-    paper: {
-      marginRight: theme.spacing(2),
+      marginLeft: '-18px'
     },
     menu: {
         color: '#fdd835'
@@ -55,6 +56,24 @@ export function CustomizedMenus(props) {
     }
   }
 
+  const logout = function(e) {
+    e.preventDefault(e)
+      props.userLogout()
+  
+    //CON ESTA LLAMADA LE PEGAMOS A LOGOUT EN EL BACK
+    axios.get('http://localhost:3001/logout')
+    .then(async res=>{
+      await alert("Sesión cerrada");
+      history.push('/')
+    })
+  
+    //MANEJO DE ERRORES...
+    .catch(err=>{
+      alert(err);
+    })
+    return;
+  }
+
        // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
@@ -75,8 +94,9 @@ export function CustomizedMenus(props) {
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
+          color= "primary"
         >
-          <MenuIcon />
+        <AccountBoxIcon/> 
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
@@ -91,17 +111,20 @@ export function CustomizedMenus(props) {
                   
                   {(props.user.user.rol === "user") ? 
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={(e) => redirect(e, '/profile')}>Inicio</MenuItem>
+                    <MenuItem onClick={(e) => redirect(e, '/profile')}>Mi perfil</MenuItem>
                     <MenuItem onClick={handleClose}>Mis Grupos</MenuItem>
                     <MenuItem onClick={handleClose}>Mi cohorte</MenuItem>
-                    <MenuItem onClick={handleClose}>Mensajes</MenuItem>
+                    <MenuItem onClick={handleClose} >Mensajes</MenuItem>
+                    <MenuItem onClick={(e)=>logout(e)}>Cerrar sesion</MenuItem>
                     
                   </MenuList> : 
                   
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                    <MenuItem onClick={(e) => redirect(e, '/profile')}>Mi perfil</MenuItem>
                     <MenuItem onClick={(e) => redirect(e, '/profile')}>Inicio</MenuItem>
                     <MenuItem onClick={handleClose}>Mensajes</MenuItem>
                     <MenuItem onClick={(e) => redirect(e, '/admin')}>Administración</MenuItem>
+                    <MenuItem onClick={(e)=>logout(e)}>Cerrar sesion</MenuItem>
                   </MenuList> }
 
                 </ClickAwayListener>
@@ -120,4 +143,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps,null)(CustomizedMenus);
+const mapDispatchToProps = dispatch => {
+  return {
+    userLogout:() => dispatch(userLogout()),
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CustomizedMenus);
+
