@@ -123,7 +123,7 @@ export function CohortList({getCohorts, pms, students, getCohortDetail, cohortDe
                         <td>{u.email}</td>                        
                         <td>{u.group === null ? 'no tiene grupo asignado' : u.group.name}</td> 
                         <td>{ u.PM !== null ? 
-                            <div>PM
+                            <div> <span className='text small mr-1' >PM</span>
                                 <img width={"25px"} height={"25px"} 
                                 src="https://media-exp1.licdn.com/dms/image/C4E0BAQE2nmZshIwV9A/company-logo_200_200/0?e=2159024400&v=beta&t=2rZ7n-f_mLfkkqAxz0B8IVGTELeBH1VTHBm0naezmZw" />
                             </div> :   
