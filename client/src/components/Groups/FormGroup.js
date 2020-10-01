@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import axios from "axios"
 import {addGroup} from '../../actions/group'
 import {getPm} from '../../actions/pm'
+import {getCohorts} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 
-import ExcelLoader from '../Cohort/ExcelLoader';
 /* componente de creacion de grupos  */
 
   const useStyles = makeStyles((theme) => ({
@@ -21,40 +21,37 @@ import ExcelLoader from '../Cohort/ExcelLoader';
     }
   }));
   
-  export function FormGroup({ getPm,pms, addGroup, emails, style}) {
+  export function FormGroup({ getPm, pms, getCohorts, addGroup, style}) {
 
   const history = useHistory()
   const classes = useStyles();
   const [pm,setPm] = useState(pms)
   const [groups,setGroups] = useState([])
-  const [cohort, setCohort] = useState({})
+  const [cohort, setCohort] = useState({usuarios:[]})
   const [input, setInput]= useState({
-    name:'',
-    startDate: ''
+    grupos: 1
   });
   
   var aux
   useEffect(()=>{
-    aux = pm.filter(p=> !p.groupId)
-      getPm().then(res=>{
-        setPm(
-          aux
-          )
-        })
-      axios.get("http://localhost:3001/cohort")
-      .then(res=>{
-        setCohort(
-          res.data[res.data.length-1]
-          )
-        })
-        .catch(err =>{console.log(err)})          
-      },[input])
+    getPm()
+    .then(data => {
+      setPm(data.payload.filter(p=> !p.groupId))
+    })
+    getCohorts()  
+    .then(res=>{
+      setCohort(
+        res.payload[res.payload.length-1]
+      )
+    })
+    .catch(err =>{console.log("Error")})          
+  },[input])
       
+
   const handleInputChange = function(e) {
-    console.log(cohort)
     const g=Number(e.target.value)
     if (g > pm.length){
-      e.target.value = g-1
+      e.target.value = pm.length
     }else if (g <= 0){
       e.target.value = 1
     } else{
@@ -65,10 +62,16 @@ import ExcelLoader from '../Cohort/ExcelLoader';
     }
   }
 
-  const handleSubmit = function (e) {
-      e.preventDefault()
-      addGroup(cohort.id,input.grupos)
-      axios.put("http://localhost:3001/pm/setGroup/"+cohort.id)
+
+const sleep= function(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }  
+
+  const handleSubmit = async function (e) {
+    e.preventDefault()
+    addGroup(cohort.id,input.grupos)
+    await sleep(2000)
+    axios.put("http://localhost:3001/pm/setGroup/"+cohort.id)
   }
 
   return (
@@ -77,15 +80,15 @@ import ExcelLoader from '../Cohort/ExcelLoader';
       <Typography component="h1" variant="h4" align="center">  Crear Grupos </Typography>
       <Grid container style={{margin:"auto"}}>
         <Grid item xs={6}> <Typography component="h1" variant="h5">  Cohorte: </Typography> </Grid>
-        <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort.name?cohort.name:"..."} </Typography> </Grid>
+        <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort?cohort.name:"..."} </Typography> </Grid>
         <Grid container>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> Alumnos Totales </Typography> </Grid>
-          <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {cohort.usuarios?cohort.usuarios.length:"..."} </Typography> </Grid>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> PMs Disponibles </Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5"> Alumnos totales </Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {cohort?cohort.usuarios.length:"..."} </Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5"> PMs disponibles </Typography> </Grid>
           <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {pm.length} </Typography> </Grid>
         </Grid>
         <Grid container style={{justifyContent:"space-between"}}>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> Cuantos Grupos?</Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5"> Ingrese cantidad de grupos</Typography> </Grid>
           <Grid item xs={2} sm={1}> <Input type="number" className={classes.inputGroup} name="grupos" defaultValue={1} onChange={(e) => handleInputChange(e)}/> </Grid>
         </Grid>
         <Grid style={{margin:"auto"}} item xs={6}>
@@ -109,7 +112,8 @@ import ExcelLoader from '../Cohort/ExcelLoader';
   const mapDispatchToProps = dispatch => { 
     return {
       addGroup: (cohortId,grupos) => dispatch(addGroup(cohortId,grupos)),
-      getPm: ()=> dispatch(getPm())
+      getPm: ()=> dispatch(getPm()),
+      getCohorts: () => dispatch(getCohorts())
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormGroup)

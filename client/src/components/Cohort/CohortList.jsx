@@ -12,6 +12,7 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
     }, [])
     
 
+
     //Busca el grupo al cual pertenece el alumno
     const buscarGrupo= (cohorte,grupoId)=>{
         let grupoName = "El alumno no tiene un grupo asignado"
@@ -41,7 +42,8 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
         
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button type="button" class="btn btn-outline-warning mb-2 mt-2" onClick={() => getCohorts()}>Ver Todos</button>
-  
+                <button type="button" class="btn btn-outline-warning mb-2 mt-2" onClick={() => getCohorts()}>Usuarios Activos</button>
+                
                 <div class="btn-group dropright" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Filtrar por Cohorte
@@ -65,6 +67,13 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
                 <th scope="col">Cohorte</th>
                 <th scope="col">Email</th>
                 <th scope="col">Grupo</th>
+             { /*  <th scope="col" id="btnGroupDrop1" type="button" class="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Estado
+                </th>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" role="menu">
+                        <a type="button" onClick={(e) => buscarEstado(e)} class="dropdown-item">Activo</a>
+                        <a type="button" onClick={(e) => buscarEstado(e)} class="dropdown-item">Inactivo</a>                      
+                    </div>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -73,22 +82,24 @@ export function CohortList({getCohorts, getCohortDetail, cohortDetail, style}){
                 {cohortDetail[0] ? cohortDetail.sort((a,b)=>orderById(a,b)).map((c) => (
                     c.usuarios.sort((a,b)=>orderById(a,b)).map(u => (
                         <tr class="bg-light"> 
-                        <td>{u.name}</td>
-                        <td>{u.lastName}</td>
-                        <td>{c.name}</td>
-                        <td>{u.email}</td>
-                        <td>{buscarGrupo(c,u.groupId)}</td>
+                            <td>{u.status ? u.name : '--'}</td>
+                            <td>{u.status ? u.lastName : '--'}</td>
+                            <td>{c.name}</td>
+                            <td>{u.email}</td>
+                            <td>{buscarGrupo(c,u.groupId)}</td>
+                            {/*<td>{u.status ? 'Activo' : 'Inactivo'}</td>*/}
                         </tr> 
                     ))                         
                     //si no, se mostrara todos los alumnos de todos los cohortes  
                     )): cohorts ? cohorts.sort((a,b)=>orderById(a,b)).map((c) => (
                     c.usuarios.sort((a,b)=>orderById(a,b)).map(u => (
                         <tr class="bg-light"> 
-                        <td>{u.name}</td>
-                        <td>{u.lastName}</td>
+                        <td>{u.status ? u.name : '--'}</td> 
+                        <td>{u.status ? u.lastName : '--'}</td>
                         <td>{c.name}</td>
                         <td>{u.email}</td>
                         <td>{buscarGrupo(c,u.groupId)}</td>
+                      {/*  <td>{u.status ? 'Activo' : 'Inactivo'}</td>*/}
                         </tr> 
                     ))   
                 )) : null

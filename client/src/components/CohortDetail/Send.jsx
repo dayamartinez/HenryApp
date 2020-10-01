@@ -106,7 +106,7 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
                 <Grid item xs={12} sm container>
                   <Grid item>
                     <ListItemAvatar>
-                      <Avatar alt="Remy Sharp" src={HenryIcon} />
+                      <Avatar alt="Remy Sharp" src={instructor.urlImage} />
                     </ListItemAvatar>
                   </Grid>
                   <Grid item xs container direction="column" spacing={2}>
