@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import axios from "axios"
 import {addGroup} from '../../actions/group'
 import {getPm} from '../../actions/pm'
+import {getCohorts} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
 
 /* componente de creacion de grupos  */
@@ -20,7 +21,7 @@ import {useHistory } from 'react-router-dom'
     }
   }));
   
-  export function FormGroup({ getPm,pms, addGroup, style}) {
+  export function FormGroup({ getPm, pms, getCohorts, addGroup, style}) {
 
   const history = useHistory()
   const classes = useStyles();
@@ -33,20 +34,18 @@ import {useHistory } from 'react-router-dom'
   
   var aux
   useEffect(()=>{
-    aux = pm.filter(p=> !p.groupId)
-      getPm().then(res=>{
-        setPm(
-          aux
-          )
-        })
-      axios.get("http://localhost:3001/cohort")
-      .then(res=>{
-        setCohort(
-          res.data[res.data.length-1]
-          )
-        })
-        .catch(err =>{console.log("Error")})          
-      },[input])
+    getPm()
+    .then(data => {
+      setPm(data.payload.filter(p=> !p.groupId))
+    })
+    getCohorts()  
+    .then(res=>{
+      setCohort(
+        res.payload[res.payload.length-1]
+      )
+    })
+    .catch(err =>{console.log("Error")})          
+  },[input])
       
 
   const handleInputChange = function(e) {
@@ -83,13 +82,13 @@ const sleep= function(ms) {
         <Grid item xs={6}> <Typography component="h1" variant="h5">  Cohorte: </Typography> </Grid>
         <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort?cohort.name:"..."} </Typography> </Grid>
         <Grid container>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> Alumnos Totales </Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5"> Alumnos totales </Typography> </Grid>
           <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {cohort?cohort.usuarios.length:"..."} </Typography> </Grid>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> PMs Disponibles </Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5"> PMs disponibles </Typography> </Grid>
           <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {pm.length} </Typography> </Grid>
         </Grid>
         <Grid container style={{justifyContent:"space-between"}}>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> Cuantos Grupos?</Typography> </Grid>
+          <Grid item xs={6}> <Typography component="h1" variant="h5"> Ingrese cantidad de grupos</Typography> </Grid>
           <Grid item xs={2} sm={1}> <Input type="number" className={classes.inputGroup} name="grupos" defaultValue={1} onChange={(e) => handleInputChange(e)}/> </Grid>
         </Grid>
         <Grid style={{margin:"auto"}} item xs={6}>
@@ -113,7 +112,8 @@ const sleep= function(ms) {
   const mapDispatchToProps = dispatch => { 
     return {
       addGroup: (cohortId,grupos) => dispatch(addGroup(cohortId,grupos)),
-      getPm: ()=> dispatch(getPm())
+      getPm: ()=> dispatch(getPm()),
+      getCohorts: () => dispatch(getCohorts())
     }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(FormGroup)

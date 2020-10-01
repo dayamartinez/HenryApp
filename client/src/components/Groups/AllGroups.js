@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { getGroups } from '../../actions/group';
-import {yellow, grey} from "@material-ui/core/colors"
+import {yellow, grey} from "@material-ui/core/colors";
+import axios from 'axios';
 
 
 const useStyles = makeStyles(theme => ({
@@ -18,39 +19,22 @@ const useStyles = makeStyles(theme => ({
 
 export function AllGroups({getGroups,style}){
   const [groups, setGroups] = useState()
-  const classes = useStyles()
-  const yellowText = {color:yellow[500]}
+  const [buscar, setBuscar] = useState()
+  
   
   useEffect(()=>{
     getGroups()
-    .then(data => setGroups(data.payload))    
+    .then(grupos => setGroups(grupos.payload)) 
   }, [])
 
-  const buscarPM = (usuarios,pmId)=>{
+  
+  function buscarPM(pmId){
     var pmName = "El grupo no tiene un PM asignado."
-    usuarios.forEach(usuario => {
-        if(pmId === usuario.id){
-            pmName = usuario.name + " " + usuario.lastName
-        }
+    axios.get("http://localhost:3001/pm/"+ pmId)
+    .then(res =>{
+      pmName = res.data.usuario.name + ' ' + res.data.usuario.lastName
+      setBuscar(pmName)
     })
-    return pmName
-
-  }
-
-
-  var data
-  if(groups){
-    data = groups.map(group => 
-     
-      ({
-        /* se sacaron el about y la fecha de inicio para los grupos, en cambio se agregaron las columnas de pm y la de cohorte*/
-        group: group.name,
-        pm: group.PMs[0] ? (buscarPM( group.usuarios, group.PMs[0].usuarioId)) : ('Sin PM asignado'),
-        cohorte: group.cohort ? (group.cohort.name):('Sin cohorte asignado'),
-        alumnos: group.usuarios?(group.usuarios.length):(undefined),
-        id: group.id
-      })
-    )
   }
 
   return (
@@ -76,14 +60,16 @@ export function AllGroups({getGroups,style}){
             </thead>
 
             <tbody>
-              {data ? data.map(celda => (
+              {groups ? groups.map(group => {group.PMs[0] && buscarPM( group.PMs[0].usuarioId)
+                return(
                   <tr class="bg-light"> 
-                    <td>{celda.group}</td>
-                    <td>{celda.pm}</td>
-                    <td>{celda.cohorte}</td>
-                    <td>{celda.alumnos}</td>
+                    <td>{group.name}</td>
+                    <td>{group.PMs[0] ? (buscar) : ('Sin PM asignado')}</td>
+                    <td>{group.cohort ? (group.cohort.name):('Sin cohorte asignado')}</td>
+                    <td>{group.usuarios?(group.usuarios.length):(undefined)}</td>
                   </tr>       
-              )) : null}                
+              )}) : null}  
+
             </tbody>
           </table>
         </div>
