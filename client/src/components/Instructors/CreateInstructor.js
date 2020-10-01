@@ -52,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     background: {
         backgroundImage:`url(${fondo})` ,
+        height: '100vh'
     },
     input: {
         background: "white"
@@ -82,24 +83,17 @@ export function CreateStaff(props) {
         })
       }
 
-console.log(props)
-
-console.log('hola')
-
-console.log(createStaffMember())
 
       const onSend = function(e){
         e.preventDefault();
-        console.log(staff)
+     
         //SE VALIDAN TODOS LOS CAMPOS PARA MANDAR AL BACK!
         if (!staff.name || !staff.lastName || !staff.email  || !staff.password  || !staff.profile  || !staff.birthday || !staff.country || !staff.city){
           alert("Se deben completar todos los campos!")
           return;
         } else {
           //SI TODO ESTA OK-> MANDA LOS DATOS!
-          console.log(props)
-          console.log('hola')
-          console.log(staff)
+       
           props.createStaffMember(staff)
           return history.push('/admin');
         }
@@ -118,6 +112,7 @@ console.log(createStaffMember())
             Registrar Personal
           </Typography>
           <form className={classes.form} noValidate>
+
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
