@@ -19,13 +19,13 @@ export default function posts(state = initialState, action){
     if (action.type === ADD_POST){
         return {
             ...state,
-            posts: state.posts.concat(action.payload) 
+            posts: action.payload
         }
     }
     if (action.type === DELETE_POST){
         return {
             ...state,
-            posts: state.posts.filter(p => p.id !== action.payload) 
+            posts: action.payload
         }
     }
     if(action.type === GET_POST_ACTIVE){
