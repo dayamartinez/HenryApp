@@ -1,20 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getCohorts, getCohortDetail } from '../../actions/cohort';
-import {GET_PM, promotePm} from '../../actions/pm'
+import { promotePm} from '../../actions/pm'
 import {getStudents} from '../../actions/student'
 import swal from 'sweetalert'
 
-export function CohortList({getCohorts, student, getCohortDetail, cohortDetail, promotePm, getStudents, style}){
+export function CohortList({getCohorts, pms, students, getCohortDetail, cohortDetail, promotePm, getStudents, style}){
 
     const [cohorts, setCohorts] = useState()
-    const [pm, setPm] = useState()
+    const [allStudents, setAllStudents] = useState()
     useEffect(()=>{        
         getCohorts().then(data => setCohorts(data.payload)) 
-        getStudents().then(res => setPm(res.payload))
-    }, [student])
-   console.log(pm)
-
+        getStudents().then(res => setAllStudents(res.payload))
+    }, [pms])
+   
     //Busca el grupo al cual pertenece el alumno
     const buscarGrupo= (cohorte,grupoId)=>{
         let grupoName = "El alumno no tiene un grupo asignado"
@@ -25,6 +24,18 @@ export function CohortList({getCohorts, student, getCohortDetail, cohortDetail, 
         })
         return grupoName
     }
+
+    const buscarPm = (students, id) => {
+        var isPm = null
+        students.length > 0 && students.forEach(u => {
+           if(u.PM !== null){
+               if(id == u.PM.usuarioId) isPm = 'is pm'
+           }  
+        })
+       return isPm  
+      
+    }
+
     const orderById= (a,b) =>{
             if (a.id > b.id) {
               return 1;
@@ -42,17 +53,16 @@ export function CohortList({getCohorts, student, getCohortDetail, cohortDetail, 
         
         <div style={{display:"flex", alignItems:"center", justifyContent:"center", padding:"20px"}}>
         
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+            <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button type="button" class="btn btn-outline-warning mb-2 mt-2" onClick={() => getCohorts()}>Ver Todos</button>
   
-                <div class="btn-group dropright" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div className="btn-group dropright" role="group">
+                    <button id="btnGroupDrop1" type="button" className="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Filtrar por Cohorte
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" role="menu">
+                    <div className="dropdown-menu" aria-labelledby="btnGroupDrop1" role="menu">
                         {cohorts && cohorts.map((c) => (         
-                            <a type="button" onClick={() => getCohortDetail(c.id)} class="dropdown-item">{c.name + " " +console.log(c)}</a>
-                           
+                            <a key={c.id} type="button" onClick={() => getCohortDetail(c.id)} className="dropdown-item">{c.name}</a>
                             ))
                         }                         
                     </div>
@@ -76,58 +86,63 @@ export function CohortList({getCohorts, student, getCohortDetail, cohortDetail, 
                 {/* Si se selecciono un cohorte en particular, solo mostrara informacion de los alumnos del mismo,
                  */}
                 {cohortDetail[0] ? cohortDetail.sort((a,b)=>orderById(a,b)).map((c) => (
-                    c.usuarios.sort((a,b)=>orderById(a,b)).map(u => (
-                       
-                        <tr class="bg-light"> 
-                        
+                    c.usuarios.sort((a,b)=>orderById(a,b)).map(u => (                       
+                        <tr key={u.id} className="bg-light">  
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
-                        {/* <td>{c.name}</td> */}
+                        <td>{c.name}</td>
                         <td>{u.email}</td>
-                        {/* <td>{buscarGrupo(c,u.groupId)}</td> */}
-                        <td>{                               
-                            <button onClick={()=> {
-                            swal({
-                                title: 'Promover',
-                                text:
-                                    '¿Seguro desea Promover este usuario a pm?',
-                                icon: 'warning',
-                                buttons: ['No', 'Si'],
-                                dangerMode: true,
-                            }).then(res =>
-                                res
-                                    ? promotePm(u)
-                                    : null
-                                   
-                            )     
-                        }}> promover a PM</button>}</td>
-                        </tr> 
+                        <td>{buscarGrupo(c,u.groupId)}</td>
+                        <td>{ buscarPm(students, u.id) !== null ?                                                
+                            <img width={"25px"} height={"25px"} 
+                            src="https://media-exp1.licdn.com/dms/image/C4E0BAQE2nmZshIwV9A/company-logo_200_200/0?e=2159024400&v=beta&t=2rZ7n-f_mLfkkqAxz0B8IVGTELeBH1VTHBm0naezmZw" /> 
+                        :   <button className="btn btn-outline-dark mb-2 mt-2 btn-sm"
+                                onClick={()=> {
+                                swal({
+                                    title: 'Promover',
+                                    text:
+                                        '¿Seguro desea Promover este usuario a PM?',
+                                    icon: 'warning',
+                                    buttons: ['No', 'Si'],
+                                    dangerMode: true,
+                                }).then(res =>
+                                            res
+                                            ? promotePm(u)
+                                            : null
+                                    )                
+                                }}>Promover a PM</button>}
+                        </td>
+                    </tr>  
                     ))                         
                     //si no, se mostrara todos los alumnos de todos los cohortes  
-                    )): pm ? pm.map(u => (
-                        <tr class="bg-light"> 
+                    )): allStudents ? allStudents.sort((a,b)=>orderById(a,b)).map(u => (
+                        <tr key={u.id} className="bg-light"> 
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
-                        
-                        <td>{u.email}</td>
-                        {/* <td>{buscarGrupo(c,u.groupId)}</td> */}
-                        <td>{ u.PM !== null ? <img width={"30px"} height={"25px"} 
-                        src="https://media-exp1.licdn.com/dms/image/C4E0BAQE2nmZshIwV9A/company-logo_200_200/0?e=2159024400&v=beta&t=2rZ7n-f_mLfkkqAxz0B8IVGTELeBH1VTHBm0naezmZw" /> :
-                            <button onClick={()=> {
-                            swal({
-                                title: 'Promover',
-                                text:
-                                    '¿Seguro desea Promover este usuario a PM?',
-                                icon: 'warning',
-                                buttons: ['No', 'Si'],
-                                dangerMode: true,
-                            }).then((res) =>
-                                res
-                                    ? promotePm(u)
-                                    : null
-                            )                
-                        }}>Promover a PM</button>}</td>
-                        </tr>   
+                        <td>{u.cohort.name}</td>
+                        <td>{u.email}</td>                        
+                        <td>{u.group === null ? 'no tiene grupo asignado' : u.group.name}</td> 
+                        <td>{ u.PM !== null ? 
+                            <div>PM
+                                <img width={"25px"} height={"25px"} 
+                                src="https://media-exp1.licdn.com/dms/image/C4E0BAQE2nmZshIwV9A/company-logo_200_200/0?e=2159024400&v=beta&t=2rZ7n-f_mLfkkqAxz0B8IVGTELeBH1VTHBm0naezmZw" />
+                            </div> :   
+                            <button className="btn btn-outline-dark mb-2 mt-2 btn-sm"
+                                onClick={()=> {
+                                swal({
+                                    text:
+                                        '¿Desea Promover este usuario a PM?',
+                                    icon: 'warning',
+                                    buttons: ['No', 'Si'],
+                                    dangerMode: true,
+                                }).then(res =>
+                                    res
+                                        ? promotePm(u)
+                                        : null
+                                )                
+                            }}>Promover a PM</button>}
+                        </td>
+                    </tr>   
                 )) : null
                 }                
                 </tbody>
@@ -136,17 +151,17 @@ export function CohortList({getCohorts, student, getCohortDetail, cohortDetail, 
     )
 }
 
-const mapStateToProps = (state) => ({
-   cohorts: state.cohort.cohorts,
-   cohortDetail: state.cohort.cohortDetail,
-   student: state.pm.pms
-  })
-  
-  const mapDispatchToProps = dispatch => ({
-    getCohorts: () =>  dispatch(getCohorts()),
-    getCohortDetail: (id) => dispatch(getCohortDetail(id)),
-    promotePm: (pm) => dispatch(promotePm(pm)),
-    getStudents: () => dispatch(getStudents())
-  })
+const mapStateToProps = state => ({
+    cohortDetail: state.cohort.cohortDetail,
+    pms: state.pm.pms,
+    students: state.student.students
+   })
+   
+   const mapDispatchToProps = dispatch => ({
+     getCohorts: () =>  dispatch(getCohorts()),
+     getCohortDetail: (id) => dispatch(getCohortDetail(id)),
+     promotePm: (pm) => dispatch(promotePm(pm)),
+     getStudents: () => dispatch(getStudents())
+   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CohortList)

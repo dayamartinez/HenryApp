@@ -19,7 +19,6 @@ export function promotePm(pm) {
           type: PROMOTE_PM,
           payload: pm
         })
-        swal('usuario promovido a pm','', 'success')
     })
     .catch(err => swal(err, '', 'error'))
   }
@@ -57,7 +56,6 @@ export function deletePM(id){
           payload: pm.id,
         })
       })
-      .catch(err => swal(err))
   }
 }
 

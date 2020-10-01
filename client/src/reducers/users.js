@@ -33,12 +33,12 @@ export default function user (state = initialState, action){
         }
     }
 
-    if (action.type === PROMOTE_PM){
-        return {
-            ...state,
-            user: action.payload
-        }
-    }
+    // if (action.type === PROMOTE_PM){
+    //     return {
+    //         ...state,
+    //         user: action.payload
+    //     }
+    // }
 
     if (action.type === PROMOTE_INSTRUCTOR){
         return {

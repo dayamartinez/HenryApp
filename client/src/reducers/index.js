@@ -7,7 +7,8 @@ import group from './group'
 import pm from './pm'
 import posts from './posts'
 import link from './link'
+import student from './student'
 
 export default combineReducers({
-    user, cohort, global, instructor, group, pm, posts, link
+    user, cohort, global, instructor, group, pm, posts, link, student
 }) 

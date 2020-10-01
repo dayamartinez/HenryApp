@@ -1,12 +1,12 @@
 import { GET_STUDENT, GET_STUDENT_DETAIL } from '../actions/student'
-
+import { PROMOTE_PM} from '../actions/pm'
 const initialState ={
     students:[],
     studentDetail:{},
 
 }
 
-export default function pm(state = initialState, action){
+export default function student(state = initialState, action){
     
     if (action.type === GET_STUDENT){
         return {
@@ -21,6 +21,6 @@ export default function pm(state = initialState, action){
             studentDetail: action.payload
         }
     }
-
+   
     return state
 }
