@@ -7,19 +7,46 @@ import {addGroup} from '../../actions/group'
 import {getPm} from '../../actions/pm'
 import {getCohorts} from '../../actions/cohort'
 import {useHistory } from 'react-router-dom'
+import fondo from "../../images/Fondo.png"
 
 /* componente de creacion de grupos  */
 
-  const useStyles = makeStyles((theme) => ({
-    submit: {
-      margin: theme.spacing(2, 0, 0),
-      marginButton: theme.spacing(2)
-    },
-    inputGroup:{
-      fontSize:"1.5rem",
-      right:1
-    }
-  }));
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  title: {
+    marginLeft: "150px",
+    margin: theme.spacing(4),
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginLeft: "150px",
+    marginBottom: "50px",
+  },
+  formControl:{
+    width: '100%',
+  },
+  submit: {
+    margin: theme.spacing(2, 0, 0),
+    marginButton: theme.spacing(2)
+  },
+  inputGroup:{
+    fontSize:"1.5rem",
+    align:"center"
+  },
+  background: {
+    backgroundImage:`url(${fondo})` ,
+    height: '100vh'
+  },
+  input: {
+    background: "white",
+    
+  }
+}));
+
   
   export function FormGroup({ getPm, pms, getCohorts, addGroup, style}) {
 
@@ -75,28 +102,136 @@ const sleep= function(ms) {
   }
 
   return (
-    <div style={style}>  
-    <Container component="main" maxWidth="sm" style={{margin:"auto",backgroundColor:"rgb(220,220,220)"}}>
-      <Typography component="h1" variant="h4" align="center">  Crear Grupos </Typography>
-      <Grid container style={{margin:"auto"}}>
-        <Grid item xs={6}> <Typography component="h1" variant="h5">  Cohorte: </Typography> </Grid>
-        <Grid item xs={6}> <Typography component="h1" variant="h5" align="right">  {cohort?cohort.name:"..."} </Typography> </Grid>
-        <Grid container>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> Alumnos totales </Typography> </Grid>
-          <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {cohort?cohort.usuarios.length:"..."} </Typography> </Grid>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> PMs disponibles </Typography> </Grid>
-          <Grid item xs={6}> <Typography component="h1" variant="h5" align="right"> {pm.length} </Typography> </Grid>
-        </Grid>
-        <Grid container style={{justifyContent:"space-between"}}>
-          <Grid item xs={6}> <Typography component="h1" variant="h5"> Ingrese cantidad de grupos</Typography> </Grid>
-          <Grid item xs={2} sm={1}> <Input type="number" className={classes.inputGroup} name="grupos" defaultValue={1} onChange={(e) => handleInputChange(e)}/> </Grid>
-        </Grid>
-        <Grid style={{margin:"auto"}} item xs={6}>
+    <div className={classes.background}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          
+          <Typography className={classes.title} component="h1" variant="h5">
+            Crear Grupos
+          </Typography>
+
+        <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+              <TextField 
+                id="standard-read-only-input"
+                variant="outlined"
+                required
+                className={classes.input}
+                fullWidth
+                defaultValue="Cohorte"
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <TextField 
+                id="standard-read-only-input"
+                variant="outlined"
+                required
+                className={classes.input}
+                fullWidth
+                defaultValue={cohort?cohort.name:"..."}
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+              <TextField 
+                id="standard-read-only-input"
+                variant="outlined"
+                required
+                className={classes.input}
+                fullWidth
+                defaultValue="Alumnos Totales"
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+              <TextField 
+                id="standard-read-only-input"
+                variant="outlined"
+                required
+                className={classes.input}
+                defaultValue={cohort?cohort.usuarios.length:"..."}
+                InputProps={{
+                  readOnly: true
+                }}
+                marginLeft="50px"
+              />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <TextField 
+                id="standard-read-only-input"
+                variant="outlined"
+                required
+                className={classes.input}
+                fullWidth
+                defaultValue="PMs Disponibles"
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+              <TextField 
+                id="standard-read-only-input"
+                variant="outlined"
+                required
+                className={classes.input}
+                fullWidth
+                defaultValue={pm.length}
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+              <TextField 
+                id="standard-read-only-input"
+                variant="outlined"
+                required
+                className={classes.input}
+                fullWidth
+                defaultValue="Cantidad de Grupos"
+                InputProps={{
+                  readOnly: true
+                }}
+              />
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+              <TextField
+              name="grupos" 
+              defaultValue={1} 
+              onChange={(e) => handleInputChange(e)}
+              id="filled-number"
+              type="number"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              variant="outlined"
+              />
+              </Grid>
+
+              <Grid style={{margin:"auto"}} item xs={6}>
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} onClick={(e) => handleSubmit(e)} >
             Crear
           </Button>
         </Grid>
-      </Grid>
+            </Grid>
+ 
+       </form>
+      </div>
     </Container>
     </div>
   )

@@ -82,11 +82,8 @@ server.put('/set', (req,res)=> {
       })
       .then(pms=>{
         let i = 0,j=0,aux;
-        console.log(pms.length)
-        console.log(groups.length)
         while(i<groups.length){
-          //console.log(i)
-          aux = {groupId:groups[i].id}
+          aux = {groupId:groups[i].id, cohortId:Number(req.params.id)}
           pms[j].update(aux)
           .then(a=>{  
             pms[j].save()
