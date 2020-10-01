@@ -54,7 +54,7 @@ function App(props) {
         {!props.user.user.name ? <Landing/> :<Redirect to='/'/>}
       </Route>
       <Route path='/profile'>
-        {!props.user.user.rol ? <Redirect to="/"/>:null}
+        {!props.user.user.name ? <Redirect to="/"/>:null}
       </Route>
       {/* {!props.user.user.id ? <Route exact path='/' component={Landing}/>:null} */}
       {props.user.user.name ? <Route exact path='/search' component={UserCard}/>:null}
