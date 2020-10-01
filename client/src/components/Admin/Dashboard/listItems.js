@@ -75,14 +75,6 @@ export const mainListItems = (
       </Link>
     </ListItem>
     
-    <Link href='/admin/formGroup' color="secondary" underline="none">
-    <ListItem button>
-      <ListItemIcon>
-        <GroupAddIcon/>
-      </ListItemIcon>
-      <ListItemText primary="Crear Grupos" />
-    </ListItem>
-    </Link>
     <Link href='/admin/createStaff' color="secondary" underline="none">
     <ListItem button>
       <ListItemIcon>
