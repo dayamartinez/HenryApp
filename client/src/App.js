@@ -42,7 +42,9 @@ function App(props) {
       </Route>
       {/* {!props.user.user.id ? <Route exact path='/' component={NewUser}/> : } */}
       {props.user.user.name && <Route path='/' component={NavBar} />}
-      {props.user.user.name ? <Route  exact path='/Home'component={Home} />:<Redirect to="/" />}
+      <Route  exact path='/Home'>
+        {props.user.user.name ? <Home/>:<Redirect to='/'/>}
+      </Route>
      
 
       {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
@@ -72,7 +74,7 @@ function App(props) {
 
       {/* Cohortes */}
       <Route path='/admin'>
-        {props.user.user.profile ? <BarraLateral/>:<Redirect to="/"/>}
+        {props.user.user.profile ? <BarraLateral/>:props.user.user.name? <Redirect to="/Home"/>:<Redirect to="/"/>}
       </Route>
       <Route exact path='/admin'component={Contenedor} />
       <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
