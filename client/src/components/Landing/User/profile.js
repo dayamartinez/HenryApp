@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: '10px'
   },
   nameLastName: {
+    textTransform: 'capitalize',
       display: 'flex',
       //position: 'absolute',
       justifyContent: 'center',
@@ -99,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: '25px'
     },
     text2: {
+      textTransform: 'capitalize',
       display: 'flex',
       color: 'black',
       marginLeft: '230px',
@@ -275,20 +277,30 @@ const useStyles = makeStyles((theme) => ({
       if (match.params.id){
         Axios.get(`http://localhost:3001/user/user/${match.params.id}`)
         .then(user=>{
-          console.log(user)
           setUserDetail(user.data);
-        })
+        }) 
       }
-      console.log(userDetail)
+      if (!user.user.cohortId){
+        Axios.get(`http://localhost:3001/cohort/instructor/${user.user.id}`)
+        .then(data=>{
+          setCohortInstId(data.data.cohortId)
+          console.log(data.data)
+        })
+        
+      }
+     // console.log(userDetail)
     },[]);
+    
     const history = useHistory();
     const classes = useStyles();
+    const [cohortInstId,setCohortInstId] = useState()
     const [userDetail, setUserDetail] = useState()
     // const [value, setValue] = React.useState(0);
     const [value,setValue] = useState(0)
     // const handleChange = (event, newValue) => {
     //   setValue(newValue);
     // };
+    console.log(cohortInstId)
     const mostrarInfo = ()=>{
       setValue(1)
       
@@ -342,7 +354,12 @@ const useStyles = makeStyles((theme) => ({
       </Button>}
       </div>
       <div>
-        {userDetail ? null : <Button variant='outline' color='primary'  href={"/cohortDetail/"+user.user.cohortId} className={classes.boton}>
+        {cohortInstId && <Button variant='outline' href={"/cohortDetail/"+cohortInstId} color='primary' className={classes.boton}>
+          Ver Cohorte
+          </Button>}
+      </div>
+      <div>
+        {(userDetail || cohortInstId)? null : <Button variant='outline' color='primary'  href={"/cohortDetail/"+user.user.cohortId} className={classes.boton}>
             Ver mi cohorte
         </Button>}
       </div>
