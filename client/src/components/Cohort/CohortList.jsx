@@ -55,9 +55,10 @@ export function CohortList({getCohorts, pms, students, getCohortDetail, cohortDe
         
             <div className="btn-group" role="group" aria-label="Button group with nested dropdown">
                 <button type="button" class="btn btn-outline-warning mb-2 mt-2" onClick={() => getCohorts()}>Ver Todos</button>
-  
-                <div className="btn-group dropright" role="group">
-                    <button id="btnGroupDrop1" type="button" className="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <div class="btn-group dropright" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-warning mb-2 mt-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
                         Filtrar por Cohorte
                     </button>
                     <div className="dropdown-menu" aria-labelledby="btnGroupDrop1" role="menu">
@@ -80,12 +81,14 @@ export function CohortList({getCohorts, pms, students, getCohortDetail, cohortDe
                 <th scope="col">Email</th>
                 <th scope="col">Grupo</th>
                 <th scope="col"></th>
+
                 </tr>
                 </thead>
                 <tbody>
                 {/* Si se selecciono un cohorte en particular, solo mostrara informacion de los alumnos del mismo,
                  */}
                 {cohortDetail[0] ? cohortDetail.sort((a,b)=>orderById(a,b)).map((c) => (
+
                     c.usuarios.sort((a,b)=>orderById(a,b)).map(u => (                       
                         <tr key={u.id} className="bg-light">  
                         <td>{u.name}</td>
@@ -143,6 +146,7 @@ export function CohortList({getCohorts, pms, students, getCohortDetail, cohortDe
                             }}>Promover a PM</button>}
                         </td>
                     </tr>   
+
                 )) : null
                 }                
                 </tbody>
