@@ -2,7 +2,7 @@
 import {ADD_USER, UPDATE_USER, RESET_PASSWORD, SET_USER, CLEAN_USER, GET_ALL_USERS, USER_LOGOUT, COMPLETE_USER} from '../actions/user.js'
 import { PROMOTE_PM } from '../actions/pm'
 import { PROMOTE_INSTRUCTOR} from '../actions/instructor'
-import { PROMOTE_STUDENT, GET_STUDENT, GET_STUDENT_DETAIL, SET_COHORT } from '../actions/student'
+import { PROMOTE_STUDENT, SET_COHORT } from '../actions/student'
 
 
 
@@ -33,12 +33,12 @@ export default function user (state = initialState, action){
         }
     }
 
-    if (action.type === PROMOTE_PM){
-        return {
-            ...state,
-            user: action.payload
-        }
-    }
+    // if (action.type === PROMOTE_PM){
+    //     return {
+    //         ...state,
+    //         user: action.payload
+    //     }
+    // }
 
     if (action.type === PROMOTE_INSTRUCTOR){
         return {
@@ -62,20 +62,6 @@ export default function user (state = initialState, action){
         }
     }
 
-    if (action.type === GET_STUDENT){
-        return {
-            ...state,
-            user: action.payload
-        }
-    }
-
-
-    if (action.type === GET_STUDENT_DETAIL){
-        return {
-            ...state,
-            userDetail: action.payload
-        }
-    }
 
     if (action.type === SET_USER){
         return {

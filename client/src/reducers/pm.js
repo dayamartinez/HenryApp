@@ -1,5 +1,5 @@
 
-import { GET_PM, GET_PM_DETAIL, DELETE_PM} from '../actions/pm'
+import { GET_PM, PROMOTE_PM, GET_PM_DETAIL, DELETE_PM} from '../actions/pm'
 
 
 const initialState ={
@@ -30,6 +30,13 @@ export default function pm(state = initialState, action){
             pms: state.pms.filter(pm => pm.id !== action.payload) 
         }
     }
+    if (action.type === PROMOTE_PM){
+        return {
+            ...state,
+            pms: action.payload
+        }
+    }
+
 
     return state
 }

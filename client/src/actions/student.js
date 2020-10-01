@@ -45,8 +45,6 @@ export function setCohort(id, user) {
   }
 }
 
-
-
 export function getStudents() {
   return function (dispatch) {
     return fetch('http://localhost:3001/student', {

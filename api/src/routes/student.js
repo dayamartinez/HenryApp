@@ -1,6 +1,6 @@
 //BUSCA TODOS LOS USUARIOS QUE SEAN ALUMNOS
 const server = require('express').Router();
-const { Usuario } = require('../db.js');
+const { Usuario, PM, Cohort, Group} = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //asigna un usuario como estudiante
@@ -20,7 +20,7 @@ server.put('/', (req,res)=> {
     Usuario.findOne({
         where: {
             id: req.params.id,
-            profile: 'student'
+            rol: 'user'
         }
     }).then(pm =>{
         !pm
@@ -33,13 +33,13 @@ server.put('/', (req,res)=> {
         })
       )
   })
-  
+    
   //Trae TODOS los Alumnos 
   server.get('/', (req,res) => {
     Usuario.findAll({
       where: {
-        profile: 'student'
-      }
+        rol: 'user'
+      }, include: [PM, Cohort, Group]
     })
     .then( students => {
         res.status(200).send(students);
