@@ -133,7 +133,7 @@ const sleep= function(ms) {
                 required
                 className={classes.input}
                 fullWidth
-                defaultValue={cohort?cohort.name:"..."}
+                placeholder={cohort?cohort.name:"..."}
                 InputProps={{
                   readOnly: true
                 }}
@@ -160,7 +160,7 @@ const sleep= function(ms) {
                 variant="outlined"
                 required
                 className={classes.input}
-                defaultValue={cohort?cohort.usuarios.length:"..."}
+                placeholder={cohort?cohort.usuarios.length:"..."}
                 InputProps={{
                   readOnly: true
                 }}
@@ -188,7 +188,7 @@ const sleep= function(ms) {
                 required
                 className={classes.input}
                 fullWidth
-                defaultValue={pm.length}
+                placeholder={pm.length}
                 InputProps={{
                   readOnly: true
                 }}
