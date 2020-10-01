@@ -17,13 +17,13 @@ export default function link(state = initialState, action){
     if (action.type === ADD_LINK){
         return {
             ...state,
-            links: state.links.concat(action.payload) 
+            links: action.payload
         }
     }
     if (action.type === DELETE_LINK){
         return {
             ...state,
-            links: state.links.filter(p => p.id !== action.payload) 
+            links: action.payload
         }
     }
 

@@ -13,6 +13,7 @@ import {addLink, deleteLink} from './../../actions/link'
 import {getCohortDetail} from './../../actions/cohort'
 import { connect } from 'react-redux';
 import {useHistory } from 'react-router-dom'
+import swal from 'sweetalert'
 
 export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts, links, deleteLink, match }){
  
@@ -121,8 +122,19 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
                   </Grid>
                   <Grid item>
                     { user.user.rol !== 'user' ? 
-                    <button class="btn btn-outline-light border-0 rounded" onClick={() => {deletePost(c.id) 
-                      history.go(0)} } 
+                    <button class="btn btn-outline-light border-0 rounded" 
+                      onClick={() => {
+                      swal({
+                        title: 'Eliminar',
+                        text: 'Seguro desea eliminar el comentario?',
+                        icon: 'warning',
+                        buttons: ['No', 'Si'],
+                        dangerMode: true,
+                      }).then((res) =>
+                        res ? deletePost(c.id) : null
+                      )
+                         
+                      } } 
                       variant="subtitle1"><DeleteIcon style={{ color: "#000"}}/>
                     </button>:null  
                     }
@@ -188,8 +200,16 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
                    {user.user.rol !== 'user' ?
                    <Grid item>
                     <button class="btn btn-outline-light border-0 rounded" onClick={() => {
-                      deleteLink(l.id)
-                      history.go(0)}}><DeleteIcon style={{ color: "#000"}}/></button>
+                      swal({
+                        title: 'Eliminar',
+                        text: 'Seguro desea eliminar el link de la clase?',
+                        icon: 'warning',
+                        buttons: ['No', 'Si'],
+                        dangerMode: true,
+                      }).then((res) =>
+                        res ? deleteLink(l.id) : null
+                      )
+                      }}><DeleteIcon style={{ color: "#000"}}/></button>
                   </Grid>:null
                    }
                 </Grid>
