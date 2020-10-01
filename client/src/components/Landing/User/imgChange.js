@@ -10,6 +10,7 @@ import { storage } from '../../../firebase/index.js';
 import Menu from './SettingMenu';
 import Avatar from '@material-ui/core/Avatar';
 import fondo from '../../../images/Fondo.png'
+import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -17,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+    },
+    paper2:{
+      width: '150px',
+      height: '150px'
     },
     avatar: {
       margin: theme.spacing(1),
@@ -64,7 +69,7 @@ export function Settings(props){
       id: props.user.user.id,
       rol: props.user.user.rol,
       urlImage: '',
-      portadaImage: ''
+      // portadaImage: ''
     })
       const handleChange = e => {
         if(e.target.files[0]){
@@ -91,7 +96,9 @@ export function Settings(props){
                       .getDownloadURL()
                       .then(urlImg => {
                          
-                          setUrlImg(urlImg)
+                          setImg({
+                            urlImage: urlImg
+                          })
                           
                       })
               }
@@ -101,16 +108,16 @@ export function Settings(props){
 
 
     const saveImage = function(){
-      if (urlImg === ''){
+      if (!img.urlImage){
         alert("Se debe completar alguno de los cambios!")
       } 
-       if(urlImg){
-         setImg({
-           ...img,
-           urlImage: urlImg,
-           portadaImage: props.user.user.portadaImage
-         })
-          props.updateUser(img)
+       if(img.urlImage){
+         var data = {
+          id: props.user.user.id,
+          rol: props.user.user.rol,
+          urlImage: img.urlImage
+        }
+        props.updateUser(data)
         }
     }
 
@@ -133,7 +140,8 @@ export function Settings(props){
                           onChange={handleChange}
                           />
                 </Typography>
-                <img src={urlImg || "http://via.placeholder.com/150x150"}/>
+                <img className={classes.paper2} src={img.urlImage || "http://via.placeholder.com/150x150"}/>
+
                 <Button
                           className={classes.button}
                           color="primary" 
@@ -152,7 +160,7 @@ export function Settings(props){
                     fullWidth
                     variant="contained"
                     type="submit"
-                     onClick={()=> saveImage()}>
+                     onClick={()=> saveImage(img)}>
                        Guardar Cambios
                        </Button>
                
