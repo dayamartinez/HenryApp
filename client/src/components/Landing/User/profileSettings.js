@@ -58,6 +58,7 @@ export function Settings(props){
     const classes = useStyles();
     const [state, setState]=useState({
         id: props.user.user.id,
+        rol: props.user.user.rol,
         name: '',
         lastName:''
     });
