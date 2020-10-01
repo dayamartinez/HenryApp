@@ -42,11 +42,8 @@ export function userLogout (user){
 
 //MODIFICAR DATOS DE MI USUARIO
 export function updateUser(data){
-    
+    console.log(data)
     return function (dispatch){
-        console.log('hhh')
-        console.log(data)
-        console.log('hola')
         return axios.put(`http://localhost:3001/user/settings/${data.id}`, data)
         .then(res => {
             dispatch({type: UPDATE_USER, payload: res.data})

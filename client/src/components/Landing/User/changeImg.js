@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
       alignItems: 'center',
     },
+    paper2:{
+      width: '800px',
+      height: '220px',
+      objectFit: 'cover',
+      objectPosition:'center center'
+    },
     avatar: {
       margin: theme.spacing(1),
       backgroundColor: theme.palette.secondary.main,
@@ -56,7 +62,7 @@ const PortadaChange = (props) => {
         id: props.user.user.id,
         rol: props.user.user.rol,
         portadaImage: '',
-        urlImage: ''
+        // urlImage: ''
       })
   // estado para firebase storage
       const [imagen, setImagen] = useState(null);
@@ -83,27 +89,33 @@ const PortadaChange = (props) => {
                 .child(imagen.name)
                 .getDownloadURL()
                 .then( portada => {
-                   
-                    setPortada(portada)
+                   setUrlP({
+                    portadaImage:portada
+                   })
+                    //setPortada(portada)
                 
                 })
         }
     )
    
 }  
-
+console.log(urlP.portadaImage)
 const saveImage = function(){
-    if (portada === ''){
+    if (!urlP.portadaImage){
       alert("Se debe completar alguno de los cambios!")
     } 
-     if(portada){
-       setUrlP({
-         ...urlP,
-         portadaImage: portada,
-         urlImage: props.user.user.urlImage
-       })
-
-        props.updateUser(urlP)
+     if(urlP.portadaImage){
+      //  setUrlP({
+      //    ...urlP,
+      //    portadaImage: portada,
+      //    urlImage: props.user.user.urlImage
+      //  })
+       var data= {
+          id: props.user.user.id,
+          rol: props.user.user.rol,
+          portadaImage: urlP.portadaImage
+        }
+        props.updateUser(data)
         console.log(urlP)
       }
   }
@@ -127,7 +139,7 @@ const saveImage = function(){
                           onChange={handleChange}
                           />
                 </Typography>
-                <img src={portada || "http://via.placeholder.com/800x220"}/>
+                <img className={classes.paper2} src={urlP.portadaImage || "http://via.placeholder.com/800x220"}/>
                 <Button
                           className={classes.button}
                           color="primary" 
@@ -143,7 +155,7 @@ const saveImage = function(){
                     type="submit"
                     fullWidth
                     variant="contained"
-                    type="submit"onClick={()=> saveImage()}>Guardar Cambios</Button>
+                    type="submit"onClick={()=> saveImage(urlP)}>Guardar Cambios</Button>
             </Container>
             </Container>
     )

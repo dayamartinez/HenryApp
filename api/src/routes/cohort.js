@@ -103,6 +103,19 @@ server.post('/create',  (req, res) => {
   })
 
 
+  server.get('/instructor/:id',(req,res)=>{
+    console.log(req.params.id)
+    staff_cohort.findOne({
+      where:{
+        staffId: req.params.id,
+        //include: Cohort
+      }})
+    .then(data=>{
+      console.log(data)
+      res.status(200).send(data);
+    })
+  })
+
   //Busca TODOS los grupos de un cohorte
   server.get('/groups/:id', (req, res) => {
     Cohort.findAll({
