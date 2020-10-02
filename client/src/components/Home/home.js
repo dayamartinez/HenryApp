@@ -197,7 +197,6 @@ console.log(staff)
                     <Grid item xs container direction="column" spacing={2}>
                       <Grid item xs>
                         <Typography  gutterBottom className={classes.username}>
-                          
                           {c.staff && c.staff.name + ' ' + c.staff.lastName}
                         </Typography>
                         <Typography >
