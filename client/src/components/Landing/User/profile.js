@@ -288,14 +288,12 @@ const useStyles = makeStyles((theme) => ({
         })
         
       }
-     // console.log(userDetail)
     },[]);
     
     const history = useHistory();
     const classes = useStyles();
     const [cohortInstId,setCohortInstId] = useState()
     const [userDetail, setUserDetail] = useState()
-    // const [value, setValue] = React.useState(0);
     const [value,setValue] = useState(0)
     // const handleChange = (event, newValue) => {
     //   setValue(newValue);
