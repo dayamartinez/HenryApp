@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Toolbar, Typography, IconButton, Button, makeStyles} from '@material-ui/core';
+import {AppBar, Toolbar, Typography, IconButton, Link, makeStyles} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchBar from './Home/SearchBar/searchBar.js'
 import { userLogout } from '../actions/user';
@@ -77,12 +77,18 @@ const logout = function(e) {
             <Menu user={user}/>
           </IconButton>
           </ButtonGroup>
-        
-         <div className={s.contenedor}>
-         <SearchBar />     
           <Typography variant='h6' className={s.title}>
           HenryApp
          </Typography>
+        
+         <div className={s.contenedor}>
+         <SearchBar />     
+        
+        <Link onClick={(e) => history.push('/About')}>
+         <Typography variant='h6' className={s.title}>
+          About Us
+         </Typography>
+         </Link>
          </div>
         </Toolbar>
       </AppBar>

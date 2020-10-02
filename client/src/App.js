@@ -28,6 +28,7 @@ import Instructor from './components/Instructors/ListInstructors';
 import StaffRegister from './components/Instructors/CreateInstructor';
 import ConfiguracionGeneral from './components/Landing/User/profileSettings.js';
 import FormGroup from './components/Groups/FormGroup';
+import About from './components/About';
 
 import UserCard from './components/Home/SearchBar/userCards'
 
@@ -63,6 +64,7 @@ function App(props) {
       <Route exact path='/profile/Settings/Portada' component={FotoPortada} />
       <Route exact path='/profile/Settings/PasswordSettings' component={PasswordSettings} />
       <Route exact path='/profile/Settings'component={Settings} />
+      <Route exact path='/About'component={About} />
       
       {/*---------------------------------------------------------------------------------
       rutas del admin */}
@@ -73,7 +75,8 @@ function App(props) {
       <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />
       <Route exact path='/admin/createStaff' render={() => <StaffRegister style={margen}/>} />
       <Route exact path='/admin/createCohort' render={({match}) => <Cohort match={match} style={margen}/>} /> 
-      
+      <Route exact path='/About'component={About} />
+
       {/* Grupos */}
       <Route exact path='/admin/groups' render={() => <AllGroups style={margen}/>} />
       <Route exact path='/admin/pms' render={() => <Pms style={margen}/>} />
