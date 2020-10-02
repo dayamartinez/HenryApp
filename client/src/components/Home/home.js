@@ -16,7 +16,7 @@ import Avatar from '@material-ui/core/Avatar'
 import HenryIcon from './../../images/henryUserIcon.jpg'
 import TextField from '@material-ui/core/TextField'
 import DeleteIcon from '@material-ui/icons/Delete'
-import {addPost, deletePost} from './../../actions/posts'
+import {addPost, deletePost, addHomePost} from './../../actions/posts'
 import {addLink, deleteLink} from './../../actions/link'
 import {getCohortDetail} from './../../actions/cohort'
 import { useRef } from 'react';
@@ -67,7 +67,8 @@ const useStyles = makeStyles((theme) => ({
         color: 'gray'
       },
       delete: {
-        marginRight: '10px'
+        marginRight: '10px',
+        marginTop: '20px'
       },
       username: {
         font : '18px',
@@ -86,7 +87,7 @@ const defaultProps = {
   children: <MailIcon style={{ color: "#000"}} />,
  
 }
-export function Home({addPost,instructor, deletePost, posts, match, user, staff}){
+export function Home({addHomePost,instructor, deletePost, posts, match, user, staff}){
   const id = match.params.id
 
     const history = useHistory()
@@ -118,7 +119,7 @@ export function Home({addPost,instructor, deletePost, posts, match, user, staff}
     const handleSubmit = (e) => {
       e.preventDefault()
       resetForm()
-      addPost(input.comments, user.user.id, user.user.id)
+      addHomePost(input.comments, user.user.id, user.user.id)
     }
 
     
@@ -132,7 +133,7 @@ var posteos;
     .catch(error => {
         return error;
     })
-}, [input])
+}, [input, posts])
   
 
 // useEffect(() => {
@@ -208,9 +209,7 @@ console.log(staff)
                     <Grid item className={classes.delete}>
                       { user.user.rol !== 'user' ? 
                       <iconButton 
-                     
-                      onClick={() => {deletePost(c.id) 
-                        history.go(0)} } 
+                      onClick={() => deletePost(c.id) } 
                         ><DeleteIcon style={{ color: "#000"}}/>
                       </iconButton>:null  
                       }
@@ -243,7 +242,7 @@ console.log(staff)
   
   const mapDispatchToProps = (dispatch) => ({
     getPosts: (id) => dispatch(getPosts(id)),
-    addPost: (post, userId, id) => dispatch(addPost(post, userId, id)),
+    addHomePost: (post, userId, id) => dispatch(addHomePost(post, userId, id)),
     getCohortDetail: (id) => dispatch(getCohortDetail(id)),
     deletePost: (id) => dispatch(deletePost(id)),
     addLink: (links, name, module, staffId, id) => dispatch(addLink(links, name, module, staffId, id)),

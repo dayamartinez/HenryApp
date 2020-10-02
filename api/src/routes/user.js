@@ -173,7 +173,7 @@ server.get('/users/:id', (req,res,next) => {
           }
         }
     ]
-    },
+		},
 	})
   .then( usuario => {
       res.status(200).json(usuario);

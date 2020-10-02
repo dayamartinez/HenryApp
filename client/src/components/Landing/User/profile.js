@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#212121',
     display: 'flex',
     height: '50px',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   boton:{
     color: '#fdd835'
