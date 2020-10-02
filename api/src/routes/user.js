@@ -155,20 +155,24 @@ server.put('/settings/:id', (req, res, next) => {
 server.get('/users/:id', (req,res,next) => {
   db.Usuario.findAll({
     where: {
-			name: {
+      [Sequelize.Op.or]: [
+			{
+        name: {
 				[Sequelize.Op.iLike]: `%${req.params.id}%`
-			}
+      }
+    },
+     { 
+       lastName: {
+				[Sequelize.Op.iLike]: `%${req.params.id}%`
+      }
+    },
+      {  
+      email: {
+        		[Sequelize.Op.iLike]: `%${req.params.id}%`
+          }
+        }
+    ]
 		},
-		where: {
-			lastName: {
-				[Sequelize.Op.iLike]: `%${req.params.id}%`
-			}
-		},
-		where: {
-			email: {
-				[Sequelize.Op.iLike]: `%${req.params.id}%`
-			}
-		}
 	})
   .then( usuario => {
       res.status(200).json(usuario);

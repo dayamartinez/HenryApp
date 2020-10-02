@@ -68,10 +68,6 @@ function ResponsiveDrawer(props) {
       <Divider />
       <List>
           <ListItem >
-             <Button  onClick={(e) => history.push('/profile/Settings/PasswordSettings')}> Cambiar Contraseña</Button>
-          </ListItem>
-          <Divider />
-          <ListItem >
               <Button  onClick={(e) => history.push('/profile/Settings/UserSettings')}>Cambiar Datos Generales</Button>
           </ListItem>
           <Divider />

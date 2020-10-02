@@ -101,7 +101,7 @@ export function Send({addPost, getCohortDetail, deletePost, user, addLink, posts
         }
   
           <div  style={{flexGrow: 1, overflowX:'hidden', overflowY:'scroll' , height: "270px"  }}> 
-            {comments && comments.map(c => ( 
+            {comments && comments.filter(c => c.staffId === instructor.id).map(c => ( 
             <Paper key={c.id} style={{padding: '2px',margin: '20px auto',maxWidth: 500}}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm container>
