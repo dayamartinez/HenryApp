@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Usuario, PM, Group } = require('../db.js');
+const { Usuario, PM, Group, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a PM 
@@ -82,11 +82,8 @@ server.put('/set', (req,res)=> {
       })
       .then(pms=>{
         let i = 0,j=0,aux;
-        console.log(pms.length)
-        console.log(groups.length)
         while(i<groups.length){
-          //console.log(i)
-          aux = {groupId:groups[i].id}
+          aux = {groupId:groups[i].id, cohortId:Number(req.params.id)}
           pms[j].update(aux)
           .then(a=>{  
             pms[j].save()
@@ -116,7 +113,7 @@ server.put('/set', (req,res)=> {
   //Trae TODOS los PM 
   server.get('/', (req, res) => {
     PM.findAll({
-        include:[Usuario, Group]
+        include:[Usuario, Group, Cohort]
     })
       .then(pms => res.send(pms))
       .catch(() => res.status(400).send([]))

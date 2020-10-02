@@ -1,4 +1,4 @@
-const db = require ('../db')//SE IMPORTO LA DATABASE{SE MODIFICO EL MODELO PARA PODER CREAR USERS..}
+const db= require ('../db')//SE IMPORTO LA DATABASE{SE MODIFICO EL MODELO PARA PODER CREAR USERS..}
 const express = require('express');
 const server = require('express').Router();
 const cors = require("cors");
@@ -153,6 +153,7 @@ server.put('/settings/:id', (req, res, next) => {
 
 //traer perfiles de usuario que matcheen con la busqueda searchBar
 server.get('/users/:id', (req,res,next) => {
+  
   db.Usuario.findAll({
     where: {
       [Sequelize.Op.or]: [

@@ -119,8 +119,6 @@ export function CustomizedMenus(props) {
                   
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={(e) => redirect(e, '/profile')}>Mi perfil</MenuItem>
-                    <MenuItem onClick={(e) => redirect(e, '/profile')}>Inicio</MenuItem>
-                    <MenuItem onClick={handleClose}>Mensajes</MenuItem>
                     <MenuItem onClick={(e) => redirect(e, '/admin')}>Administración</MenuItem>
                     <MenuItem onClick={(e)=>logout(e)}>Cerrar sesion</MenuItem>
                   </MenuList> }
