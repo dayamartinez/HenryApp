@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     background: '#212121',
     display: 'flex',
     height: '50px',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
   },
   boton:{
     color: '#fdd835'
@@ -288,14 +288,12 @@ const useStyles = makeStyles((theme) => ({
         })
         
       }
-     // console.log(userDetail)
     },[]);
     
     const history = useHistory();
     const classes = useStyles();
     const [cohortInstId,setCohortInstId] = useState()
     const [userDetail, setUserDetail] = useState()
-    // const [value, setValue] = React.useState(0);
     const [value,setValue] = useState(0)
     // const handleChange = (event, newValue) => {
     //   setValue(newValue);
@@ -349,19 +347,9 @@ const useStyles = makeStyles((theme) => ({
       </Button>
       </div>
       <div>
-      {userDetail ? null : <Button variant='outline' color='primary' className={classes.boton} onClick={mostrarPost}>
-         Posts
-      </Button>}
-      </div>
-      <div>
         {cohortInstId && <Button variant='outline' href={"/cohortDetail/"+cohortInstId} color='primary' className={classes.boton}>
           Ver Cohorte
           </Button>}
-      </div>
-      <div>
-        {(userDetail || cohortInstId)? null : <Button variant='outline' color='primary'  href={"/cohortDetail/"+user.user.cohortId} className={classes.boton}>
-            Ver mi cohorte
-        </Button>}
       </div>
     </div>
     <div>
@@ -391,16 +379,7 @@ const useStyles = makeStyles((theme) => ({
         //  </div>
         //  </Paper>
         :null}
-        {value === 2?
-        <Typography variant="subtitle1" gutterBottom> 
-        <p className={classes.text}>La clase de autenticacion se paso para el dia 22/09</p>
-        <br></br>
-        <p className={classes.text}>La fecha del checkpoint es el viernes 25/09</p>
-        <br></br>
-        <p className={classes.text}>Faltan los github de Rodrigo Villaruel, Sofia Lagos y Matias Galvan</p>
-       </Typography> 
-        :null}
-        {value === 3 ?<CohortDetail/>:null}
+       
     </div>
         </Card>
     )

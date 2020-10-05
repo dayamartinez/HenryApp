@@ -1,16 +1,33 @@
 const server = require('express').Router();
 const {Post, Staff } = require('../db.js');
 
-//crear posts 
+//crear posts home
 server.post('/:id', (req, res) => {
+    console.log(req.body)
     const {comments, staffId} = req.body
     Post.create({
         comments,
         cohortId: req.params.id,
 	      staffId
     })
-    .then(post => res.status(201).send(post))
-    .catch(err => res.status(404).send(err))
+    .then(post => {res.status(201).send(post)
+    console.log(post)})
+    .catch(err => {res.status(404).send(err)
+    console.log(err)})
+})
+
+//crear posts instructor
+server.post('/home/:id', (req, res) => {
+  console.log(req.body)
+  const {comments, staffId} = req.body
+  Post.create({
+      comments,
+      staffId
+  })
+  .then(post => {res.status(201).send(post)
+  console.log(post)})
+  .catch(err => {res.status(404).send(err)
+  console.log(err)})
 })
 
 //Eliminar post

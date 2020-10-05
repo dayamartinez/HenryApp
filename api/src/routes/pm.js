@@ -1,5 +1,5 @@
 const server = require('express').Router();
-const { Usuario, PM, Group } = require('../db.js');
+const { Usuario, PM, Group, Cohort } = require('../db.js');
 //const {isAuthenticated,isAdmin} =require('./helpers')  
   
 //promover un usuario a PM 
@@ -113,7 +113,7 @@ server.put('/set', (req,res)=> {
   //Trae TODOS los PM 
   server.get('/', (req, res) => {
     PM.findAll({
-        include:[Usuario, Group]
+        include:[Usuario, Group, Cohort]
     })
       .then(pms => res.send(pms))
       .catch(() => res.status(400).send([]))
