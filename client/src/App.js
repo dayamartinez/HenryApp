@@ -34,6 +34,7 @@ import UserCard from './components/Home/SearchBar/userCards'
 
 
 function App(props) {
+  props.user && console.log (props.user);
   const margen = {marginLeft:"240px"} // guardo el estilo en una unica variable y se las paso al componente por props
   return (
     <ThemeProvider theme = {theme}>
@@ -42,7 +43,9 @@ function App(props) {
       </Route>
       {/* {!props.user.user.id ? <Route exact path='/' component={NewUser}/> : } */}
       {props.user.user.name && <Route path='/' component={NavBar} />}
-      {props.user.user.name ? <Route  exact path='/Home'component={Home} />:null}
+      <Route  exact path='/Home'>
+        {props.user.user.name ? <Home/>:<Redirect to='/'/>}
+      </Route>
      
 
       {props.user.user.name ? <Route  exact path='/profile'component={Profile} />:null}
@@ -53,12 +56,14 @@ function App(props) {
       <Route exact path='/'>
         {!props.user.user.name ? <Landing/> :<Redirect to='/'/>}
       </Route>
+      <Route path='/profile'>
+        {!props.user.user.name ? <Redirect to="/"/>:null}
+      </Route>
       {/* {!props.user.user.id ? <Route exact path='/' component={Landing}/>:null} */}
       {props.user.user.name ? <Route exact path='/search' component={UserCard}/>:null}
       <Route path='/cohort/:id' render={({match}) => <Cohort  match={match} />} />
-      <Route exact path='/admin'component={Contenedor} />
-      <Route path='/admin' component={BarraLateral} />
-      {/* Seccion settings user */}
+      {/* --------------------------------------------------------------------
+      Seccion settings user */}
       <Route exact path='/profile/Settings/UserSettings'component={ConfiguracionGeneral} />
       <Route exact path='/profile/Settings/Perfil' component={FotoPerfil} />
       <Route exact path='/profile/Settings/Portada' component={FotoPortada} />
@@ -70,6 +75,10 @@ function App(props) {
       rutas del admin */}
 
       {/* Cohortes */}
+      <Route path='/admin'>
+        {props.user.user.profile ? <BarraLateral/>:props.user.user.name? <Redirect to="/Home"/>:<Redirect to="/"/>}
+      </Route>
+      <Route exact path='/admin'component={Contenedor} />
       <Route exact path='/admin/cohorts' render={() => <AllCohorts style={margen}/>} />
       <Route exact path='/cohortDetail/:id' render={({match}) => <CohortDetail match={match}/>} />
       <Route exact path='/admin/instructors' render={() => <Instructor style={margen}/>} />

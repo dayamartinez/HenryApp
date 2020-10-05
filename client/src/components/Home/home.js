@@ -87,8 +87,9 @@ const defaultProps = {
   children: <MailIcon style={{ color: "#000"}} />,
  
 }
-export function Home({addHomePost,instructor, deletePost, posts, match, user, staff}){
-  const id = match.params.id
+
+export function Home({addPost,instructor, deletePost, posts, match, user, staff}){
+  // const id = match.params.id
 
     const history = useHistory()
     const classes = useStyles();
