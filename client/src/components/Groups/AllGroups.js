@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 // import { Link } from 'react-router-dom'
 import {Link,Table,TableContainer,TableHead, TableBody,TableRow,TableCell} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { getGroups } from '../../actions/group';
+import { getPm } from '../../actions/pm';
 import {yellow, grey} from "@material-ui/core/colors";
 import axios from 'axios';
 
@@ -22,20 +22,23 @@ export function AllGroups({getGroups,style}){
   const [buscar, setBuscar] = useState()
   
   
-  useEffect(()=>{
-    getGroups()
-    .then(grupos => setGroups(grupos.payload)) 
-  }, [])
+  // useEffect(()=>{
+  //   getPm()
+  //   .then(grupos => setGroups(grupos.payload)) 
+  // }, [])
 
-  
-  function buscarPM(pmId){
-    var pmName = "El grupo no tiene un PM asignado."
-    axios.get("http://localhost:3001/pm/"+ pmId)
-    .then(res =>{
-      pmName = res.data.usuario.name + ' ' + res.data.usuario.lastName
-      setBuscar(pmName)
-    })
-  }
+  useEffect(() => {
+    fetch('http://localhost:3001/pm')
+    .then(response => response.json())
+    .then(grupos => 
+     { console.log(grupos)
+       setGroups(grupos)}) 
+.catch(error => {
+    return error;
+})
+}, [])
+
+console.log(groups)
 
   return (
     <div class="bg-dark" style = {style}>
@@ -60,15 +63,16 @@ export function AllGroups({getGroups,style}){
             </thead>
 
             <tbody>
-              {groups ? groups.map(group => {group.PMs[0] && buscarPM( group.PMs[0].usuarioId)
-                return(
+              {console.log(groups)}
+              {groups ? groups.map(group => 
+               
                   <tr class="bg-light"> 
-                    <td>{group.name}</td>
-                    <td>{group.PMs[0] ? (buscar) : ('Sin PM asignado')}</td>
-                    <td>{group.cohort ? (group.cohort.name):('Sin cohorte asignado')}</td>
-                    <td>{group.usuarios?(group.usuarios.length):(undefined)}</td>
+                    <td>{group.group.name}</td>
+                    <td>{(group.usuario.name !== 'undefined') ? group.usuario.name : ('Sin PM asignado')}</td>
+                    <td>{group.group.cohortId ? (group.cohort.name):('Sin cohorte asignado')}</td>
+              <td>{console.log(group.group)}{group.group? (group.group.length):(undefined)}</td>
                   </tr>       
-              )}) : null}  
+               ) : null}  
 
             </tbody>
           </table>
@@ -119,7 +123,7 @@ const mapStateToProps = (state) => ({
  })
 
 const mapDispatchToProps = dispatch => ({
-  getGroups: () =>  dispatch(getGroups())
+  getPm: () =>  dispatch(getPm())
 })
     
 export default connect(mapStateToProps, mapDispatchToProps)(AllGroups)

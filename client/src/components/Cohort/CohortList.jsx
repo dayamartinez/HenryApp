@@ -122,7 +122,7 @@ export function CohortList({getCohorts, pms, students, getCohortDetail, cohortDe
                         <tr key={u.id} className="bg-light"> 
                         <td>{u.name}</td>
                         <td>{u.lastName}</td>
-                        <td>{u.cohort.name}</td>
+                        <td>{u.cohort && u.cohort.name}</td>
                         <td>{u.email}</td>                        
                         <td>{u.group === null ? 'no tiene grupo asignado' : u.group.name}</td> 
                         <td>{ u.PM !== null ? 
