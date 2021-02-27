@@ -2,9 +2,22 @@
 
 *Proyecto real dentro del Marco Académico. 
 Aplicación estilo red social con fin académico, diseñada para los alumnos y docentes del Instituto Henry. Se enfoca en facilitar y favorecer la comunicación entre ellos. 
-FE:  React [+Redux] - MaterialUI
-BE: Node.js - Express.js - Sequelize - Firebase - Passport - Nodemailer
-DB: PostgreSQL
+
+Tecnologias utilizadas:
+
+	HTML
+	CSS
+	Javascript
+	React
+	Redux
+	MaterialUI
+	Nodejs
+	Sequelize (ORM)
+	Express
+	Passport
+	PostgreSQL
+ Firebase
+ Nodemailer
 
 Manejando la Metodología Scrum
 
