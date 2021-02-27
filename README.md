@@ -20,7 +20,9 @@ Tecnologias utilizadas:
 	Nodemailer
 	
 
+
 Manejando la Metodología Scrum
+
 
 
 *Se crea el front para la página de HenryApp. Se utiliza https://marvelapp.com/ para hacerlo.
