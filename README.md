@@ -16,8 +16,9 @@ Tecnologias utilizadas:
 	Express
 	Passport
 	PostgreSQL
-  Firebase
-  Nodemailer
+	Firebase
+	Nodemailer
+	
 
 Manejando la Metodología Scrum
 
